@@ -1,0 +1,23 @@
+# Local customer data and generated model artifacts
+*.csv
+*.tsv
+*.parquet
+*.pkl
+*.pickle
+*.joblib
+*.ubj
+data/
+artifacts/
+outputs/
+logs/
+
+# Credentials and local environments
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.DS_Store
