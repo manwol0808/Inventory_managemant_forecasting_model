@@ -1,0 +1,624 @@
+{
+  "champion": {
+    "version": "champion-v1",
+    "model_id": "xgboost-short-v2",
+    "model_dir": "artifacts/xgboost-short-v2",
+    "role": "champion",
+    "selected_by": "user",
+    "selected_on": "2026-09-16",
+    "selection_basis": "User-selected current benchmark and local preview reference; no common-cohort superiority claim",
+    "report_sha256": "67005e5e27081ea3a561883807f48066ec9adb70e4e276ff9f2db7f34fed85c3",
+    "model_files": {
+      "quantity-model.json": "565d2aad741178c5dd4694ac524ee41dc0e5247f1ac59c4fe8a44ab0b4536138",
+      "gap-model.json": "9bc2db95382de1baef7e37d6d3af54785a71bfd522f433c9eb2efabba05e9df7",
+      "feature-schema.json": "d85c89826697b20a1cd86b1927d589de5ac656dcc8c2e897fc6fd2fb5c15ed84"
+    },
+    "training_start": "2026-04-09",
+    "training_end": "2026-07-13",
+    "operational_approval": false,
+    "auto_apply": false,
+    "evaluation_contract": "Original boundary-limited observed repurchases; validation1196 and consumed test786 are separate cohorts"
+  },
+  "training_history_counts": {
+    "1회": 3150,
+    "2회": 1451,
+    "3~5회": 1485,
+    "6회 이상": 493
+  },
+  "training_rows": 6579,
+  "cohorts": {
+    "legacy_validation": [
+      {
+        "label": "초기 단순 기준",
+        "n": 1196,
+        "date_hit7": 0.6354515050167224,
+        "qty_hit2": 0.9581939799331104,
+        "date_mae": 8.442307692307692
+      },
+      {
+        "label": "최근 이력 단순 기준",
+        "n": 1196,
+        "date_hit7": 0.6354515050167224,
+        "qty_hit2": 0.9581939799331104,
+        "date_mae": 8.442307692307692
+      },
+      {
+        "label": "전체 이력 단순 기준",
+        "n": 1196,
+        "date_hit7": 0.6362876254180602,
+        "qty_hit2": 0.9581939799331104,
+        "date_mae": 9.689799331103679
+      },
+      {
+        "label": "초기 XGBoost",
+        "n": 1196,
+        "date_hit7": 0.729933110367893,
+        "qty_hit2": 0.9732441471571907,
+        "date_mae": 5.5602006688963215
+      },
+      {
+        "label": "★ 챔피언 · 최근 이력 XGBoost",
+        "n": 1196,
+        "date_hit7": 0.729933110367893,
+        "qty_hit2": 0.9732441471571907,
+        "date_mae": 5.559364548494983
+      },
+      {
+        "label": "전체 이력 XGBoost",
+        "n": 1196,
+        "date_hit7": 0.6362876254180602,
+        "qty_hit2": 0.9698996655518395,
+        "date_mae": 7.648829431438127
+      },
+      {
+        "label": "전체 + 최근 가중치 XGBoost",
+        "n": 1196,
+        "date_hit7": 0.6580267558528428,
+        "qty_hit2": 0.9698996655518395,
+        "date_mae": 7.233277591973244
+      }
+    ],
+    "legacy_test": [
+      {
+        "label": "단순 기준 모델",
+        "n": 786,
+        "date_hit7": 0.7022900763358778,
+        "qty_hit2": 0.9529262086513995,
+        "date_mae": 7.797709923664122
+      },
+      {
+        "label": "★ 챔피언 · 최근 이력 XGBoost",
+        "n": 786,
+        "date_hit7": 0.7633587786259542,
+        "qty_hit2": 0.9758269720101781,
+        "date_mae": 4.980916030534351
+      }
+    ],
+    "mature60": [
+      {
+        "label": "w180_pair_median_qlast",
+        "n": 7882,
+        "date_hit7": 0.48122303983760467,
+        "qty_hit2": 0.9686627759451916,
+        "date_mae": 12.64133468662776
+      },
+      {
+        "label": "w180_pair_median_qmedian_last3",
+        "n": 7882,
+        "date_hit7": 0.48122303983760467,
+        "qty_hit2": 0.9717076884039584,
+        "date_mae": 12.64133468662776
+      },
+      {
+        "label": "w180_last_gap_qlast",
+        "n": 7882,
+        "date_hit7": 0.44037046434914995,
+        "qty_hit2": 0.9686627759451916,
+        "date_mae": 15.80918548591728
+      },
+      {
+        "label": "w180_last_gap_qmedian_last3",
+        "n": 7882,
+        "date_hit7": 0.44037046434914995,
+        "qty_hit2": 0.9717076884039584,
+        "date_mae": 15.80918548591728
+      },
+      {
+        "label": "w180_recent3_gap_qlast",
+        "n": 7882,
+        "date_hit7": 0.46536412078152756,
+        "qty_hit2": 0.9686627759451916,
+        "date_mae": 13.501141842172037
+      },
+      {
+        "label": "w180_recent3_gap_qmedian_last3",
+        "n": 7882,
+        "date_hit7": 0.46536412078152756,
+        "qty_hit2": 0.9717076884039584,
+        "date_mae": 13.501141842172037
+      },
+      {
+        "label": "w180_abs_d2_200_qlast",
+        "n": 7882,
+        "date_hit7": 0.47665567114945445,
+        "qty_hit2": 0.9686627759451916,
+        "date_mae": 10.069652372494291
+      },
+      {
+        "label": "w180_abs_d2_200_qmedian_last3",
+        "n": 7882,
+        "date_hit7": 0.47665567114945445,
+        "qty_hit2": 0.9717076884039584,
+        "date_mae": 10.069652372494291
+      },
+      {
+        "label": "w180_abs_d4_200_qlast",
+        "n": 7882,
+        "date_hit7": 0.47589444303476275,
+        "qty_hit2": 0.9686627759451916,
+        "date_mae": 10.096422227860948
+      },
+      {
+        "label": "w180_abs_d4_200_qmedian_last3",
+        "n": 7882,
+        "date_hit7": 0.47589444303476275,
+        "qty_hit2": 0.9717076884039584,
+        "date_mae": 10.096422227860948
+      },
+      {
+        "label": "w180_abs_d3_500_qlast",
+        "n": 7882,
+        "date_hit7": 0.4739913727480335,
+        "qty_hit2": 0.9686627759451916,
+        "date_mae": 10.152118751585892
+      },
+      {
+        "label": "w180_abs_d3_500_qmedian_last3",
+        "n": 7882,
+        "date_hit7": 0.4739913727480335,
+        "qty_hit2": 0.9717076884039584,
+        "date_mae": 10.152118751585892
+      },
+      {
+        "label": "w180_log_d3_300_qlast",
+        "n": 7882,
+        "date_hit7": 0.48705912205024104,
+        "qty_hit2": 0.9686627759451916,
+        "date_mae": 10.206673433138798
+      },
+      {
+        "label": "w180_log_d3_300_qmedian_last3",
+        "n": 7882,
+        "date_hit7": 0.48705912205024104,
+        "qty_hit2": 0.9717076884039584,
+        "date_mae": 10.206673433138798
+      },
+      {
+        "label": "w180_personal_hybrid_qlast",
+        "n": 7882,
+        "date_hit7": 0.46308043643745245,
+        "qty_hit2": 0.9686627759451916,
+        "date_mae": 11.567749302207561
+      },
+      {
+        "label": "w180_personal_hybrid_qmedian_last3",
+        "n": 7882,
+        "date_hit7": 0.46308043643745245,
+        "qty_hit2": 0.9717076884039584,
+        "date_mae": 11.567749302207561
+      },
+      {
+        "label": "w90_pair_median_qlast",
+        "n": 7882,
+        "date_hit7": 0.4841410809439229,
+        "qty_hit2": 0.9686627759451916,
+        "date_mae": 12.612661760974373
+      },
+      {
+        "label": "w90_pair_median_qmedian_last3",
+        "n": 7882,
+        "date_hit7": 0.4841410809439229,
+        "qty_hit2": 0.9717076884039584,
+        "date_mae": 12.612661760974373
+      },
+      {
+        "label": "w90_last_gap_qlast",
+        "n": 7882,
+        "date_hit7": 0.44328850545546816,
+        "qty_hit2": 0.9686627759451916,
+        "date_mae": 15.780512560263892
+      },
+      {
+        "label": "w90_last_gap_qmedian_last3",
+        "n": 7882,
+        "date_hit7": 0.44328850545546816,
+        "qty_hit2": 0.9717076884039584,
+        "date_mae": 15.780512560263892
+      },
+      {
+        "label": "w90_recent3_gap_qlast",
+        "n": 7882,
+        "date_hit7": 0.4682821618878457,
+        "qty_hit2": 0.9686627759451916,
+        "date_mae": 13.47246891651865
+      },
+      {
+        "label": "w90_recent3_gap_qmedian_last3",
+        "n": 7882,
+        "date_hit7": 0.4682821618878457,
+        "qty_hit2": 0.9717076884039584,
+        "date_mae": 13.47246891651865
+      },
+      {
+        "label": "w90_abs_d2_200_qlast",
+        "n": 7882,
+        "date_hit7": 0.48122303983760467,
+        "qty_hit2": 0.9686627759451916,
+        "date_mae": 10.160365389495052
+      },
+      {
+        "label": "w90_abs_d2_200_qmedian_last3",
+        "n": 7882,
+        "date_hit7": 0.48122303983760467,
+        "qty_hit2": 0.9717076884039584,
+        "date_mae": 10.160365389495052
+      },
+      {
+        "label": "w90_abs_d4_200_qlast",
+        "n": 7882,
+        "date_hit7": 0.47830499873128646,
+        "qty_hit2": 0.9686627759451916,
+        "date_mae": 10.226972849530576
+      },
+      {
+        "label": "w90_abs_d4_200_qmedian_last3",
+        "n": 7882,
+        "date_hit7": 0.47830499873128646,
+        "qty_hit2": 0.9717076884039584,
+        "date_mae": 10.226972849530576
+      },
+      {
+        "label": "w90_abs_d3_500_qlast",
+        "n": 7882,
+        "date_hit7": 0.47665567114945445,
+        "qty_hit2": 0.9686627759451916,
+        "date_mae": 10.2661760974372
+      },
+      {
+        "label": "w90_abs_d3_500_qmedian_last3",
+        "n": 7882,
+        "date_hit7": 0.47665567114945445,
+        "qty_hit2": 0.9717076884039584,
+        "date_mae": 10.2661760974372
+      },
+      {
+        "label": "w90_log_d3_300_qlast",
+        "n": 7882,
+        "date_hit7": 0.4895965490992134,
+        "qty_hit2": 0.9686627759451916,
+        "date_mae": 10.315655924892159
+      },
+      {
+        "label": "w90_log_d3_300_qmedian_last3",
+        "n": 7882,
+        "date_hit7": 0.4895965490992134,
+        "qty_hit2": 0.9717076884039584,
+        "date_mae": 10.315655924892159
+      },
+      {
+        "label": "w90_personal_hybrid_qlast",
+        "n": 7882,
+        "date_hit7": 0.46714031971580816,
+        "qty_hit2": 0.9686627759451916,
+        "date_mae": 11.62027404212129
+      },
+      {
+        "label": "w90_personal_hybrid_qmedian_last3",
+        "n": 7882,
+        "date_hit7": 0.46714031971580816,
+        "qty_hit2": 0.9717076884039584,
+        "date_mae": 11.62027404212129
+      },
+      {
+        "label": "tabpfn_v2_1000",
+        "n": 7882,
+        "date_hit7": 0.47957371225577267,
+        "qty_hit2": 0.9717076884039584,
+        "date_mae": 10.128774422735347
+      },
+      {
+        "label": "xgboost_matched_1000",
+        "n": 7882,
+        "date_hit7": 0.4731032732808932,
+        "qty_hit2": 0.9717076884039584,
+        "date_mae": 10.372240548084243
+      }
+    ],
+    "mature90_all": [
+      {
+        "label": "270일 · 전체 모델",
+        "n": 7551,
+        "date_hit7": 0.4080254270957489,
+        "qty_hit2": 0.9769566944775526,
+        "date_mae": 13.774864256389883
+      },
+      {
+        "label": "270일 · 고객군별 모델",
+        "n": 7551,
+        "date_hit7": 0.40153622036816317,
+        "qty_hit2": 0.9751026354125282,
+        "date_mae": 13.914315984637796
+      },
+      {
+        "label": "전체 이력 · 전체 모델",
+        "n": 7551,
+        "date_hit7": 0.4106740829029268,
+        "qty_hit2": 0.9785458879618594,
+        "date_mae": 13.695404582174547
+      },
+      {
+        "label": "전체 이력 · 고객군별 모델",
+        "n": 7551,
+        "date_hit7": 0.40842272546682556,
+        "qty_hit2": 0.9756323665739637,
+        "date_mae": 13.805588663753145
+      },
+      {
+        "label": "2회 이상만 학습",
+        "n": 7551,
+        "date_hit7": 0.38630644947689047,
+        "qty_hit2": 0.9769566944775526,
+        "date_mae": 14.894848364455038
+      },
+      {
+        "label": "4회 이상만 학습",
+        "n": 7551,
+        "date_hit7": 0.4122632763872335,
+        "qty_hit2": 0.9769566944775526,
+        "date_mae": 14.334790094027282
+      },
+      {
+        "label": "개인 품목 주기 중앙값",
+        "n": 7551,
+        "date_hit7": 0.4117335452257979,
+        "qty_hit2": 0.9720566812342736,
+        "date_mae": 16.04568931267382
+      }
+    ],
+    "mature90_history2": [
+      {
+        "label": "XGBoost · 전체 학습 사례",
+        "n": 5926,
+        "date_hit7": 0.4627067161660479,
+        "qty_hit2": 0.9814377320283496,
+        "date_mae": 12.520924738440769
+      },
+      {
+        "label": "XGBoost · 2회 이상 학습",
+        "n": 5926,
+        "date_hit7": 0.4578130273371583,
+        "qty_hit2": 0.979750253121836,
+        "date_mae": 12.474687816402295
+      },
+      {
+        "label": "XGBoost · 4회 이상 학습",
+        "n": 5926,
+        "date_hit7": 0.4760377995275059,
+        "qty_hit2": 0.979750253121836,
+        "date_mae": 12.542355720553493
+      },
+      {
+        "label": "개인 품목 주기 중앙값",
+        "n": 5926,
+        "date_hit7": 0.46405669929125887,
+        "qty_hit2": 0.9741815727303409,
+        "date_mae": 15.515693553830577
+      },
+      {
+        "label": "XGBoost · 같은 1,000건",
+        "n": 5926,
+        "date_hit7": 0.4368882888963888,
+        "qty_hit2": 0.9775565305433682,
+        "date_mae": 12.960175497806278
+      },
+      {
+        "label": "TabPFN v2 · 1,000건",
+        "n": 5926,
+        "date_hit7": 0.46355045561930475,
+        "qty_hit2": 0.9767127910901113,
+        "date_mae": 12.61474856564293
+      }
+    ],
+    "mature90_history4": [
+      {
+        "label": "XGBoost · 전체 학습 사례",
+        "n": 4364,
+        "date_hit7": 0.5148945921173236,
+        "qty_hit2": 0.9821264894592118,
+        "date_mae": 11.280247479376719
+      },
+      {
+        "label": "XGBoost · 2회 이상 학습",
+        "n": 4364,
+        "date_hit7": 0.5107699358386801,
+        "qty_hit2": 0.9807516040329972,
+        "date_mae": 11.21929422548121
+      },
+      {
+        "label": "XGBoost · 4회 이상 학습",
+        "n": 4364,
+        "date_hit7": 0.5151237396883593,
+        "qty_hit2": 0.9802933088909258,
+        "date_mae": 11.246104491292392
+      },
+      {
+        "label": "개인 품목 주기 중앙값",
+        "n": 4364,
+        "date_hit7": 0.5139780018331805,
+        "qty_hit2": 0.974564619615032,
+        "date_mae": 12.006186984417965
+      },
+      {
+        "label": "XGBoost · 같은 1,000건",
+        "n": 4364,
+        "date_hit7": 0.4901466544454629,
+        "qty_hit2": 0.9775435380384968,
+        "date_mae": 11.634509624197984
+      },
+      {
+        "label": "TabPFN v2 · 1,000건",
+        "n": 4364,
+        "date_hit7": 0.5192483959670028,
+        "qty_hit2": 0.9759395050412466,
+        "date_mae": 11.32813932172319
+      }
+    ],
+    "mature90_history6": [
+      {
+        "label": "XGBoost · 전체 학습 사례",
+        "n": 3542,
+        "date_hit7": 0.5367024280067758,
+        "qty_hit2": 0.9802371541501976,
+        "date_mae": 10.767363071710898
+      },
+      {
+        "label": "XGBoost · 2회 이상 학습",
+        "n": 3542,
+        "date_hit7": 0.5355731225296443,
+        "qty_hit2": 0.9788255223037832,
+        "date_mae": 10.714285714285714
+      },
+      {
+        "label": "XGBoost · 4회 이상 학습",
+        "n": 3542,
+        "date_hit7": 0.5398080180688877,
+        "qty_hit2": 0.9779785431959345,
+        "date_mae": 10.738565782044043
+      },
+      {
+        "label": "개인 품목 주기 중앙값",
+        "n": 3542,
+        "date_hit7": 0.538961038961039,
+        "qty_hit2": 0.9731789949181253,
+        "date_mae": 11.006211180124224
+      },
+      {
+        "label": "XGBoost · 같은 1,000건",
+        "n": 3542,
+        "date_hit7": 0.510446075663467,
+        "qty_hit2": 0.9751552795031055,
+        "date_mae": 11.104743083003953
+      },
+      {
+        "label": "TabPFN v2 · 1,000건",
+        "n": 3542,
+        "date_hit7": 0.5434782608695652,
+        "qty_hit2": 0.974025974025974,
+        "date_mae": 10.79672501411632
+      }
+    ],
+    "mature90_regular": [
+      {
+        "label": "90일 기준 · 전체 이력 학습",
+        "n": 2732,
+        "date_hit7": 0.5523426061493412,
+        "qty_hit2": 0.982796486090776,
+        "date_mae": 10.463396778916545
+      },
+      {
+        "label": "90일 기준 · 규칙적 이력 학습",
+        "n": 2732,
+        "date_hit7": 0.5585651537335286,
+        "qty_hit2": 0.9795021961932651,
+        "date_mae": 10.389824304538799
+      }
+    ]
+  },
+  "survival_candidates": [
+    {
+      "label": "w180_km",
+      "brier": 0.08452469156328107,
+      "brier60": 0.24791130056135957
+    },
+    {
+      "label": "w180_normal_s1_d2",
+      "brier": 0.07798280735436465,
+      "brier60": 0.1550007424026402
+    },
+    {
+      "label": "w180_normal_s1_d4",
+      "brier": 0.07803792708073647,
+      "brier60": 0.15613288329127473
+    },
+    {
+      "label": "w180_normal_s05_d2",
+      "brier": 0.08401215880855639,
+      "brier60": 0.20053718085032146
+    },
+    {
+      "label": "w180_logistic_s1_d2",
+      "brier": 0.078962215578965,
+      "brier60": 0.1606573043434042
+    },
+    {
+      "label": "w180_logistic_s1_d4",
+      "brier": 0.07907125507493329,
+      "brier60": 0.16347341396604534
+    },
+    {
+      "label": "w180_logistic_s05_d2",
+      "brier": 0.08310927984358815,
+      "brier60": 0.17741263930917825
+    },
+    {
+      "label": "w90_km",
+      "brier": 0.08474351901008104,
+      "brier60": 0.25165077831763905
+    },
+    {
+      "label": "w90_normal_s1_d2",
+      "brier": 0.07780840716514328,
+      "brier60": 0.15370410605395582
+    },
+    {
+      "label": "w90_normal_s1_d4",
+      "brier": 0.07798186264307586,
+      "brier60": 0.15777371924547318
+    },
+    {
+      "label": "w90_normal_s05_d2",
+      "brier": 0.0849496001878283,
+      "brier60": 0.20204532732657857
+    },
+    {
+      "label": "w90_logistic_s1_d2",
+      "brier": 0.07890314772366591,
+      "brier60": 0.16134981214082633
+    },
+    {
+      "label": "w90_logistic_s1_d4",
+      "brier": 0.07871231655297996,
+      "brier60": 0.1628354015182333
+    },
+    {
+      "label": "w90_logistic_s05_d2",
+      "brier": 0.0814625274575234,
+      "brier60": 0.16779836024857572
+    }
+  ],
+  "synthetic_models": [
+    "short_original",
+    "global_90d",
+    "customer_group_90d"
+  ],
+  "report_hashes": {
+    "timing-experiment-v2": "8fe8eec372d11e8f8a930ea17dbc8d479ecbd5029dde612688ee27b48ee0dc9b",
+    "survival-experiment-v1": "163992c62b14028414482f192cc63f03e5613bb7b931065d4b4f6ec0fcddee21",
+    "tabpfn-experiment-v1": "3bbb1eedafd44bb3591eb0a76f40f1a68f58415397abbf46e0fdbd6f47a5fdba",
+    "cadence-groups-v1": "90223dc6192d6363e846048519ed23948b0594101445a6a08e8c6b3e5891998e",
+    "cadence-groups-full-v1": "5d01fcddf43097b5a4205a7b328de76f4b8e611d9c297d97307ab703892862ee",
+    "repeat-history-v1": "0dbcaea5b5cc2ffc951c55872bb40e42c8812795b1ada53081e1d46a270011e1",
+    "tabpfn-repeat-v1": "77a04676703d2889d61d26d7c591fbd751699ed72fc21ee96fc798a4417d2ffe"
+  },
+  "dashboard_sha256": "3c2a629c411b321b01c2511fdb0f09789ae2dbeb75d6abcae7fe810eca7a04d3"
+}

@@ -1,0 +1,12 @@
+{
+  "version": "regular-history-v1",
+  "source_protocol": "config/cadence-groups-full-v1.json",
+  "history_unit": "customer_product",
+  "minimum_past_gaps": 3,
+  "recent_gap_count": 5,
+  "maximum_gap_cv": 0.5,
+  "exact_purchase_buckets": ["1", "2", "3", "4", "5", "6+"],
+  "primary_evaluation": "regular_at_prediction_time",
+  "independent_final_test": false,
+  "operational_approval": false
+}

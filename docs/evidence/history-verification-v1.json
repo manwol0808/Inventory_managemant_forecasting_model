@@ -1,0 +1,8 @@
+{
+  "raw_rows_reconciled": 138427,
+  "all_raw_cells_preserved_with_explicit_UTC_normalization": true,
+  "final_test_rows_independently_verified": 786,
+  "saved_model_reload_equal": true,
+  "metrics_independently_recomputed": true,
+  "unit_tests_passed": 46
+}

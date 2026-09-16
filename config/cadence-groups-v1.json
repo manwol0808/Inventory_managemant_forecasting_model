@@ -1,0 +1,28 @@
+{
+  "version": "cadence-groups-v1",
+  "reference_protocol": "config/timing-experiment-v2.json",
+  "grouping_unit": "customer_unique_completed_purchase_days_across_products",
+  "prediction_unit": "customer_product",
+  "horizon_days": 90,
+  "training_window_days": 270,
+  "folds": [
+    {"id":"apr2026","train_end":"2026-03-31","origin_start":"2026-04-01","origin_end":"2026-04-30"},
+    {"id":"may2026","train_end":"2026-04-30","origin_start":"2026-05-01","origin_end":"2026-05-31"},
+    {"id":"jun2026","train_end":"2026-05-31","origin_start":"2026-06-01","origin_end":"2026-06-16"}
+  ],
+  "minimum_past_gaps": 3,
+  "recent_gap_count": 5,
+  "irregular_cv_above": 0.75,
+  "cadence_upper_bounds_days": [14, 30, 60],
+  "minimum_specialist_training_rows": 300,
+  "specialist_objective": "reg:absoluteerror",
+  "specialist_depth": 4,
+  "specialist_rounds": 200,
+  "synthetic_seed": 20260916,
+  "synthetic_customers_per_scenario": 200,
+  "synthetic_scenarios": ["weekly", "fortnightly", "monthly", "every45days", "every75days", "irregular", "sudden_speedup", "quantity_spike", "first_purchase", "no_return_60d", "weekly_shop_monthly_item"],
+  "primary_metric": "customer_macro_date_mae",
+  "quantity_rule_real_comparison": "separate_quantity_xgboost_same_training_population_and_parameters",
+  "operational_approval": false,
+  "independent_final_test": false
+}

@@ -1,0 +1,102 @@
+{
+  "version": "purchase-events-v4",
+  "policy_version": "purchase-policy-v4",
+  "source": "data/purchase-policy-v4/rows.csv",
+  "source_sha256": "afc69725f8e961b5faa060f213e7e24e66107e7b9e772f92d76d87dce1e160f5",
+  "raw_source_sha256": "47aee8fdcfdb0ebb8c4ccc5dfbd080f5d047bf5ff3379b016ea9f557e4c82c29",
+  "policy_report_sha256": "b153fcd76bba13af7e7027c90b550d841fcd535a48bd0168f4d66a0cf3763644",
+  "source_rows": 42511,
+  "linked_rows": 42511,
+  "customer_product_series": 19759,
+  "daily_event_rows": 34243,
+  "event_states": {
+    "cancelled_only": 720,
+    "completed": 29473,
+    "excluded_only": 3134,
+    "held": 916
+  },
+  "label_states": {
+    "blocked_by_hold": 503,
+    "observed": 12920,
+    "right_censored": 16050
+  },
+  "row_dispositions": {
+    "exclude_cancelled": 1055,
+    "exclude_gift": 329,
+    "exclude_internal_test": 11,
+    "exclude_prepaid_credit": 594,
+    "exclude_sample": 9217,
+    "hold_in_progress_linked": 899,
+    "hold_partial_cancel_linked": 22,
+    "hold_return_exchange_linked": 56,
+    "include_completed": 30328
+  },
+  "raw_quantity_by_disposition": {
+    "exclude_cancelled": 1502,
+    "exclude_gift": 329,
+    "exclude_internal_test": 11,
+    "exclude_prepaid_credit": 1179,
+    "exclude_sample": 9345,
+    "hold_in_progress_linked": 1508,
+    "hold_partial_cancel_linked": 36,
+    "hold_return_exchange_linked": 74,
+    "include_completed": 46411
+  },
+  "included_quantity": 46411,
+  "observed_pair_series": 4765,
+  "single_completed_event_series": 11782,
+  "first_ordered_on": "2026-04-09",
+  "last_ordered_on": "2026-09-15",
+  "last_day_completeness_verified": false,
+  "historical_availability_verified": false,
+  "training_ready": false,
+  "reconciliation_passed": true,
+  "files": {
+    "daily-events.csv": "b1a5b54262fe165583a59968311f0f26b99e27ca906af1a4605b2dc2c1533b73",
+    "next-purchase-labels.csv": "8cb5c161f7837281e5d546029a3f8ed874e8b4468c2352a0f2a29bee5be33004",
+    "observed-pairs.csv": "a7c0b70d5f2919e6b474bb9a99e92ca1956864b21575c4612f408d3e5b43ccb1",
+    "source-links.csv": "d051f2884f63d3b5b7fb0e0e05e450456a410d251ebb2483357a86ea3965ffca"
+  },
+  "scope": "Retrospective snapshot events/labels only; held days break sequences; cancelled-only/excluded-only days are audit records, not purchase events or model features. No features, splits, or training.",
+  "product_exclusions": {
+    "version": "product-exclusions-v2",
+    "confirmed_on": "2026-09-16",
+    "basis": "User asked to continue sample/explicit-gift exclusion after confirming prepaid credit and test account rules. Exact product codes from reviewed names; no broad name regex at application time. Normal products sharing an order/customer stay included.",
+    "products": {
+      "108": "exclude_sample",
+      "235": "exclude_prepaid_credit",
+      "236": "exclude_prepaid_credit",
+      "276": "exclude_sample",
+      "280": "exclude_sample",
+      "327": "exclude_prepaid_credit",
+      "333": "exclude_sample",
+      "365": "exclude_sample",
+      "477": "exclude_sample",
+      "664": "exclude_sample",
+      "808": "exclude_sample",
+      "1098": "exclude_sample",
+      "1108": "exclude_sample",
+      "1318": "exclude_sample",
+      "1346": "exclude_sample",
+      "1505": "exclude_sample",
+      "1528": "exclude_sample",
+      "1545": "exclude_gift",
+      "1603": "exclude_sample",
+      "1644": "exclude_prepaid_credit",
+      "1645": "exclude_prepaid_credit",
+      "1646": "exclude_prepaid_credit",
+      "1667": "exclude_gift"
+    }
+  },
+  "product_exclusions_sha256": "7012f4d173e74520f2b2ad175276fd386586dbc6941d98ef83e38fe273b64138",
+  "customer_exclusions_sha256": "8783cb3fe67a3ab2920105d9ee574d97df7cbf936270089db67f48580d5c839e",
+  "customer_exclusion_count": 1,
+  "verification": {
+    "all_raw_fields_preserved": true,
+    "nonexcluded_events_and_labels_identical_to_v1": true,
+    "excluded_labels_absent": true,
+    "source_quantity_reconciled": true,
+    "fresh_rebuild_csv_hashes_identical": true,
+    "tests_passed": 20
+  }
+}

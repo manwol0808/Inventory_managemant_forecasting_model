@@ -1,0 +1,15 @@
+{
+  "source": "data/order-items-v2.csv",
+  "source_sha256": "47aee8fdcfdb0ebb8c4ccc5dfbd080f5d047bf5ff3379b016ea9f557e4c82c29",
+  "output": "data/order-items-status-v1.csv",
+  "output_sha256": "464528955477286249f513b65024ba6dce37028c2af444efe5864d578dd26c77",
+  "rows_preserved": 42511,
+  "decisions": {
+    "candidate_completed": 39906,
+    "exclude_cancelled": 1523,
+    "review_in_progress": 1029,
+    "review_return_exchange": 53
+  },
+  "training_ready": false,
+  "rule": "Only cancellation exclusion approved; completed rows are candidates, other statuses pending. No quantities aggregated."
+}

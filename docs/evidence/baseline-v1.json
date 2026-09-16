@@ -1,0 +1,211 @@
+{
+  "version": "baseline-result-v1",
+  "config": {
+    "version": "baseline-v1",
+    "mode": "retrospective_exploration",
+    "quantity_rule": "last_quantity",
+    "gap_rule": "pair_median_then_frozen_product_then_global",
+    "product_min_intervals": 5,
+    "gap_rounding": "half_up_minimum_one",
+    "primary_metric": "quantity_rmse",
+    "descriptive_date_tolerance_days": 7,
+    "history_groups": [
+      "1",
+      "2",
+      "3-5",
+      "6+"
+    ],
+    "guardrail_status": "unassessed",
+    "final_test_locked": true
+  },
+  "split_config": {
+    "version": "time-split-v1",
+    "mode": "retrospective_exploration",
+    "timezone": "Asia/Seoul",
+    "start": "2026-04-09",
+    "train_end": "2026-07-13",
+    "validation_end": "2026-08-14",
+    "test_end": "2026-09-15",
+    "train_core_end": "2026-06-23",
+    "split_anchor": "origin_purchase_day",
+    "prediction_asof": "next_local_midnight_after_origin_purchase_day",
+    "target": "next_same_customer_product_purchase_day_quantity_and_gap_from_origin_day",
+    "historical_availability_verified": false,
+    "last_day_completeness_verified": false,
+    "final_test_locked": true
+  },
+  "input_report_sha256": "2f966727fda8c830e52df0f6494e308910cbdb314ed55e64561513d9cf0568d7",
+  "config_sha256": "6798872b0acc41d77b80cb397010aa0acb8f267177ce9bf28fe85f0535f55a96",
+  "code_sha256": "24d6e52debe130fcc83d8072c88c0b9c161e9e3f08a6cbfeba394a16bf376a8d",
+  "inputs_read": {
+    "report.json": "2f966727fda8c830e52df0f6494e308910cbdb314ed55e64561513d9cf0568d7",
+    "train_pool.csv": "2719f53674f659bde3a247ec78ede7f1fb4d6925e6baf54ddd9ee41350600983",
+    "validation.csv": "69326f2420e8aea0fa2d67ca5801481860af1d3f9c78f509102b1e4f3179b1de"
+  },
+  "fit_rows": 6579,
+  "metrics": {
+    "n": 1196,
+    "status": "exploratory",
+    "quantity_rmse": 1.7664657760037816,
+    "quantity_mae": 0.6287625418060201,
+    "quantity_wape": 0.3315696649029982,
+    "actual_quantity_sum": 2268.0,
+    "predicted_quantity_sum": 2136.0,
+    "quantity_bias_mean": -0.11036789297658862,
+    "quantity_exact_rate": 0.6312709030100334,
+    "quantity_under_rate": 0.22157190635451504,
+    "quantity_over_rate": 0.14715719063545152,
+    "date_mae_days": 8.442307692307692,
+    "date_bias_days": 5.95066889632107,
+    "date_within_tolerance_rate": 0.6354515050167224
+  },
+  "history_groups": {
+    "1": {
+      "n": 176,
+      "status": "exploratory",
+      "quantity_rmse": 1.5539539012701526,
+      "quantity_mae": 0.5511363636363636,
+      "quantity_wape": 0.3464285714285714,
+      "actual_quantity_sum": 280.0,
+      "predicted_quantity_sum": 237.0,
+      "quantity_bias_mean": -0.24431818181818182,
+      "quantity_exact_rate": 0.6704545454545454,
+      "quantity_under_rate": 0.26136363636363635,
+      "quantity_over_rate": 0.06818181818181818,
+      "date_mae_days": 7.926136363636363,
+      "date_bias_days": 5.6647727272727275,
+      "date_within_tolerance_rate": 0.48295454545454547
+    },
+    "2": {
+      "n": 117,
+      "status": "exploratory",
+      "quantity_rmse": 1.524724999724975,
+      "quantity_mae": 0.6495726495726496,
+      "quantity_wape": 0.35023041474654376,
+      "actual_quantity_sum": 217.0,
+      "predicted_quantity_sum": 187.0,
+      "quantity_bias_mean": -0.2564102564102564,
+      "quantity_exact_rate": 0.5897435897435898,
+      "quantity_under_rate": 0.26495726495726496,
+      "quantity_over_rate": 0.1452991452991453,
+      "date_mae_days": 22.358974358974358,
+      "date_bias_days": 19.641025641025642,
+      "date_within_tolerance_rate": 0.4017094017094017
+    },
+    "3-5": {
+      "n": 405,
+      "status": "exploratory",
+      "quantity_rmse": 2.1959558789334137,
+      "quantity_mae": 0.6345679012345679,
+      "quantity_wape": 0.31076178960096734,
+      "actual_quantity_sum": 827.0,
+      "predicted_quantity_sum": 776.0,
+      "quantity_bias_mean": -0.1259259259259259,
+      "quantity_exact_rate": 0.6320987654320988,
+      "quantity_under_rate": 0.2222222222222222,
+      "quantity_over_rate": 0.145679012345679,
+      "date_mae_days": 10.11604938271605,
+      "date_bias_days": 8.071604938271605,
+      "date_within_tolerance_rate": 0.508641975308642
+    },
+    "6+": {
+      "n": 498,
+      "status": "exploratory",
+      "quantity_rmse": 1.4740050078111027,
+      "quantity_mae": 0.6465863453815262,
+      "quantity_wape": 0.3411016949152542,
+      "actual_quantity_sum": 944.0,
+      "predicted_quantity_sum": 936.0,
+      "quantity_bias_mean": -0.01606425702811245,
+      "quantity_exact_rate": 0.6265060240963856,
+      "quantity_under_rate": 0.19678714859437751,
+      "quantity_over_rate": 0.17670682730923695,
+      "date_mae_days": 3.9939759036144578,
+      "date_bias_days": 1.1104417670682731,
+      "date_within_tolerance_rate": 0.8473895582329317
+    }
+  },
+  "gap_sources": {
+    "pair": {
+      "n": 1020,
+      "status": "exploratory",
+      "quantity_rmse": 1.8005990288637552,
+      "quantity_mae": 0.6421568627450981,
+      "quantity_wape": 0.32947686116700203,
+      "actual_quantity_sum": 1988.0,
+      "predicted_quantity_sum": 1899.0,
+      "quantity_bias_mean": -0.08725490196078431,
+      "quantity_exact_rate": 0.6245098039215686,
+      "quantity_under_rate": 0.21470588235294116,
+      "quantity_over_rate": 0.1607843137254902,
+      "date_mae_days": 8.531372549019608,
+      "date_bias_days": 6.0,
+      "date_within_tolerance_rate": 0.6617647058823529
+    },
+    "product": {
+      "n": 127,
+      "status": "exploratory",
+      "quantity_rmse": 1.645801147563956,
+      "quantity_mae": 0.5669291338582677,
+      "quantity_wape": 0.36180904522613067,
+      "actual_quantity_sum": 199.0,
+      "predicted_quantity_sum": 171.0,
+      "quantity_bias_mean": -0.2204724409448819,
+      "quantity_exact_rate": 0.6614173228346457,
+      "quantity_under_rate": 0.2755905511811024,
+      "quantity_over_rate": 0.06299212598425197,
+      "date_mae_days": 7.968503937007874,
+      "date_bias_days": 5.858267716535433,
+      "date_within_tolerance_rate": 0.4881889763779528
+    },
+    "global": {
+      "n": 49,
+      "status": "exploratory",
+      "quantity_rmse": 1.2857142857142858,
+      "quantity_mae": 0.5102040816326531,
+      "quantity_wape": 0.30864197530864196,
+      "actual_quantity_sum": 81.0,
+      "predicted_quantity_sum": 66.0,
+      "quantity_bias_mean": -0.30612244897959184,
+      "quantity_exact_rate": 0.6938775510204082,
+      "quantity_under_rate": 0.22448979591836735,
+      "quantity_over_rate": 0.08163265306122448,
+      "date_mae_days": 7.816326530612245,
+      "date_bias_days": 5.163265306122449,
+      "date_within_tolerance_rate": 0.46938775510204084
+    }
+  },
+  "coverage": {
+    "validation_origins": 5633,
+    "outcomes": {
+      "right_censored": 2928,
+      "crosses_role_boundary": 1375,
+      "observed": 1196,
+      "blocked_by_hold": 134
+    },
+    "evaluated_rows": 1196,
+    "evaluated_fraction": 0.2123202556364282
+  },
+  "strict_training_ready": false,
+  "final_test_metrics_computed": false,
+  "guardrail_status": "unassessed",
+  "operational_approval": false,
+  "limitations": [
+    "Latest-state snapshot: historical availability is unverified.",
+    "Only returns observed by validation cutoff are scored; short-gap selection bias.",
+    "Post-purchase forecasts only, no no-purchase probability or daily rescheduling.",
+    "Timing tolerance is descriptive, not a business approval threshold."
+  ],
+  "files": {
+    "model.json": "7667d6b084f5661bd15afc5a652cf77d8d456e1ee8d7794e5086c4d1c73a8a5c",
+    "validation-predictions.csv": "e49311e26dc7f638fc1823e7b0c9700132e856ebf2c9a6a704a8696f1b01b53a"
+  },
+  "verification": {
+    "unit_tests_passed": 33,
+    "independently_reconciled_prediction_rows": 1196,
+    "grafana_health": "ok",
+    "grafana_browser_values_match": true,
+    "final_test_file_opened_by_runner": false,
+    "review": "fresh contract cold read; timestamp clarification applied"
+  }
+}

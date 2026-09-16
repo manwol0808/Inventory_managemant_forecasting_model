@@ -1,0 +1,25 @@
+{
+  "source": "data/order-items-v2.csv",
+  "source_sha256": "47aee8fdcfdb0ebb8c4ccc5dfbd080f5d047bf5ff3379b016ea9f557e4c82c29",
+  "source_rows": 42511,
+  "linked_rows": 42511,
+  "item_groups": 42474,
+  "group_decisions": {
+    "completed_group_candidate": 39875,
+    "excluded_cancelled_group": 1511,
+    "review_in_progress_linked": 1029,
+    "review_partial_cancel_linked": 8,
+    "review_return_exchange_linked": 51
+  },
+  "repeated_group_status_patterns": {
+    "CANCEL_COMPLETE | CANCEL_COMPLETE": 2,
+    "CANCEL_COMPLETE | PURCHASE_CONFIRMATION": 8,
+    "CANCEL_COMPLETE | RETURN_COMPLETE": 2,
+    "PURCHASE_CONFIRMATION | PURCHASE_CONFIRMATION": 18,
+    "PURCHASE_CONFIRMATION | RETURN_COMPLETE": 4,
+    "PURCHASE_CONFIRMATION | SHIPPING_COMPLETE": 1,
+    "RETURN_COMPLETE | RETURN_COMPLETE | RETURN_COMPLETE": 1
+  },
+  "training_ready": false,
+  "scope": "Snapshot links by order_id + order_item_code; state subtotals are audit values, not demand labels or event history."
+}

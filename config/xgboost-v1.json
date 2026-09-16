@@ -1,0 +1,31 @@
+{
+  "version": "xgboost-v1",
+  "mode": "retrospective_exploration",
+  "xgboost_version": "3.2.0",
+  "numpy_version": "2.4.3",
+  "params": {
+    "tree_method": "hist",
+    "device": "cpu",
+    "max_depth": 3,
+    "eta": 0.05,
+    "min_child_weight": 5,
+    "lambda": 1,
+    "alpha": 0,
+    "subsample": 1,
+    "colsample_bytree": 1,
+    "seed": 42,
+    "nthread": 4
+  },
+  "targets": {
+    "quantity": {"label": "target_quantity", "objective": "reg:squarederror", "eval_metric": "rmse"},
+    "gap": {"label": "target_gap_days", "objective": "reg:absoluteerror", "eval_metric": "mae"}
+  },
+  "max_rounds": 1000,
+  "early_stopping_rounds": 50,
+  "primary_metric": "quantity_rmse",
+  "quantity_prediction": "continuous_minimum_one",
+  "cart_quantity": "half_up_minimum_one",
+  "gap_prediction": "half_up_minimum_one",
+  "unseen_product": "native_missing_and_separate_group_report",
+  "final_test_locked": true
+}

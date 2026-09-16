@@ -1,0 +1,297 @@
+{
+  "uid": "forecasting-timing-models",
+  "title": "자동 장바구니 · 주기와 재구매 확률 비교",
+  "schemaVersion": 41,
+  "version": 1,
+  "refresh": "",
+  "timezone": "Asia/Seoul",
+  "time": {
+    "from": "2026-04-01T00:00:00+09:00",
+    "to": "2026-06-30T23:59:59+09:00"
+  },
+  "tags": [
+    "forecasting",
+    "development-backtest"
+  ],
+  "panels": [
+    {
+      "id": 1,
+      "type": "text",
+      "title": "후보 비교와 읽는 법",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 11
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "**모든 비교 실행 완료 · 과거 개발 비교 · 자동 장바구니 적용 전**\n\n출발 구매 2026년 4·5·6월, 각 구매 뒤 60일 관찰. 18,136건 중 재구매 7,882건, 60일 미구매 10,248건, 보류로 불명 6건. 아래 날짜·수량 점수는 재구매 7,882건에 한정합니다. 과거의 짧은 관찰 기간 MAE와 직접 비교하지 마세요.\n\n|후보|날짜 MAE|고객 평균 날짜 MAE|날짜 ±7일|수량 ±1개|수량 ±2개|\n|---|---:|---:|---:|---:|---:|\n|개인 주기·직전 수량|12.64일|15.79일|48.1%|90.2%|96.9%|\n|XGBoost · 전체 학습 사례|10.10일|11.68일|47.6%|90.9%|97.2%|\n|TabPFN v2 · 1,000 사례|10.13일|11.83일|48.0%|90.9%|97.2%|\n|XGBoost · 동일 1,000 사례|10.37일|12.22일|47.3%|90.9%|97.2%|\n\nTabPFN은 최신 3.5가 아닌 v2의 제한된 로컬 비교입니다. XGBoost 전체 사례 후보는 32구성 중 고객 평균 날짜 MAE로 선택했습니다. AI 후보의 수량은 모두 최근 3번 주문 수량의 중앙값 규칙이며 별도 수량 AI 점수가 아닙니다. MAE 개선이 ±7일 적중률 개선을 보장하지 않습니다. 최신 상태 스냅샷의 과거 가용성은 미검증이며 기존 최종 시험은 사용 완료했습니다."
+      }
+    },
+    {
+      "id": 2,
+      "type": "timeseries",
+      "title": "출발 구매월별 날짜 MAE",
+      "description": "각 점은 한 달의 평가 집계이며 학습 진행 곡선이 아닙니다.",
+      "gridPos": {
+        "x": 0,
+        "y": 11,
+        "w": 12,
+        "h": 9
+      },
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "forecasting-saved-results"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "forecasting-saved-results"
+          },
+          "scenarioId": "csv_content",
+          "csvContent": "Time,개인 주기·직전 수량,XGBoost · 전체 학습 사례,\"TabPFN v2 · 1,000 사례\",\"XGBoost · 동일 1,000 사례\"\r\n2026-04-01T00:00:00+09:00,12.498980285520055,9.967029231815092,9.94663494221618,10.265805574439158\r\n2026-05-01T00:00:00+09:00,13.289043336058871,10.541291905151267,10.556827473426,10.643090760425183\r\n2026-06-01T00:00:00+09:00,12.174017642341619,9.812750601443465,9.923817161186848,10.232157177225341\r\n",
+          "dropPercent": 0
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "suffix:일",
+          "decimals": 2,
+          "min": 0,
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "fillOpacity": 6,
+            "showPoints": "always",
+            "pointSize": 4,
+            "spanNulls": false,
+            "axisLabel": "일"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": []
+        }
+      }
+    },
+    {
+      "id": 3,
+      "type": "timeseries",
+      "title": "출발 구매월별 날짜 ±7일 비율",
+      "description": "각 점은 한 달의 평가 집계이며 학습 진행 곡선이 아닙니다.",
+      "gridPos": {
+        "x": 12,
+        "y": 11,
+        "w": 12,
+        "h": 9
+      },
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "forecasting-saved-results"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "forecasting-saved-results"
+          },
+          "scenarioId": "csv_content",
+          "csvContent": "Time,개인 주기·직전 수량,XGBoost · 전체 학습 사례,\"TabPFN v2 · 1,000 사례\",\"XGBoost · 동일 1,000 사례\"\r\n2026-04-01T00:00:00+09:00,0.48878314072059825,0.4847042828008158,0.47926580557443915,0.4816451393609789\r\n2026-05-01T00:00:00+09:00,0.4721995094031071,0.4501226492232216,0.47383483237939494,0.4668847097301717\r\n2026-06-01T00:00:00+09:00,0.48115477145148355,0.4907778668805132,0.48556535685645547,0.46912590216519645\r\n",
+          "dropPercent": 0
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "decimals": 2,
+          "min": 0,
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "fillOpacity": 6,
+            "showPoints": "always",
+            "pointSize": 4,
+            "spanNulls": false,
+            "axisLabel": "비율"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": []
+        }
+      }
+    },
+    {
+      "id": 4,
+      "type": "timeseries",
+      "title": "출발 구매월별 수량 ±1개 비율",
+      "description": "각 점은 한 달의 평가 집계이며 학습 진행 곡선이 아닙니다.",
+      "gridPos": {
+        "x": 0,
+        "y": 20,
+        "w": 12,
+        "h": 9
+      },
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "forecasting-saved-results"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "forecasting-saved-results"
+          },
+          "scenarioId": "csv_content",
+          "csvContent": "Time,개인 주기·직전 수량,XGBoost · 전체 학습 사례,\"TabPFN v2 · 1,000 사례\",\"XGBoost · 동일 1,000 사례\"\r\n2026-04-01T00:00:00+09:00,0.8902107409925221,0.8959891230455472,0.8959891230455472,0.8959891230455472\r\n2026-05-01T00:00:00+09:00,0.901471790678659,0.9063777596075225,0.9063777596075225,0.9063777596075225\r\n2026-06-01T00:00:00+09:00,0.9165998396150762,0.9270248596631917,0.9270248596631917,0.9270248596631917\r\n",
+          "dropPercent": 0
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "decimals": 2,
+          "min": 0,
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "fillOpacity": 6,
+            "showPoints": "always",
+            "pointSize": 4,
+            "spanNulls": false,
+            "axisLabel": "비율"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": []
+        }
+      }
+    },
+    {
+      "id": 5,
+      "type": "timeseries",
+      "title": "출발 구매월별 재구매 확률 Brier",
+      "description": "각 구매·고객을 차례로 평균합니다. 낮을수록 좋으며 날짜 MAE와 단위가 다릅니다.",
+      "gridPos": {
+        "x": 12,
+        "y": 20,
+        "w": 12,
+        "h": 9
+      },
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "forecasting-saved-results"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "forecasting-saved-results"
+          },
+          "scenarioId": "csv_content",
+          "csvContent": "Time,단순 확률 기준,생존분석\r\n2026-04-01T00:00:00+09:00,0.11668038361252284,0.10557068524430714\r\n2026-05-01T00:00:00+09:00,0.11310559428773775,0.09851432621715529\r\n2026-06-01T00:00:00+09:00,0.11578469657954202,0.10143102345019228\r\n",
+          "dropPercent": 0
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 4,
+          "min": 0,
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "fillOpacity": 6,
+            "showPoints": "always",
+            "pointSize": 4,
+            "spanNulls": false,
+            "axisLabel": "확률 오차"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": []
+        }
+      }
+    },
+    {
+      "id": 6,
+      "type": "text",
+      "title": "재구매 확률과 추천 문턱의 관계",
+      "gridPos": {
+        "x": 0,
+        "y": 29,
+        "w": 24,
+        "h": 10
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "**w90_normal_s1_d2 · 고객 평균 Brier 0.08474 → 0.07781**\n\n아직 재구매하지 않은 주간 시점에서 향후 7일 구매 확률을 평가합니다. 추천 기회 110,984건, 실제 구매 양성 7,711건입니다. 같은 출발 구매의 여러 주차가 포함되므로 아래 값은 실제 장바구니 중복을 제거한 성능이 아닙니다.\n\n|확률 문턱|추천 중 실제 구매 비율 (정밀도)|실제 구매 중 추천한 비율 (재현율)|전체 기회 중 추천 비율|\n|---|---:|---:|---:|\n|20%|34.7%|30.8%|6.2%|\n|35%|52.4%|8.6%|1.1%|\n|50%|59.7%|0.9%|0.1%|\n\n문턱을 높이면 정확한 추천의 비율은 높아지지만 구매를 많이 놓칩니다. 문턱은 진단값이며 운영 기준으로 확정하지 않았습니다. 생존분석의 무조건부 날짜 중앙값은 별도 목표이며 날짜 회귀 모델을 그대로 대체하지 않습니다."
+      }
+    }
+  ],
+  "description": "Verified saved trial aggregates; no customer records; verification=2b117deec74b90d898c5ef27513131ac05805a1fb3ebd38f1aeb3a381dfed21e",
+  "links": [
+    {
+      "title": "이전 최종 시험 (사용 완료)",
+      "type": "link",
+      "url": "/d/forecasting-final-test",
+      "keepTime": false
+    }
+  ]
+}

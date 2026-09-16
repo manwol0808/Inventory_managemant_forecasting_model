@@ -1,0 +1,138 @@
+{
+  "version": "features-splits-v1",
+  "mode": "retrospective_exploration",
+  "split_config": {
+    "version": "time-split-v1",
+    "mode": "retrospective_exploration",
+    "timezone": "Asia/Seoul",
+    "start": "2026-04-09",
+    "train_end": "2026-07-13",
+    "validation_end": "2026-08-14",
+    "test_end": "2026-09-15",
+    "train_core_end": "2026-06-23",
+    "split_anchor": "origin_purchase_day",
+    "prediction_asof": "next_local_midnight_after_origin_purchase_day",
+    "target": "next_same_customer_product_purchase_day_quantity_and_gap_from_origin_day",
+    "historical_availability_verified": false,
+    "last_day_completeness_verified": false,
+    "final_test_locked": true
+  },
+  "split_config_sha256": "c9955486bffa6ad6f07651df7a867adff88b60b54e460a430fa49ccc7c06739b",
+  "events_report_sha256": "81524f6a57c968039c48166eb88137be15d9ffedbe1e6dac0c19b5af78b16fd1",
+  "source_event_files": {
+    "daily-events.csv": "b1a5b54262fe165583a59968311f0f26b99e27ca906af1a4605b2dc2c1533b73",
+    "next-purchase-labels.csv": "8cb5c161f7837281e5d546029a3f8ed874e8b4468c2352a0f2a29bee5be33004"
+  },
+  "feature_columns": [
+    "product_id",
+    "origin_weekday",
+    "origin_month",
+    "episode_purchase_count",
+    "episode_age_days",
+    "qty_last",
+    "qty_mean",
+    "qty_mean_last3",
+    "qty_median_last3",
+    "qty_std_last3",
+    "qty_sum_7d",
+    "qty_sum_28d",
+    "gap_count",
+    "gap_last_days",
+    "gap_mean_days",
+    "gap_median_days",
+    "customer_purchase_days",
+    "customer_product_count",
+    "product_purchase_events",
+    "product_customer_count",
+    "product_mean_quantity"
+  ],
+  "numeric_features": [
+    "origin_weekday",
+    "origin_month",
+    "episode_purchase_count",
+    "episode_age_days",
+    "qty_last",
+    "qty_mean",
+    "qty_mean_last3",
+    "qty_median_last3",
+    "qty_std_last3",
+    "qty_sum_7d",
+    "qty_sum_28d",
+    "gap_count",
+    "gap_last_days",
+    "gap_mean_days",
+    "gap_median_days",
+    "customer_purchase_days",
+    "customer_product_count",
+    "product_purchase_events",
+    "product_customer_count",
+    "product_mean_quantity"
+  ],
+  "categorical_features": [
+    "product_id"
+  ],
+  "all_origins": 29473,
+  "calendar_days": {
+    "train": 96,
+    "validation": 32,
+    "test": 32
+  },
+  "origins_by_outer_split": {
+    "train": 18975,
+    "validation": 5633,
+    "test": 4865
+  },
+  "role_outcomes": {
+    "train_core": {
+      "observed": 4654,
+      "crosses_role_boundary": 3135,
+      "right_censored": 7483,
+      "blocked_by_hold": 45
+    },
+    "early_stop": {
+      "observed": 399,
+      "right_censored": 1813,
+      "crosses_role_boundary": 1414,
+      "blocked_by_hold": 32
+    },
+    "validation": {
+      "right_censored": 2928,
+      "crosses_role_boundary": 1375,
+      "observed": 1196,
+      "blocked_by_hold": 134
+    },
+    "final_test": {
+      "observed": 747,
+      "right_censored": 3826,
+      "blocked_by_hold": 292
+    }
+  },
+  "exploratory_file_rows": {
+    "train_core": 4654,
+    "early_stop": 399,
+    "validation": 1196,
+    "final_test": 747,
+    "train_pool": 6579
+  },
+  "feature_timestamp_available_origins": 0,
+  "timestamp_availability_pass_rows": 0,
+  "strict_training_ready_rows": 0,
+  "strict_training_ready": false,
+  "final_test_metrics_computed": false,
+  "note": "Calendar/order-time leakage checks do not repair retrospectively selected final states. All files are exploratory only. Fit using feature_columns allowlist, never target/metadata columns.",
+  "files": {
+    "all-origins-audit.csv": "1c1997cd3b3fdc0c66d81647366c7150a6120afbf11c4f11d40dce0ea6fbaee2",
+    "early_stop.csv": "a38e511864d89937cccc2dd9375ba38f35b46ed4067fc39eeadd38f398bec411",
+    "final_test.csv": "b49385ac9bbae804fab8860619869d6f9cf246d4474c8087f51b9cbe59e8d1be",
+    "train_core.csv": "53e1ebaabf6f4a4cc86fb07e66a9766c1502ce297278fecdedbb1cc22f69d6e4",
+    "train_pool.csv": "2719f53674f659bde3a247ec78ede7f1fb4d6925e6baf54ddd9ee41350600983",
+    "validation.csv": "69326f2420e8aea0fa2d67ca5801481860af1d3f9c78f509102b1e4f3179b1de"
+  },
+  "verification": {
+    "tests_passed": 27,
+    "all_pair_history_count_mean_last_values_independently_recomputed": true,
+    "all_eligible_label_boundaries_checked": true,
+    "future_append_feature_invariance_test_passed": true,
+    "no_model_or_test_metrics_computed": true
+  }
+}

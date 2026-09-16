@@ -1,0 +1,16 @@
+{
+  "checked_on": "2026-09-16",
+  "source": "manwol-core.manwol_core_mirror.public_imweb_orders",
+  "job_id": "job_XhkHy1Xu7Fe35bZL8O4wQ1oRql3K",
+  "scope": "b2s; latest version per order_no; member_code not null; all statuses; no order-date restriction",
+  "first_order_date": "2024-10-02",
+  "latest_order_date": "2026-09-16",
+  "observed_calendar_months": 24,
+  "orders": 55023,
+  "customers": 11290,
+  "item_rows": 138531,
+  "orders_before_2026_04_09": 39383,
+  "item_rows_before_2026_04_09": 95916,
+  "orders_last_12m_before_2026_09_16": 41442,
+  "limitations": "Live aggregate query only; older rows not downloaded or quality-audited. Includes partial current day. Historical completeness and label availability not established."
+}

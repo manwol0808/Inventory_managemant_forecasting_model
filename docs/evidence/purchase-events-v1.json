@@ -1,0 +1,54 @@
+{
+  "version": "purchase-events-v1",
+  "policy_version": "purchase-policy-v1",
+  "source": "data/purchase-policy-v1/rows.csv",
+  "source_sha256": "629eb07c3c386c06181515ef9715b35373950ea38b56457fbfa93a83cb6a28b7",
+  "raw_source_sha256": "47aee8fdcfdb0ebb8c4ccc5dfbd080f5d047bf5ff3379b016ea9f557e4c82c29",
+  "policy_report_sha256": "65022ff6bfbe41e149ddee5856ffcb2b828bc619a999154fb715bfeb96576ba6",
+  "source_rows": 42511,
+  "linked_rows": 42511,
+  "customer_product_series": 19759,
+  "daily_event_rows": 34243,
+  "event_states": {
+    "cancelled_only": 792,
+    "completed": 32492,
+    "held": 959
+  },
+  "label_states": {
+    "blocked_by_hold": 517,
+    "observed": 13587,
+    "right_censored": 18388
+  },
+  "row_dispositions": {
+    "exclude_cancelled": 1429,
+    "hold_in_progress_linked": 1029,
+    "hold_partial_cancel_linked": 172,
+    "hold_return_exchange_linked": 60,
+    "hold_same_day": 2,
+    "include_completed": 39819
+  },
+  "raw_quantity_by_disposition": {
+    "exclude_cancelled": 1888,
+    "hold_in_progress_linked": 1638,
+    "hold_partial_cancel_linked": 186,
+    "hold_return_exchange_linked": 82,
+    "hold_same_day": 2,
+    "include_completed": 56599
+  },
+  "included_quantity": 56599,
+  "observed_pair_series": 5018,
+  "single_completed_event_series": 13881,
+  "first_ordered_on": "2026-04-09",
+  "last_ordered_on": "2026-09-15",
+  "last_day_completeness_verified": false,
+  "historical_availability_verified": false,
+  "training_ready": false,
+  "reconciliation_passed": true,
+  "files": {
+    "daily-events.csv": "88b61f5f3fe55a39975ccaa2583b83c8ac87bc61f29eb5d752531739bce3ecd3",
+    "next-purchase-labels.csv": "cb39b0979d15def7e4a2e4b9511479146b3e2310b0b0ba25b19429da34dee699",
+    "observed-pairs.csv": "b24c1f1c4bdf1e20cb78035d6b18c37b43821d59dc472d4c3963f168abfd323a",
+    "source-links.csv": "7ece1672120211a48de307d7182e27ea0dc60919712e4789624691c986e76cfb"
+  },
+  "scope": "Retrospective snapshot events/labels only; held days break sequences; cancelled-only days are audit records, not purchase events. No features, splits, or training."
+}

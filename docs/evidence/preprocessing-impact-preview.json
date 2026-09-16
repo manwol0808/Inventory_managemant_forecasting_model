@@ -1,0 +1,308 @@
+{
+  "scope": "Simulation only: remove entire candidate product codes from recommendation history. Candidate codes identified by names; business semantics unconfirmed. No source or training outputs changed. Internal test exclusions NOT applied.",
+  "source_sha256": "47aee8fdcfdb0ebb8c4ccc5dfbd080f5d047bf5ff3379b016ea9f557e4c82c29",
+  "observed_pairs_sha256": "b24c1f1c4bdf1e20cb78035d6b18c37b43821d59dc472d4c3963f168abfd323a",
+  "observed_pairs_before": 13587,
+  "impact_by_candidate_group": {
+    "sample_name": {
+      "candidate_product_count": 15,
+      "raw_rows": 9217,
+      "completed_days": 2153,
+      "observed_pairs_removed": 113,
+      "observed_pairs_remaining": 13474,
+      "remaining_pair_series": 4924
+    },
+    "explicit_gift_name": {
+      "candidate_product_count": 2,
+      "raw_rows": 329,
+      "completed_days": 313,
+      "observed_pairs_removed": 173,
+      "observed_pairs_remaining": 13414,
+      "remaining_pair_series": 4955
+    },
+    "payment_proxy_name": {
+      "candidate_product_count": 6,
+      "raw_rows": 594,
+      "completed_days": 553,
+      "observed_pairs_removed": 381,
+      "observed_pairs_remaining": 13206,
+      "remaining_pair_series": 4922
+    },
+    "combined": {
+      "candidate_product_count": 23,
+      "raw_rows": 10140,
+      "completed_days": 3019,
+      "observed_pairs_removed": 667,
+      "observed_pairs_remaining": 12920,
+      "remaining_pair_series": 4765
+    }
+  },
+  "candidate_products": [
+    {
+      "product_id": "108",
+      "names": [
+        "[사업자 전용] 원액베이스 20종 샘플 – 결제 시 100% 적립금 환급",
+        "[사업자 전용] 원액베이스 21종 샘플 – 결제 시 100% 적립금 환급",
+        "[사업자 전용] 원액베이스 22종 샘플 – 결제 시 100% 적립금 환급"
+      ],
+      "review_reasons": [
+        "sample_name"
+      ],
+      "raw_rows": 7095,
+      "observed_pairs": 89
+    },
+    {
+      "product_id": "235",
+      "names": [
+        "만월플러스 5",
+        "임시개인결제창 5"
+      ],
+      "review_reasons": [
+        "payment_proxy_name"
+      ],
+      "raw_rows": 51,
+      "observed_pairs": 19
+    },
+    {
+      "product_id": "236",
+      "names": [
+        "만월플러스 10",
+        "임시개인결제창 10"
+      ],
+      "review_reasons": [
+        "payment_proxy_name"
+      ],
+      "raw_rows": 492,
+      "observed_pairs": 329
+    },
+    {
+      "product_id": "276",
+      "names": [
+        "[예비사업자 전용] 원액베이스 21종 샘플",
+        "[예비사업자 전용] 원액베이스 22종 샘플"
+      ],
+      "review_reasons": [
+        "sample_name"
+      ],
+      "raw_rows": 42,
+      "observed_pairs": 0
+    },
+    {
+      "product_id": "280",
+      "names": [
+        "[사업자 전용] 울루루 원두 7종 샘플 – 결제 시 100% 적립금 환급"
+      ],
+      "review_reasons": [
+        "sample_name"
+      ],
+      "raw_rows": 112,
+      "observed_pairs": 4
+    },
+    {
+      "product_id": "327",
+      "names": [
+        "[특별] 만월플러스 10",
+        "[플러스] 임시개인결제창 10"
+      ],
+      "review_reasons": [
+        "payment_proxy_name"
+      ],
+      "raw_rows": 45,
+      "observed_pairs": 33
+    },
+    {
+      "product_id": "333",
+      "names": [
+        "[사업자 전용] 묵리 원두 4종 샘플 – 결제 시 100% 적립금 환급"
+      ],
+      "review_reasons": [
+        "sample_name"
+      ],
+      "raw_rows": 8,
+      "observed_pairs": 0
+    },
+    {
+      "product_id": "365",
+      "names": [
+        "[사업자 전용] 떼세르 시럽 20종 샘플"
+      ],
+      "review_reasons": [
+        "sample_name"
+      ],
+      "raw_rows": 9,
+      "observed_pairs": 0
+    },
+    {
+      "product_id": "477",
+      "names": [
+        "[사업자 전용] 진심블렌딩 샘플 – 결제 시 100% 적립금 환급"
+      ],
+      "review_reasons": [
+        "sample_name"
+      ],
+      "raw_rows": 212,
+      "observed_pairs": 7
+    },
+    {
+      "product_id": "664",
+      "names": [
+        "[사업자 전용] 퍼스티아 블렌딩 티 5종 샘플"
+      ],
+      "review_reasons": [
+        "sample_name"
+      ],
+      "raw_rows": 69,
+      "observed_pairs": 0
+    },
+    {
+      "product_id": "808",
+      "names": [
+        "[사업자 전용] 더진한 음료 베이스 25종 샘플"
+      ],
+      "review_reasons": [
+        "sample_name"
+      ],
+      "raw_rows": 38,
+      "observed_pairs": 0
+    },
+    {
+      "product_id": "1098",
+      "names": [
+        "[사업자 전용] 루이보스/페퍼민트/캐모마일 액상차 3종 샘플"
+      ],
+      "review_reasons": [
+        "sample_name"
+      ],
+      "raw_rows": 23,
+      "observed_pairs": 0
+    },
+    {
+      "product_id": "1108",
+      "names": [
+        "[사업자 전용] 수제 대추고, 과일청 샘플"
+      ],
+      "review_reasons": [
+        "sample_name"
+      ],
+      "raw_rows": 20,
+      "observed_pairs": 0
+    },
+    {
+      "product_id": "1318",
+      "names": [
+        "[사업자 전용] 베이커리 직배송 완제품 27종 샘플",
+        "[사업자 전용] 베이커리 직배송 완제품 29종 샘플"
+      ],
+      "review_reasons": [
+        "sample_name"
+      ],
+      "raw_rows": 928,
+      "observed_pairs": 8
+    },
+    {
+      "product_id": "1346",
+      "names": [
+        "[사업자 전용] 두바이 쫀득쿠키 2종 샘플 신청"
+      ],
+      "review_reasons": [
+        "sample_name"
+      ],
+      "raw_rows": 32,
+      "observed_pairs": 0
+    },
+    {
+      "product_id": "1505",
+      "names": [
+        "리얼 초코 브라우니 무료 샘플"
+      ],
+      "review_reasons": [
+        "sample_name"
+      ],
+      "raw_rows": 83,
+      "observed_pairs": 0
+    },
+    {
+      "product_id": "1528",
+      "names": [
+        "[사업자 전용] 30초 컵빙수 4종 샘플 신청"
+      ],
+      "review_reasons": [
+        "sample_name"
+      ],
+      "raw_rows": 485,
+      "observed_pairs": 5
+    },
+    {
+      "product_id": "1545",
+      "names": [
+        "[사은품] 와이프올 X70 행주 300매+스카트 위생행주 10매"
+      ],
+      "review_reasons": [
+        "explicit_gift_name"
+      ],
+      "raw_rows": 26,
+      "observed_pairs": 6
+    },
+    {
+      "product_id": "1603",
+      "names": [
+        "클래식/우베 바스크 치즈케이크 무료 샘플"
+      ],
+      "review_reasons": [
+        "sample_name"
+      ],
+      "raw_rows": 61,
+      "observed_pairs": 0
+    },
+    {
+      "product_id": "1644",
+      "names": [
+        "[6월 한정] 만월플러스 50"
+      ],
+      "review_reasons": [
+        "payment_proxy_name"
+      ],
+      "raw_rows": 2,
+      "observed_pairs": 0
+    },
+    {
+      "product_id": "1645",
+      "names": [
+        "[6월 한정] 만월플러스 100"
+      ],
+      "review_reasons": [
+        "payment_proxy_name"
+      ],
+      "raw_rows": 2,
+      "observed_pairs": 0
+    },
+    {
+      "product_id": "1646",
+      "names": [
+        "[6월 한정] 만월플러스 500"
+      ],
+      "review_reasons": [
+        "payment_proxy_name"
+      ],
+      "raw_rows": 2,
+      "observed_pairs": 0
+    },
+    {
+      "product_id": "1667",
+      "names": [
+        "[사은품] 컵빙수 밀크/망고/초코 홍보 포스터 A2, A4"
+      ],
+      "review_reasons": [
+        "explicit_gift_name"
+      ],
+      "raw_rows": 303,
+      "observed_pairs": 167
+    }
+  ],
+  "warnings": [
+    "Removing sample/gift items does not remove normal items in the same order.",
+    "Internal testing identities and exclusion scope are still pending.",
+    "Changing product scope does not resolve historical availability or last-day completeness.",
+    "Counts are before chronological train/validation/test split; not effective training sample size."
+  ]
+}

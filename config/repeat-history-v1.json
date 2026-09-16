@@ -1,0 +1,12 @@
+{
+  "version": "repeat-history-v1",
+  "source_protocol": "config/cadence-groups-full-v1.json",
+  "training_minimum_product_purchases": [2, 4],
+  "evaluation_minimum_product_purchases": [1, 2, 4, 6],
+  "grouping": "customer_product_history_at_origin",
+  "fixed_horizon_days": 90,
+  "same_evaluation_origins": true,
+  "quantity_targets": "catalog_units",
+  "operational_approval": false,
+  "independent_final_test": false
+}

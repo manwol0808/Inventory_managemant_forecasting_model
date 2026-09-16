@@ -1,0 +1,57 @@
+{
+  "inputs": [
+    {
+      "file": "dataset3.csv",
+      "sha256": "d72fe630c376c81dc57f090b83ef25a2814a72d2c0545a3bed8de38c3022b9ae",
+      "rows": 14099,
+      "extracted_at": [
+        "2026-09-16 00:45:00.001608 UTC"
+      ]
+    },
+    {
+      "file": "dataset5.csv",
+      "sha256": "8b133e1caafa3942078a86bde70afcbf4595b8dbc3a0f85c3f9ccf84936fd97e",
+      "rows": 14130,
+      "extracted_at": [
+        "2026-09-16 00:47:21.398423 UTC"
+      ]
+    },
+    {
+      "file": "dataset6.csv",
+      "sha256": "b11098efeb55aa66953fc2285cc8684e9d6fd542f4feec90b4affcbc668ce280",
+      "rows": 14282,
+      "extracted_at": [
+        "2026-09-16 00:47:59.325906 UTC"
+      ]
+    }
+  ],
+  "output": "data/order-items-v2.csv",
+  "output_sha256": "47aee8fdcfdb0ebb8c4ccc5dfbd080f5d047bf5ff3379b016ea9f557e4c82c29",
+  "rows": 42511,
+  "orders": 15597,
+  "customers": 4044,
+  "unique_source_positions": 42511,
+  "unique_section_item_keys": 42511,
+  "repeated_order_item_codes": 36,
+  "latest_timestamp_tie_orders": 0,
+  "statuses": {
+    "CANCEL_COMPLETE": 1523,
+    "EXCHANGE_PRODUCT_PREPARATION": 1,
+    "EXCHANGE_PURCHASE_CONFIRMATION": 3,
+    "PRODUCT_PREPARATION": 36,
+    "PURCHASE_CONFIRMATION": 38398,
+    "RETURN_COMPLETE": 49,
+    "SHIPPING": 393,
+    "SHIPPING_COMPLETE": 1508,
+    "SHIPPING_READY": 600
+  },
+  "date_min": "2026-04-09",
+  "date_max": "2026-09-15",
+  "training_ready": false,
+  "scope": "All statuses retained; separate live shard snapshots; quantities not summed or deduplicated.",
+  "partial_export_cross_check": {
+    "rows": 21537,
+    "missing_in_merged": 0,
+    "changed_except_extracted_at": 0
+  }
+}

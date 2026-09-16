@@ -1,0 +1,23 @@
+{
+  "version": "tabpfn-experiment-v1",
+  "timing_config": "config/timing-experiment-v2.json",
+  "model_family": "TabPFN-v2-reg",
+  "model_revision": "4972a65a1b30806315c6f92499959ffbfc69a673",
+  "weights": "artifacts/tabpfn-weights/tabpfn-v2-regressor.ckpt",
+  "window_days": 180,
+  "max_training_rows": 1000,
+  "sampling": "sha256(origin_event_id) ascending, independent of labels",
+  "n_estimators": 2,
+  "auto_scale_n_estimators": false,
+  "output_type": "median",
+  "batch_size": 256,
+  "device": "cpu",
+  "torch_threads": 4,
+  "quantity_rule": "median_last3",
+  "seed": 42,
+  "matched_xgboost": {"depth":4,"rounds":200,"objective":"reg:absoluteerror"},
+  "primary_ranking": "customer_macro_date_mae",
+  "mode": "bounded_local_development_benchmark",
+  "operational_approval": false,
+  "independent_final_test": false
+}

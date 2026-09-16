@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "prediction_rows": 30982,
+  "regular_observed": 2732,
+  "past_only_training_ids_verified": true,
+  "xgboost_reload_exact": true,
+  "pandas_metrics_match": true,
+  "customer_macro_date_mae_delta": -0.06631098268085801,
+  "descriptive_customer_bootstrap_95pct": [
+    -0.25025677884682346,
+    0.10040913237736146
+  ],
+  "report_sha256": "0795cbe026d3367423292c76c0e7d08a8e01dd17e2050b05b46603e8b2e686bf"
+}

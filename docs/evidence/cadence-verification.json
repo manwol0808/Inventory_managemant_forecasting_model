@@ -1,0 +1,56 @@
+{
+  "passed": true,
+  "runs": {
+    "cadence-groups-v1": {
+      "real_prediction_rows": 30982,
+      "unique_origins": 15491,
+      "observed_per_method": 7551,
+      "model_reload_exact": true,
+      "independent_pandas_metrics_match": true,
+      "report_sha256": "90223dc6192d6363e846048519ed23948b0594101445a6a08e8c6b3e5891998e"
+    },
+    "cadence-groups-full-v1": {
+      "real_prediction_rows": 30982,
+      "unique_origins": 15491,
+      "observed_per_method": 7551,
+      "model_reload_exact": true,
+      "independent_pandas_metrics_match": true,
+      "report_sha256": "5d01fcddf43097b5a4205a7b328de76f4b8e611d9c297d97307ab703892862ee"
+    }
+  },
+  "same_real_observed_cohort": true,
+  "paired_differences": {
+    "cadence-groups-v1/global": {
+      "customer_macro_mae_delta_vs_270day_global": 0.0,
+      "descriptive_customer_bootstrap_95pct": [
+        0.0,
+        0.0
+      ]
+    },
+    "cadence-groups-v1/group_specialists": {
+      "customer_macro_mae_delta_vs_270day_global": -0.02746470836920216,
+      "descriptive_customer_bootstrap_95pct": [
+        -0.2054467685605384,
+        0.14411997459213896
+      ]
+    },
+    "cadence-groups-full-v1/global": {
+      "customer_macro_mae_delta_vs_270day_global": -0.1522235233179814,
+      "descriptive_customer_bootstrap_95pct": [
+        -0.25612367228674887,
+        -0.05245618344297084
+      ]
+    },
+    "cadence-groups-full-v1/group_specialists": {
+      "customer_macro_mae_delta_vs_270day_global": -0.2528980552606477,
+      "descriptive_customer_bootstrap_95pct": [
+        -0.4743526729267985,
+        -0.05089552511482824
+      ]
+    }
+  },
+  "bootstrap_replicates": 2000,
+  "bootstrap_seed": 42,
+  "independent_final_test": false,
+  "code_sha256": "940a6cbb270730a0dd92e6057fd4aa64d07704aeb11f1f55ff7b09eead30bc58"
+}

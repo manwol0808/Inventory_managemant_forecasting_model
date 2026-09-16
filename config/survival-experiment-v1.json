@@ -1,0 +1,23 @@
+{
+  "version": "survival-experiment-v1",
+  "timing_config": "config/timing-experiment-v2.json",
+  "horizon_days": 60,
+  "landmarks_days": [0, 7, 14, 21, 28, 35, 42, 49],
+  "prediction_window_days": 7,
+  "thresholds": [0.2, 0.35, 0.5],
+  "rounds": 300,
+  "variants": [
+    {"id":"normal_s1_d2","distribution":"normal","scale":1.0,"depth":2},
+    {"id":"normal_s1_d4","distribution":"normal","scale":1.0,"depth":4},
+    {"id":"normal_s05_d2","distribution":"normal","scale":0.5,"depth":2},
+    {"id":"logistic_s1_d2","distribution":"logistic","scale":1.0,"depth":2},
+    {"id":"logistic_s1_d4","distribution":"logistic","scale":1.0,"depth":4},
+    {"id":"logistic_s05_d2","distribution":"logistic","scale":0.5,"depth":2}
+  ],
+  "primary_ranking": "landmark_customer_macro_brier",
+  "quantity_rule": "last",
+  "purpose": "Learn observed and censored repeat orders; score next-seven-day conditional probabilities",
+  "mode": "retrospective_development_backtest",
+  "operational_approval": false,
+  "independent_final_test": false
+}

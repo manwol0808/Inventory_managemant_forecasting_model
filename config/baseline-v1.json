@@ -1,0 +1,13 @@
+{
+  "version": "baseline-v1",
+  "mode": "retrospective_exploration",
+  "quantity_rule": "last_quantity",
+  "gap_rule": "pair_median_then_frozen_product_then_global",
+  "product_min_intervals": 5,
+  "gap_rounding": "half_up_minimum_one",
+  "primary_metric": "quantity_rmse",
+  "descriptive_date_tolerance_days": 7,
+  "history_groups": ["1", "2", "3-5", "6+"],
+  "guardrail_status": "unassessed",
+  "final_test_locked": true
+}

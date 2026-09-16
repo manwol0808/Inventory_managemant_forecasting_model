@@ -1,0 +1,30 @@
+{
+  "version": "product-exclusions-v2",
+  "confirmed_on": "2026-09-16",
+  "basis": "User asked to continue sample/explicit-gift exclusion after confirming prepaid credit and test account rules. Exact product codes from reviewed names; no broad name regex at application time. Normal products sharing an order/customer stay included.",
+  "products": {
+    "108": "exclude_sample",
+    "235": "exclude_prepaid_credit",
+    "236": "exclude_prepaid_credit",
+    "276": "exclude_sample",
+    "280": "exclude_sample",
+    "327": "exclude_prepaid_credit",
+    "333": "exclude_sample",
+    "365": "exclude_sample",
+    "477": "exclude_sample",
+    "664": "exclude_sample",
+    "808": "exclude_sample",
+    "1098": "exclude_sample",
+    "1108": "exclude_sample",
+    "1318": "exclude_sample",
+    "1346": "exclude_sample",
+    "1505": "exclude_sample",
+    "1528": "exclude_sample",
+    "1545": "exclude_gift",
+    "1603": "exclude_sample",
+    "1644": "exclude_prepaid_credit",
+    "1645": "exclude_prepaid_credit",
+    "1646": "exclude_prepaid_credit",
+    "1667": "exclude_gift"
+  }
+}

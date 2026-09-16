@@ -1,0 +1,32 @@
+{
+  "policy_version": "purchase-policy-v1",
+  "source": "data/order-items-v2.csv",
+  "source_sha256": "47aee8fdcfdb0ebb8c4ccc5dfbd080f5d047bf5ff3379b016ea9f557e4c82c29",
+  "output_sha256": "629eb07c3c386c06181515ef9715b35373950ea38b56457fbfa93a83cb6a28b7",
+  "source_rows": 42511,
+  "output_rows": 42511,
+  "order_product_groups": 34710,
+  "group_decisions": {
+    "exclude_cancelled": 1149,
+    "hold_in_progress_linked": 904,
+    "hold_partial_cancel_linked": 27,
+    "hold_return_exchange_linked": 48,
+    "include_completed": 32582
+  },
+  "row_decisions": {
+    "exclude_cancelled": 1429,
+    "hold_in_progress_linked": 1029,
+    "hold_partial_cancel_linked": 172,
+    "hold_return_exchange_linked": 60,
+    "include_completed": 39821
+  },
+  "raw_quantity_by_decision": {
+    "exclude_cancelled": 1888,
+    "hold_in_progress_linked": 1638,
+    "hold_partial_cancel_linked": 186,
+    "hold_return_exchange_linked": 82,
+    "include_completed": 56601
+  },
+  "training_ready": false,
+  "scope": "Latest snapshot eligibility only. Holds are sequence barriers; missing eligible quantity is not zero demand. Historical availability is unverified."
+}

@@ -1,0 +1,16 @@
+{
+  "version": "time-split-v1",
+  "mode": "retrospective_exploration",
+  "timezone": "Asia/Seoul",
+  "start": "2026-04-09",
+  "train_end": "2026-07-13",
+  "validation_end": "2026-08-14",
+  "test_end": "2026-09-15",
+  "train_core_end": "2026-06-23",
+  "split_anchor": "origin_purchase_day",
+  "prediction_asof": "next_local_midnight_after_origin_purchase_day",
+  "target": "next_same_customer_product_purchase_day_quantity_and_gap_from_origin_day",
+  "historical_availability_verified": false,
+  "last_day_completeness_verified": false,
+  "final_test_locked": true
+}

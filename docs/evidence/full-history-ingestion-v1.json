@@ -1,0 +1,27 @@
+{
+  "version": "full-history-ingestion-v1",
+  "raw_sha256": "a4c038c35287f0d9e4071d42bbce022112244576d8701bb9c8d3d82ab23167d4",
+  "server_table_metadata_sha256": "c5bf95308a627032681bfdd63eb3f000501af8e63e63c5a9eeed50dcd68c5243",
+  "server_rows": 138427,
+  "raw_rows": 138427,
+  "kept_rows": 137279,
+  "quarantine_rows": 1148,
+  "quarantine_reasons": {
+    "missing_product_id": 965,
+    "prefix_before_unknown_product": 183
+  },
+  "affected_customers": 339,
+  "latest_missing_product_day": "2025-03-11",
+  "raw_date_min": "2024-10-02",
+  "raw_date_max": "2026-09-15",
+  "orders": 54496,
+  "customers": 11253,
+  "files": {
+    "orders.csv": "5580c6aacac84ea691f9ce914d92ca9e4e6ad8afcd5fe895a28cbbdc774f6d66",
+    "identified-export.csv": "5580c6aacac84ea691f9ce914d92ca9e4e6ad8afcd5fe895a28cbbdc774f6d66",
+    "quarantine.csv": "69fd64fa74364f2ad66b008de50745dcfeb51d2ba764717e32205c1332896752"
+  },
+  "identification_policy": "No inferred IDs. Quarantine all customer rows through last unknown-product date; retain later history.",
+  "timestamp_precision": "bq CSV UTC seconds; raw export and job metadata retained",
+  "strict_training_ready": false
+}

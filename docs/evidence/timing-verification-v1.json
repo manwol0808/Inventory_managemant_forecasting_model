@@ -1,0 +1,187 @@
+{
+  "expected_origins": 18136,
+  "outcomes": {
+    "no_repurchase_within_horizon": 10248,
+    "observed": 7882,
+    "unknown_due_to_hold": 6
+  },
+  "reports": {
+    "timing-experiment-v2": {
+      "sha256": "8fe8eec372d11e8f8a930ea17dbc8d479ecbd5029dde612688ee27b48ee0dc9b",
+      "candidates": 32,
+      "prediction_rows_verified": 580352,
+      "landmark_rows_verified": 0
+    },
+    "survival-experiment-v1": {
+      "sha256": "163992c62b14028414482f192cc63f03e5613bb7b931065d4b4f6ec0fcddee21",
+      "candidates": 14,
+      "prediction_rows_verified": 253904,
+      "landmark_rows_verified": 1553776
+    },
+    "tabpfn-experiment-v1": {
+      "sha256": "3bbb1eedafd44bb3591eb0a76f40f1a68f58415397abbf46e0fdbd6f47a5fdba",
+      "candidates": 2,
+      "prediction_rows_verified": 36272,
+      "landmark_rows_verified": 0
+    }
+  },
+  "coverage": {
+    "apr2026": [
+      {
+        "elapsed_days": 0,
+        "evaluable": 6795,
+        "unknown_due_to_hold": 1
+      },
+      {
+        "elapsed_days": 7,
+        "evaluable": 6287,
+        "already_repurchased": 507,
+        "unknown_due_to_hold": 2
+      },
+      {
+        "elapsed_days": 14,
+        "evaluable": 5623,
+        "already_repurchased": 1170,
+        "unknown_due_to_hold": 3
+      },
+      {
+        "elapsed_days": 21,
+        "evaluable": 5078,
+        "already_repurchased": 1715,
+        "unknown_due_to_hold": 3
+      },
+      {
+        "elapsed_days": 28,
+        "evaluable": 4700,
+        "already_repurchased": 2093,
+        "unknown_due_to_hold": 3
+      },
+      {
+        "elapsed_days": 35,
+        "evaluable": 4440,
+        "already_repurchased": 2353,
+        "unknown_due_to_hold": 3
+      },
+      {
+        "elapsed_days": 42,
+        "evaluable": 4197,
+        "already_repurchased": 2596,
+        "unknown_due_to_hold": 3
+      },
+      {
+        "elapsed_days": 49,
+        "evaluable": 4030,
+        "already_repurchased": 2763,
+        "unknown_due_to_hold": 3
+      }
+    ],
+    "may2026": [
+      {
+        "elapsed_days": 0,
+        "evaluable": 5698
+      },
+      {
+        "elapsed_days": 7,
+        "evaluable": 5372,
+        "already_repurchased": 326
+      },
+      {
+        "elapsed_days": 14,
+        "already_repurchased": 854,
+        "evaluable": 4843,
+        "unknown_due_to_hold": 1
+      },
+      {
+        "elapsed_days": 21,
+        "already_repurchased": 1299,
+        "evaluable": 4398,
+        "unknown_due_to_hold": 1
+      },
+      {
+        "elapsed_days": 28,
+        "already_repurchased": 1620,
+        "evaluable": 4077,
+        "unknown_due_to_hold": 1
+      },
+      {
+        "elapsed_days": 35,
+        "already_repurchased": 1876,
+        "evaluable": 3821,
+        "unknown_due_to_hold": 1
+      },
+      {
+        "elapsed_days": 42,
+        "already_repurchased": 2077,
+        "evaluable": 3620,
+        "unknown_due_to_hold": 1
+      },
+      {
+        "elapsed_days": 49,
+        "already_repurchased": 2241,
+        "evaluable": 3456,
+        "unknown_due_to_hold": 1
+      }
+    ],
+    "jun2026": [
+      {
+        "elapsed_days": 0,
+        "evaluable": 5641,
+        "unknown_due_to_hold": 1
+      },
+      {
+        "elapsed_days": 7,
+        "evaluable": 5319,
+        "already_repurchased": 321,
+        "unknown_due_to_hold": 2
+      },
+      {
+        "elapsed_days": 14,
+        "evaluable": 4787,
+        "already_repurchased": 853,
+        "unknown_due_to_hold": 2
+      },
+      {
+        "elapsed_days": 21,
+        "evaluable": 4330,
+        "already_repurchased": 1310,
+        "unknown_due_to_hold": 2
+      },
+      {
+        "elapsed_days": 28,
+        "evaluable": 3995,
+        "already_repurchased": 1645,
+        "unknown_due_to_hold": 2
+      },
+      {
+        "elapsed_days": 35,
+        "evaluable": 3683,
+        "already_repurchased": 1957,
+        "unknown_due_to_hold": 2
+      },
+      {
+        "elapsed_days": 42,
+        "evaluable": 3479,
+        "already_repurchased": 2161,
+        "unknown_due_to_hold": 2
+      },
+      {
+        "elapsed_days": 49,
+        "evaluable": 3315,
+        "already_repurchased": 2325,
+        "unknown_due_to_hold": 2
+      }
+    ]
+  },
+  "survival_customer_bootstrap": {
+    "candidate": "w90_normal_s1_d2",
+    "baseline": "w90_km",
+    "customers": 2900,
+    "mean_brier_delta": -0.00693511184493776,
+    "interval_95": [
+      -0.007987504343768919,
+      -0.005818766065217329
+    ],
+    "interpretation": "Paired customer resampling descriptive interval; does not correct candidate-selection bias or time drift"
+  },
+  "status": "passed"
+}

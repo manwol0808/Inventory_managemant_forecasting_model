@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "runs": {
+    "repeat-history-v1": {
+      "prediction_rows": 61964,
+      "identities_and_targets_match": true,
+      "xgboost_reload_exact": true,
+      "independent_metrics_match": true,
+      "report_sha256": "0dbcaea5b5cc2ffc951c55872bb40e42c8812795b1ada53081e1d46a270011e1"
+    },
+    "tabpfn-repeat-v1": {
+      "prediction_rows": 15792,
+      "identities_and_targets_match": true,
+      "xgboost_reload_exact": true,
+      "independent_metrics_match": true,
+      "report_sha256": "77a04676703d2889d61d26d7c591fbd751699ed72fc21ee96fc798a4417d2ffe"
+    }
+  },
+  "tabpfn_context_and_raw_output_match": true,
+  "tabpfn_forward_pass_replayed": false,
+  "code_sha256": "40d1de279caa7add3842f830fc50977ecd51683f7dde7ed67b7824db2a286ae5"
+}

@@ -1,0 +1,761 @@
+{
+  "uid": "forecasting-baseline",
+  "title": "자동 장바구니 · 기준 모델",
+  "schemaVersion": 41,
+  "version": 1,
+  "refresh": "5s",
+  "links": [
+    {
+      "title": "XGBoost 학습 곡선·비교",
+      "type": "link",
+      "url": "/d/forecasting-xgboost",
+      "keepTime": false
+    },
+    {
+      "title": "날짜별 선 그래프 보기",
+      "type": "link",
+      "url": "/d/forecasting-validation-trends",
+      "keepTime": false
+    }
+  ],
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "tags": [
+    "forecasting",
+    "exploratory"
+  ],
+  "panels": [
+    {
+      "id": 1,
+      "type": "text",
+      "title": "탐색 실험 · 최종 시험 잠금",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 4
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "**사후 정제 탐색 점수**입니다. 당시 주문 상태의 가용성은 미검증이며 운영 승인이 아닙니다. 검증 기간 내 재구매가 확인된 쌍만 평가합니다. 날짜 ±7일은 설명용입니다. 최종 시험 점수는 표시하지 않습니다.\n\n수량: 직전 구매일 개수 / 날짜: 개인 간격 중앙값 → 학습 상품 간격 → 학습 전체 간격. 새 실행 중에는 이전 점수를 숨깁니다."
+      }
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "수집 연결 (1=정상)",
+      "gridPos": {
+        "x": 0,
+        "y": 4,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "forecasting-prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "(up{job=\"forecastingml\"}) and on() (up{job=\"forecastingml\"} == 1)",
+          "instant": true
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 2,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "mappings": [],
+          "noValue": "미산출 / 연결 확인"
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "auto"
+      }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "실행 완료 (점수 산출 완료)",
+      "gridPos": {
+        "x": 6,
+        "y": 4,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "forecasting-prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "(forecasting_run_completed) and on() (up{job=\"forecastingml\"} == 1)",
+          "instant": true
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 2,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "mappings": [],
+          "noValue": "미산출 / 연결 확인"
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "auto"
+      }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "실행 실패 (1=실패)",
+      "gridPos": {
+        "x": 12,
+        "y": 4,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "forecasting-prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "(forecasting_run_failed) and on() (up{job=\"forecastingml\"} == 1)",
+          "instant": true
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 2,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "mappings": [],
+          "noValue": "미산출 / 연결 확인"
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "auto"
+      }
+    },
+    {
+      "id": 5,
+      "type": "stat",
+      "title": "가드레일 심사",
+      "gridPos": {
+        "x": 18,
+        "y": 4,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "forecasting-prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "(forecasting_guardrail_assessed) and on() (up{job=\"forecastingml\"} == 1)",
+          "instant": true
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 2,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {
+                  "text": "판단 보류",
+                  "color": "gray"
+                },
+                "1": {
+                  "text": "심사 결과 확인"
+                }
+              }
+            }
+          ],
+          "noValue": "미산출 / 연결 확인"
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "auto"
+      }
+    },
+    {
+      "id": 6,
+      "type": "stat",
+      "title": "수량 RMSE · 주지표 (개)",
+      "gridPos": {
+        "x": 0,
+        "y": 8,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "forecasting-prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "(forecasting_validation_metric{metric=\"quantity_rmse\"}) and on() (up{job=\"forecastingml\"} == 1)",
+          "instant": true
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 2,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "mappings": [],
+          "noValue": "미산출 / 연결 확인"
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "auto"
+      }
+    },
+    {
+      "id": 7,
+      "type": "stat",
+      "title": "수량 평균 절대 오차 (개)",
+      "gridPos": {
+        "x": 6,
+        "y": 8,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "forecasting-prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "(forecasting_validation_metric{metric=\"quantity_mae\"}) and on() (up{job=\"forecastingml\"} == 1)",
+          "instant": true
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 2,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "mappings": [],
+          "noValue": "미산출 / 연결 확인"
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "auto"
+      }
+    },
+    {
+      "id": 8,
+      "type": "stat",
+      "title": "수량 정확 일치율",
+      "gridPos": {
+        "x": 12,
+        "y": 8,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "forecasting-prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "(forecasting_validation_metric{metric=\"quantity_exact_rate\"}) and on() (up{job=\"forecastingml\"} == 1)",
+          "instant": true
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "decimals": 2,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "mappings": [],
+          "noValue": "미산출 / 연결 확인"
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "auto"
+      }
+    },
+    {
+      "id": 9,
+      "type": "stat",
+      "title": "날짜 평균 절대 오차 (일)",
+      "gridPos": {
+        "x": 18,
+        "y": 8,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "forecasting-prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "(forecasting_validation_metric{metric=\"date_mae_days\"}) and on() (up{job=\"forecastingml\"} == 1)",
+          "instant": true
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 2,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "mappings": [],
+          "noValue": "미산출 / 연결 확인"
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "auto"
+      }
+    },
+    {
+      "id": 10,
+      "type": "stat",
+      "title": "검증 점수 대상 (쌍)",
+      "gridPos": {
+        "x": 0,
+        "y": 12,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "forecasting-prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "(forecasting_rows{split=\"validation\"}) and on() (up{job=\"forecastingml\"} == 1)",
+          "instant": true
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 2,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "mappings": [],
+          "noValue": "미산출 / 연결 확인"
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "auto"
+      }
+    },
+    {
+      "id": 11,
+      "type": "stat",
+      "title": "검증 출발 구매 중 평가 비율",
+      "gridPos": {
+        "x": 6,
+        "y": 12,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "forecasting-prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "(forecasting_validation_coverage) and on() (up{job=\"forecastingml\"} == 1)",
+          "instant": true
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "decimals": 2,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "mappings": [],
+          "noValue": "미산출 / 연결 확인"
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "auto"
+      }
+    },
+    {
+      "id": 12,
+      "type": "stat",
+      "title": "±7일 이내 비율 · 설명용",
+      "gridPos": {
+        "x": 12,
+        "y": 12,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "forecasting-prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "(forecasting_validation_metric{metric=\"date_within_tolerance_rate\"}) and on() (up{job=\"forecastingml\"} == 1)",
+          "instant": true
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "decimals": 2,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "mappings": [],
+          "noValue": "미산출 / 연결 확인"
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "auto"
+      }
+    },
+    {
+      "id": 13,
+      "type": "stat",
+      "title": "상태 마지막 갱신 이후 (초)",
+      "gridPos": {
+        "x": 18,
+        "y": 12,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "forecasting-prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "(time() - forecasting_heartbeat_timestamp_seconds) and on() (up{job=\"forecastingml\"} == 1)",
+          "instant": true
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 2,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "mappings": [],
+          "noValue": "미산출 / 연결 확인"
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "auto"
+      }
+    },
+    {
+      "id": 14,
+      "type": "bargauge",
+      "title": "이력 횟수별 수량 MAE (개)",
+      "gridPos": {
+        "x": 0,
+        "y": 16,
+        "w": 8,
+        "h": 7
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "forecasting-prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "(forecasting_history_group_metric{metric=\"quantity_mae\"}) and on() (up{job=\"forecastingml\"} == 1)",
+          "instant": true,
+          "legendFormat": "{{group}}회"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 2,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "min": 0,
+          "noValue": "미산출"
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "basic",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        }
+      }
+    },
+    {
+      "id": 15,
+      "type": "bargauge",
+      "title": "이력 횟수별 날짜 MAE (일)",
+      "gridPos": {
+        "x": 8,
+        "y": 16,
+        "w": 8,
+        "h": 7
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "forecasting-prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "(forecasting_history_group_metric{metric=\"date_mae_days\"}) and on() (up{job=\"forecastingml\"} == 1)",
+          "instant": true,
+          "legendFormat": "{{group}}회"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 2,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "min": 0,
+          "noValue": "미산출"
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "basic",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        }
+      }
+    },
+    {
+      "id": 16,
+      "type": "bargauge",
+      "title": "이력 횟수별 평가 표본 (쌍)",
+      "gridPos": {
+        "x": 16,
+        "y": 16,
+        "w": 8,
+        "h": 7
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "forecasting-prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "(forecasting_history_group_metric{metric=\"n\"}) and on() (up{job=\"forecastingml\"} == 1)",
+          "instant": true,
+          "legendFormat": "{{group}}회"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 2,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "min": 0,
+          "noValue": "미산출"
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "basic",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        }
+      }
+    }
+  ]
+}

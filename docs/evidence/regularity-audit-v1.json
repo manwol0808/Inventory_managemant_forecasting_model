@@ -1,0 +1,80 @@
+{
+  "asof": "2026-09-14",
+  "active_since": "2026-06-17",
+  "active_customer_product_pairs": 9511,
+  "unique_customers": 2487,
+  "groups": {
+    "irregular": 1083,
+    "moderate": 1194,
+    "regular": 388,
+    "insufficient": 6846
+  },
+  "definitions": "last up to 5 product gaps; >=3 gaps; regular CV<=0.25, moderate<=0.5, irregular>0.5; latest completed in prior90d; no later hold",
+  "real_90d_full_global_past_product_regularity_groups": {
+    "insufficient": {
+      "origins": 10400,
+      "observed": 3187,
+      "date_mae": 17.002510197678067,
+      "date_within_7": 0.26796360213366804,
+      "no_repurchase_90d": 7208
+    },
+    "regular": {
+      "origins": 836,
+      "observed": 750,
+      "date_mae": 9.164,
+      "date_within_7": 0.6133333333333333,
+      "no_repurchase_90d": 85
+    },
+    "moderate": {
+      "origins": 2281,
+      "observed": 1982,
+      "date_mae": 10.955095862764884,
+      "date_within_7": 0.529263370332997,
+      "no_repurchase_90d": 299
+    },
+    "irregular": {
+      "origins": 1974,
+      "observed": 1632,
+      "date_mae": 12.647671568627452,
+      "date_within_7": 0.4522058823529412,
+      "no_repurchase_90d": 342
+    }
+  },
+  "past_product_median_rule_diagnostic": {
+    "regular": {
+      "n": 750,
+      "median_last5_gap_rule_date_mae": 9.4,
+      "date_within_7": 0.596
+    },
+    "moderate": {
+      "n": 1982,
+      "median_last5_gap_rule_date_mae": 11.513622603430878,
+      "date_within_7": 0.5186680121089808
+    },
+    "irregular": {
+      "n": 1632,
+      "median_last5_gap_rule_date_mae": 14.528186274509803,
+      "date_within_7": 0.4375
+    }
+  },
+  "customer_overall_order_cadence_groups": {
+    "irregular": 782,
+    "moderate": 585,
+    "regular": 176,
+    "insufficient": 891
+  },
+  "customer_overall_order_cadence_n": 2434,
+  "provenance": {
+    "event_file_sha256": "0a2364d7e9e06ea8125b33f243b0ff19ca6e2a2e96ecfaddbaf60f2366dc7c5b",
+    "evaluation_predictions_sha256": "a545f861085bf7162e8801fadd4fe82f3632abb98506079b5d32fd1913a0b5cb",
+    "evaluation_candidate": "global",
+    "irregularity_cv_thresholds": [
+      0.25,
+      0.5
+    ],
+    "minimum_product_gaps": 3,
+    "recent_gaps_max": 5,
+    "held_resets_history": true,
+    "operational_approval": false
+  }
+}

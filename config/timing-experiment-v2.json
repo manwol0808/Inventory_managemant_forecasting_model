@@ -1,0 +1,28 @@
+{
+  "version": "timing-experiment-v2",
+  "purpose": "Timing first; quantity within one/two catalog units; customer-level reporting",
+  "mode": "retrospective_development_backtest",
+  "horizon_days": 60,
+  "origin_training_windows_days": [180, 90],
+  "folds": [
+    {"id":"apr2026","train_end":"2026-03-31","origin_start":"2026-04-01","origin_end":"2026-04-30"},
+    {"id":"may2026","train_end":"2026-04-30","origin_start":"2026-05-01","origin_end":"2026-05-31"},
+    {"id":"jun2026","train_end":"2026-05-31","origin_start":"2026-06-01","origin_end":"2026-06-30"}
+  ],
+  "xgboost_variants": [
+    {"id":"abs_d2_200","objective":"reg:absoluteerror","depth":2,"rounds":200},
+    {"id":"abs_d4_200","objective":"reg:absoluteerror","depth":4,"rounds":200},
+    {"id":"abs_d3_500","objective":"reg:absoluteerror","depth":3,"rounds":500},
+    {"id":"log_d3_300","objective":"reg:squarederror","depth":3,"rounds":300,"log_target":true}
+  ],
+  "params": {"tree_method":"hist","device":"cpu","eta":0.05,"min_child_weight":10,"lambda":1,"alpha":0,"subsample":1,"colsample_bytree":1,"seed":42,"nthread":4},
+  "rules": ["pair_median","last_gap","recent3_gap"],
+  "hybrid": "recent3 gap median when at least three gaps, otherwise abs_d2_200",
+  "quantity_rules": ["last","median_last3"],
+  "primary_ranking": "customer_macro_date_mae",
+  "quantity_guardrail": "within_one_rate must not be below matching pair_median+last baseline on same outcomes",
+  "date_tolerances_days": [3,7],
+  "quantity_tolerances_units": [1,2],
+  "operational_approval": false,
+  "new_independent_final_test": false
+}

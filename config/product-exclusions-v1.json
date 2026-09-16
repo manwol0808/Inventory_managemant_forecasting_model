@@ -1,0 +1,13 @@
+{
+  "version": "product-exclusions-v1",
+  "confirmed_on": "2026-09-16",
+  "basis": "User explained Manwol Plus (formerly Manwol Pay) is prepaid shopping credit with bonus credit, not inventory. Applies to these observed product codes, including their former temporary-payment names.",
+  "products": {
+    "235": "exclude_prepaid_credit",
+    "236": "exclude_prepaid_credit",
+    "327": "exclude_prepaid_credit",
+    "1644": "exclude_prepaid_credit",
+    "1645": "exclude_prepaid_credit",
+    "1646": "exclude_prepaid_credit"
+  }
+}

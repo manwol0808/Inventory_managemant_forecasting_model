@@ -1,0 +1,14 @@
+{
+  "source_sha256": "1eef036216d2c04a3debbf6fec42846b54a40666efb89621f30e028837e302f3",
+  "group_key": [
+    "member_code",
+    "order_no",
+    "prod_no"
+  ],
+  "repeated_groups": 1857,
+  "group_types": {
+    "all_fields_identical": 1594,
+    "different_fields": 263
+  },
+  "interpretation": "Structural categories only; no duplicate deletion or quantity aggregation authorized by these counts."
+}

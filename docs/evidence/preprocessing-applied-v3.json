@@ -1,0 +1,60 @@
+{
+  "version": "purchase-events-v3",
+  "source_sha256": "71eb2c749aa66f96f06495a3d58a19d6618bddf664ce1643cac5af78a9146f3e",
+  "raw_source_sha256": "47aee8fdcfdb0ebb8c4ccc5dfbd080f5d047bf5ff3379b016ea9f557e4c82c29",
+  "source_rows": 42511,
+  "linked_rows": 42511,
+  "event_states": {
+    "cancelled_only": 783,
+    "completed": 31939,
+    "excluded_only": 563,
+    "held": 958
+  },
+  "label_states": {
+    "blocked_by_hold": 516,
+    "observed": 13206,
+    "right_censored": 18217
+  },
+  "row_dispositions": {
+    "exclude_cancelled": 1405,
+    "exclude_internal_test": 11,
+    "exclude_prepaid_credit": 594,
+    "hold_in_progress_linked": 1029,
+    "hold_partial_cancel_linked": 172,
+    "hold_return_exchange_linked": 58,
+    "hold_same_day": 2,
+    "include_completed": 39240
+  },
+  "included_quantity": 55448,
+  "files": {
+    "daily-events.csv": "2adaa942af6af153646515b1757089ffbbd890d99a35baeceff1eb6221fc1e9f",
+    "next-purchase-labels.csv": "24b3f419259cd8fed9fdee415e1bcfa63c1edb0003f7503d53e78a3bd2bc24bc",
+    "observed-pairs.csv": "fcabd78945b371e25f30e0a48f6f9ffb1b2af9e6d83478cbad6469971b839b9a",
+    "source-links.csv": "f5585654c926330f871c52d94425d2024ac3bfe5271ba4b8d8830d7961e9aebf"
+  },
+  "product_exclusions_sha256": "70dbacadd5d458a69ea43c6d6e0e286f8a295827b0bc5a1582fb2da2ed2a5c12",
+  "customer_exclusions_sha256": "8783cb3fe67a3ab2920105d9ee574d97df7cbf936270089db67f48580d5c839e",
+  "historical_availability_verified": false,
+  "training_ready": false,
+  "account_audit": {
+    "job_id": "job_J-Gt5xTRbutT-HIVSCoKl3NULQXT",
+    "scope": "Latest b2s orders with item rows dated 2026-04-09 through 2026-09-15, joined to latest members; available member version history also checked.",
+    "scoped_customers": 4044,
+    "missing_member": 7,
+    "blank_name": 7,
+    "exact_test_name": 1,
+    "contains_test_name": 1,
+    "ever_exact_test_name": 1,
+    "test_account_source_rows": 11,
+    "test_account_orders": 11,
+    "all_test_rows_previously_cancelled": true,
+    "local_config": "data/test-account-exclusions-v1.json",
+    "unidentified_names_are_not_assumed_to_be_test": true
+  },
+  "verified": {
+    "all_raw_fields_preserved": true,
+    "unrelated_event_and_label_rows_unchanged": true,
+    "excluded_source_contributions_zero": true,
+    "tests_passed": 19
+  }
+}

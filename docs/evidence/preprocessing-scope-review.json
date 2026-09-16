@@ -1,0 +1,64 @@
+{
+  "source_sha256": "47aee8fdcfdb0ebb8c4ccc5dfbd080f5d047bf5ff3379b016ea9f557e4c82c29",
+  "source_rows": 42511,
+  "current_links_sha256": "7ece1672120211a48de307d7182e27ea0dc60919712e4789624691c986e76cfb",
+  "scope": "Read-only preprocessing audit. Name matches are review candidates, not confirmed exclusions or internal test identities. No rows removed. Internal account/order identifiers pending user input.",
+  "name_review_flags": {
+    "sample_name": {
+      "regex": "샘플|sample",
+      "raw_rows": 9217,
+      "currently_included_rows": 8596,
+      "product_ids": [
+        "108",
+        "1098",
+        "1108",
+        "1318",
+        "1346",
+        "1505",
+        "1528",
+        "1603",
+        "276",
+        "280",
+        "333",
+        "365",
+        "477",
+        "664",
+        "808"
+      ]
+    },
+    "explicit_gift_name": {
+      "regex": "^\\[사은품\\]",
+      "raw_rows": 329,
+      "currently_included_rows": 316,
+      "product_ids": [
+        "1545",
+        "1667"
+      ]
+    },
+    "payment_proxy_name": {
+      "regex": "임시개인결제창|만월플러스",
+      "raw_rows": 594,
+      "currently_included_rows": 579,
+      "product_ids": [
+        "1644",
+        "1645",
+        "1646",
+        "235",
+        "236",
+        "327"
+      ]
+    },
+    "test_name": {
+      "regex": "테스트|test",
+      "raw_rows": 0,
+      "currently_included_rows": 0,
+      "product_ids": []
+    }
+  },
+  "product_codes_with_multiple_names": 33,
+  "identical_names_with_multiple_codes": 2,
+  "zero_payment_orders": 1666,
+  "zero_payment_currently_included_rows": 2418,
+  "max_currently_included_row_quantity": 499,
+  "note": "Zero payment, large quantity and name changes alone do not establish erroneous orders. Current event/label outputs precede this business-scope audit."
+}
