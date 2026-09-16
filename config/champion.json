@@ -1,0 +1,20 @@
+{
+  "version": "champion-v1",
+  "model_id": "xgboost-short-v2",
+  "model_dir": "artifacts/xgboost-short-v2",
+  "role": "champion",
+  "selected_by": "user",
+  "selected_on": "2026-09-16",
+  "selection_basis": "User-selected current benchmark and local preview reference; no common-cohort superiority claim",
+  "report_sha256": "67005e5e27081ea3a561883807f48066ec9adb70e4e276ff9f2db7f34fed85c3",
+  "model_files": {
+    "quantity-model.json": "565d2aad741178c5dd4694ac524ee41dc0e5247f1ac59c4fe8a44ab0b4536138",
+    "gap-model.json": "9bc2db95382de1baef7e37d6d3af54785a71bfd522f433c9eb2efabba05e9df7",
+    "feature-schema.json": "d85c89826697b20a1cd86b1927d589de5ac656dcc8c2e897fc6fd2fb5c15ed84"
+  },
+  "training_start": "2026-04-09",
+  "training_end": "2026-07-13",
+  "operational_approval": false,
+  "auto_apply": false,
+  "evaluation_contract": "Original boundary-limited observed repurchases; validation1196 and consumed test786 are separate cohorts"
+}

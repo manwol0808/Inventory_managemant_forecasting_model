@@ -1,0 +1,58 @@
+{
+  "definition": "Actual minus predicted days; positive means customer repurchased later than forecast. Regularity uses only short-window history known at origin; min3 gaps, recent5 CV<=0.5. Diagnostic on consumed cohorts, not a new test.",
+  "events_sha256": "04a116e9d122b317f6787ad74ea034f2f1c65d9a08c4f11405df109baaad0de1",
+  "cohorts": {
+    "validation": {
+      "source_sha256": "d2090683fd8eb66c962a657e9ead4fd86d52ca69505a8773d882187d1b631178",
+      "n": 1196,
+      "hit7": 873,
+      "miss7": 323,
+      "actual_earlier_by_over7": 14,
+      "actual_later_by_over7": 309,
+      "miss_absolute_error_median": 11.0,
+      "groups": {
+        "regular": {
+          "n": 560,
+          "miss7": 120,
+          "hit7_rate": 0.7857142857142857
+        },
+        "variable": {
+          "n": 195,
+          "miss7": 45,
+          "hit7_rate": 0.7692307692307693
+        },
+        "insufficient": {
+          "n": 441,
+          "miss7": 158,
+          "hit7_rate": 0.6417233560090703
+        }
+      }
+    },
+    "consumed_test": {
+      "source_sha256": "583e46781983082e8f81ed3db44d43656c0503e6870230e9917dbf6780c10439",
+      "n": 786,
+      "hit7": 600,
+      "miss7": 186,
+      "actual_earlier_by_over7": 8,
+      "actual_later_by_over7": 178,
+      "miss_absolute_error_median": 11.0,
+      "groups": {
+        "regular": {
+          "n": 371,
+          "miss7": 85,
+          "hit7_rate": 0.77088948787062
+        },
+        "variable": {
+          "n": 166,
+          "miss7": 40,
+          "hit7_rate": 0.7590361445783133
+        },
+        "insufficient": {
+          "n": 249,
+          "miss7": 61,
+          "hit7_rate": 0.7550200803212851
+        }
+      }
+    }
+  }
+}
