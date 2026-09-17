@@ -1,0 +1,303 @@
+{
+  "metric": "Observed repurchase date minus 10 through same day, inclusive; scheduled gap=max(1, predicted gap-min(7,ceil(predicted gap*.25))). Historical descriptive frequency, not calibrated probability.",
+  "groups": {
+    "mature90": {
+      "irregular": {
+        "patterns_items_q25": {
+          "observed_n": 4450,
+          "all_origins": 6922,
+          "in_window_n": 1652,
+          "in_window_rate": 0.3712359550561798,
+          "same_day_n": 127,
+          "late_n": 441,
+          "too_early_n": 2357
+        },
+        "specialists_q25": {
+          "observed_n": 4450,
+          "all_origins": 6922,
+          "in_window_n": 1655,
+          "in_window_rate": 0.37191011235955057,
+          "same_day_n": 129,
+          "late_n": 445,
+          "too_early_n": 2350
+        }
+      },
+      "stable": {
+        "patterns_items_q25": {
+          "observed_n": 388,
+          "all_origins": 481,
+          "in_window_n": 203,
+          "in_window_rate": 0.5231958762886598,
+          "same_day_n": 13,
+          "late_n": 24,
+          "too_early_n": 161
+        },
+        "specialists_q25": {
+          "observed_n": 388,
+          "all_origins": 481,
+          "in_window_n": 196,
+          "in_window_rate": 0.5051546391752577,
+          "same_day_n": 17,
+          "late_n": 28,
+          "too_early_n": 164
+        }
+      },
+      "rebound": {
+        "patterns_items_q25": {
+          "observed_n": 209,
+          "all_origins": 307,
+          "in_window_n": 76,
+          "in_window_rate": 0.36363636363636365,
+          "same_day_n": 7,
+          "late_n": 24,
+          "too_early_n": 109
+        },
+        "specialists_q25": {
+          "observed_n": 209,
+          "all_origins": 307,
+          "in_window_n": 69,
+          "in_window_rate": 0.33014354066985646,
+          "same_day_n": 7,
+          "late_n": 30,
+          "too_early_n": 110
+        }
+      },
+      "speeding_up": {
+        "patterns_items_q25": {
+          "observed_n": 217,
+          "all_origins": 380,
+          "in_window_n": 84,
+          "in_window_rate": 0.3870967741935484,
+          "same_day_n": 4,
+          "late_n": 28,
+          "too_early_n": 105
+        },
+        "specialists_q25": {
+          "observed_n": 217,
+          "all_origins": 380,
+          "in_window_n": 84,
+          "in_window_rate": 0.3870967741935484,
+          "same_day_n": 6,
+          "late_n": 35,
+          "too_early_n": 98
+        }
+      },
+      "insufficient": {
+        "patterns_items_q25": {
+          "observed_n": 1904,
+          "all_origins": 6731,
+          "in_window_n": 518,
+          "in_window_rate": 0.27205882352941174,
+          "same_day_n": 47,
+          "late_n": 341,
+          "too_early_n": 1045
+        },
+        "specialists_q25": {
+          "observed_n": 1904,
+          "all_origins": 6731,
+          "in_window_n": 518,
+          "in_window_rate": 0.27205882352941174,
+          "same_day_n": 47,
+          "late_n": 341,
+          "too_early_n": 1045
+        }
+      },
+      "slowing_down": {
+        "patterns_items_q25": {
+          "observed_n": 383,
+          "all_origins": 670,
+          "in_window_n": 119,
+          "in_window_rate": 0.31070496083550914,
+          "same_day_n": 4,
+          "late_n": 44,
+          "too_early_n": 220
+        },
+        "specialists_q25": {
+          "observed_n": 383,
+          "all_origins": 670,
+          "in_window_n": 117,
+          "in_window_rate": 0.30548302872062666,
+          "same_day_n": 10,
+          "late_n": 56,
+          "too_early_n": 210
+        }
+      }
+    },
+    "champion_validation": {
+      "irregular": {
+        "frozen_champion": {
+          "observed_n": 764,
+          "all_origins": 764,
+          "in_window_n": 523,
+          "in_window_rate": 0.6845549738219895,
+          "same_day_n": 38,
+          "late_n": 80,
+          "too_early_n": 161
+        },
+        "patterns_items_q25": {
+          "observed_n": 764,
+          "all_origins": 764,
+          "in_window_n": 521,
+          "in_window_rate": 0.6819371727748691,
+          "same_day_n": 46,
+          "late_n": 139,
+          "too_early_n": 104
+        },
+        "specialists_q25": {
+          "observed_n": 764,
+          "all_origins": 764,
+          "in_window_n": 521,
+          "in_window_rate": 0.6819371727748691,
+          "same_day_n": 42,
+          "late_n": 142,
+          "too_early_n": 101
+        }
+      },
+      "stable": {
+        "frozen_champion": {
+          "observed_n": 128,
+          "all_origins": 128,
+          "in_window_n": 96,
+          "in_window_rate": 0.75,
+          "same_day_n": 4,
+          "late_n": 9,
+          "too_early_n": 23
+        },
+        "patterns_items_q25": {
+          "observed_n": 128,
+          "all_origins": 128,
+          "in_window_n": 90,
+          "in_window_rate": 0.703125,
+          "same_day_n": 2,
+          "late_n": 18,
+          "too_early_n": 20
+        },
+        "specialists_q25": {
+          "observed_n": 128,
+          "all_origins": 128,
+          "in_window_n": 94,
+          "in_window_rate": 0.734375,
+          "same_day_n": 6,
+          "late_n": 20,
+          "too_early_n": 14
+        }
+      },
+      "rebound": {
+        "frozen_champion": {
+          "observed_n": 24,
+          "all_origins": 24,
+          "in_window_n": 15,
+          "in_window_rate": 0.625,
+          "same_day_n": 2,
+          "late_n": 3,
+          "too_early_n": 6
+        },
+        "patterns_items_q25": {
+          "observed_n": 24,
+          "all_origins": 24,
+          "in_window_n": 17,
+          "in_window_rate": 0.7083333333333334,
+          "same_day_n": 1,
+          "late_n": 5,
+          "too_early_n": 2
+        },
+        "specialists_q25": {
+          "observed_n": 24,
+          "all_origins": 24,
+          "in_window_n": 13,
+          "in_window_rate": 0.5416666666666666,
+          "same_day_n": 1,
+          "late_n": 8,
+          "too_early_n": 3
+        }
+      },
+      "speeding_up": {
+        "frozen_champion": {
+          "observed_n": 49,
+          "all_origins": 49,
+          "in_window_n": 27,
+          "in_window_rate": 0.5510204081632653,
+          "same_day_n": 2,
+          "late_n": 10,
+          "too_early_n": 12
+        },
+        "patterns_items_q25": {
+          "observed_n": 49,
+          "all_origins": 49,
+          "in_window_n": 28,
+          "in_window_rate": 0.5714285714285714,
+          "same_day_n": 3,
+          "late_n": 13,
+          "too_early_n": 8
+        },
+        "specialists_q25": {
+          "observed_n": 49,
+          "all_origins": 49,
+          "in_window_n": 28,
+          "in_window_rate": 0.5714285714285714,
+          "same_day_n": 2,
+          "late_n": 16,
+          "too_early_n": 5
+        }
+      },
+      "insufficient": {
+        "frozen_champion": {
+          "observed_n": 188,
+          "all_origins": 188,
+          "in_window_n": 102,
+          "in_window_rate": 0.5425531914893617,
+          "same_day_n": 12,
+          "late_n": 35,
+          "too_early_n": 51
+        },
+        "patterns_items_q25": {
+          "observed_n": 188,
+          "all_origins": 188,
+          "in_window_n": 96,
+          "in_window_rate": 0.5106382978723404,
+          "same_day_n": 14,
+          "late_n": 62,
+          "too_early_n": 30
+        },
+        "specialists_q25": {
+          "observed_n": 188,
+          "all_origins": 188,
+          "in_window_n": 96,
+          "in_window_rate": 0.5106382978723404,
+          "same_day_n": 14,
+          "late_n": 62,
+          "too_early_n": 30
+        }
+      },
+      "slowing_down": {
+        "frozen_champion": {
+          "observed_n": 43,
+          "all_origins": 43,
+          "in_window_n": 22,
+          "in_window_rate": 0.5116279069767442,
+          "same_day_n": 1,
+          "late_n": 3,
+          "too_early_n": 18
+        },
+        "patterns_items_q25": {
+          "observed_n": 43,
+          "all_origins": 43,
+          "in_window_n": 25,
+          "in_window_rate": 0.5813953488372093,
+          "same_day_n": 2,
+          "late_n": 9,
+          "too_early_n": 9
+        },
+        "specialists_q25": {
+          "observed_n": 43,
+          "all_origins": 43,
+          "in_window_n": 28,
+          "in_window_rate": 0.6511627906976745,
+          "same_day_n": 2,
+          "late_n": 10,
+          "too_early_n": 5
+        }
+      }
+    }
+  }
+}

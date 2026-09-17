@@ -1,41 +1,39 @@
-# 발주 예측 프로젝트
+# 발주 예측 프로젝트 문서
 
-고객·상품별 재구매 시점을 우선 예측하고 수량 ±1·±2개 적중률과 불필요한 추천을 함께 평가한다.
+카페 고객×품목의 다음 재구매일과 수량을 예측해, 예상 주의 전주 월요일 발주에 맞춰 장바구니를 준비한다. 모델은 45일 안에 다시 산 경우의 날짜 ±7일 적중으로 평가한다.
 
-## 현재 상태
+## 현재 상태 (2026-09-17)
 
-최신: 사용자 선택에 따라 `xgboost-short-v2`를 [챔피언으로 등록하고 전체 벤치마크 화면](champion-benchmarks.md)을 만들었다. [규칙적인 품목 이력만 새 학습](evidence/regular-history-v1.md)한 비교도 완료했으며 같은 대상의 ±7일 적중률은 55.2% → 55.9%였다. 챔피언은 유지한다.
-
-2026-09-16 기준. [주기·재구매 확률·TabPFN 비교](evidence/timing-model-comparison-v1.md)에 이어 [고객군별 모델·전체 이력·인공 시나리오](evidence/cadence-groups-v1.md)와 [반복 구매 이력·TabPFN 비교](evidence/repeat-history-v1.md)를 실행했다. 최신 비교는 동일한 90일 관찰 조건이며 이전 60일 평가 및 마감일까지 재구매한 사례만의 평가와 구분한다. [작업 상태](tasks.md)를 따른다. 원본 CSV는 보존했고 기존 최종 시험 구간은 사용 완료했다. 실제 앱 연결과 운영 승인은 미완료다.
-
-현재 결과는 사후 정제 탐색 실험이다. 당시 상태의 가용성과 업무 통과 한도는 미확정이므로 운영 성능으로 해석하지 않는다.
+- 챔피언은 사용자가 지정한 주기 유형 라우터 `multi-agent-router-v1`이다. 일정형은 XGBoost, 점점 짧아짐은 TabPFN, 나머지는 기본 모델 `xgboost-short-v2`가 예측하고, 이 품목의 첫 구매에는 담지 않는다. [등록과 성능](champion-benchmarks.md), [구조와 실험 기록](multi-agent-architecture.md).
+- 모델·규칙 변경은 멈추고 앱 연동으로 넘어간다. 실제 앱 쓰기와 운영 승인은 없다. [다음 작업 시작점](handoff.md).
+- 모든 수치는 여러 번 본 과거 개발 자료의 결과다. 새 검증은 2026-09-16 일정과 이후 실제 구매의 대조로 한다.
 
 ## 읽는 순서
 
-1. [결정 사항과 다음 질문](decisions.md): 확정·제안·미결 상태의 기준 문서.
-2. [파이프라인과 아키텍처](architecture.md): 단계별 입력, 출력, 완료 조건.
-3. [데이터와 피처 계약](data-contract.md): 행, 열, 정제, 피처의 정의.
-4. [평가와 학습 설계](evaluation.md): baseline, Champion, 검증과 과적합 방지.
-5. [연구 근거](research.md): 논문과 프로젝트 적용 범위.
-6. [에이전트와 스킬 운영](agent-workflow.md): 실행자와 검토자의 책임.
-7. [Grafana 추적 설계](observability.md): 학습·과적합·데이터·집단별 성능 패널.
-8. [대화 기록](conversations/2026-09-15.md): 사용자와 응답의 원문 보존. 현재 설계와 다른 과거 제안도 남긴다.
+1. [다음 작업 시작점](handoff.md): 현재 모델, 재개 방법, 남은 검수.
+2. [결정 사항](decisions.md): 사용자 확정 방향과 미결 질문.
+3. [멀티 에이전트 라우터](multi-agent-architecture.md): 트리, 시도한 대안과 수치, 챔피언 등록.
+4. [챔피언 등록](champion-benchmarks.md): 등록 형식, 배치 일정 명령, 되돌리는 방법.
+5. [앱 연결 계약](app-integration-contract.md): 전주 월요일 일정, 미리보기 입출력.
+6. [데이터 계약](data-contract.md), [구매 상태 정책](purchase-policy-v1.md), [피처·시간 분할](feature-split-contract.md): 행·정답·피처의 정의.
+7. [평가 설계](evaluation.md), [XGBoost 학습 계약](xgboost-contract.md), [기준 모델 계약](baseline-contract.md): 검증과 과적합 방지.
+8. [Grafana 추적](observability.md), [연구 근거](research.md), [작업 목록](tasks.md).
 
-## 지금 시작할 일
+## 실험 기록
 
-완료한 모델 비교를 바탕으로 일별 구매 확률·상품 최근 추세의 추가 가치를 검토한다. 앱 저장소·API 위치와 적용 기준이 정해지면 [미리보기 계약](app-integration-contract.md)을 연결하고 실제 미래 예측 로그로 검증한다.
+진행 순서대로다. 각 문서에 설정·출처 해시와 한계가 있다.
 
-이미 실행 가능한 첫 단계는 구조 점검이다. 저장소 루트에서 실행한다.
+- 정제: [구매 이벤트 검토](evidence/purchase-events-review.md), [전처리 v3](evidence/preprocessing-applied-v3.md), [전처리 v4](evidence/preprocessing-applied-v4.md), [상품 수명 검토](evidence/lifecycle-review.md), [설계 v0 점검](evidence/review.md)
+- 초기 모델: [기준 모델](evidence/baseline-v1.md), [첫 XGBoost](evidence/xgboost-v1.md), [전체 이력 비교](evidence/history-comparison-v1.md)([실험 설계](full-history-experiment.md)), [챔피언 오차 진단](evidence/champion-error-diagnosis-v1.md)
+- 주기·확률·TabPFN: [종합 결과](evidence/timing-model-comparison-v1.md)([주기 설계](timing-experiment-v2.md), [생존분석 설계](survival-experiment-v1.md)), [고객군](evidence/cadence-groups-v1.md), [반복 이력](evidence/repeat-history-v1.md), [규칙적 이력](evidence/regular-history-v1.md)
+- 고객 유형·라우터: [유형·품목 속도](evidence/purchase-segments-v1.md)([설계](purchase-segments-v1.md)), [짧은 이력 비교](evidence/segment-history-comparison-v1.md), [±7일 기준 모델 선택](evidence/multi-agent-router-selection-v1.json), [라우터 전체 기록](multi-agent-architecture.md)
 
-```bash
-python3 scripts/audit_csv.py datase.csv --output docs/evidence/data-profile.json
-```
+## 대화 기록
 
-[집계 결과](evidence/data-profile.json)는 개인정보 원문을 담지 않는 원본 구조 통계다. 재실행 시 이 결과 파일을 갱신하며, 원본 CSV는 변경하지 않는다. 해석은 [데이터 계약](data-contract.md)에 있다.
+[2026-09-15](conversations/2026-09-15.md) · [2026-09-16](conversations/2026-09-16.md) · [2026-09-17](conversations/2026-09-17.md). 과거 발언은 현재 확정사항이 아니며, 현재 판단은 주제별 문서를 따른다.
 
 ## 기록 관리
 
 - 대화 원문은 날짜별 파일에 추가하고, 현재 판단은 주제별 문서 본문을 갱신한다.
-- 변경된 결정의 이유와 상태는 `decisions.md`에 기록한다. 과거 발언을 현재의 확정사항으로 취급하지 않는다.
-- 실험 결과는 데이터 해시·평가 버전·설정·예측값과 함께 저장한다. 수치만 복사해 보고하지 않는다.
-- [검토 기록](evidence/review.md)은 실제로 수행한 점검과 남은 제약을 구분한다.
+- 결정의 이유와 상태는 `decisions.md`에 기록한다.
+- 실험 결과는 설정·출처 해시·예측값과 함께 `artifacts/`에 저장하고, 문서에는 요약과 한계를 남긴다. 원본 CSV·`data/`·`artifacts/`는 Git에 올리지 않는다.

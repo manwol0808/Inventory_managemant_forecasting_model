@@ -8,7 +8,7 @@ from pathlib import Path
 
 from scripts.build_features_and_splits import read_csv
 from scripts.build_validation_dashboard import SOURCE, panel as time_panel
-from scripts.predict_replenishment import champion_path
+from scripts.predict_replenishment import base_champion_path
 from scripts.run_baseline import digest, write_json
 
 
@@ -77,7 +77,7 @@ def same_truth(rows):
 
 def build():
     registry=json.loads(Path('config/champion.json').read_text())
-    champion=champion_path()
+    champion=base_champion_path()
     reports={}
     names=['timing-experiment-v2','survival-experiment-v1','tabpfn-experiment-v1',
            'cadence-groups-v1','cadence-groups-full-v1','repeat-history-v1','tabpfn-repeat-v1']

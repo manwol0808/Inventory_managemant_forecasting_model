@@ -1,0 +1,83 @@
+{
+  "contract": "Descriptive reuse of consumed cohorts, observed repurchases only. Assumes daily execution from feature availability; no measured stockout or delivery labels. Lead choices fixed at 0, 7, 10; no test tuning.",
+  "cohorts": [
+    {
+      "source": "artifacts/xgboost-short-v2/validation-predictions.csv",
+      "source_sha256": "d2090683fd8eb66c962a657e9ead4fd86d52ca69505a8773d882187d1b631178",
+      "policies": [
+        {
+          "lead_days": 0,
+          "n": 1196,
+          "before_repurchase": 802,
+          "same_day": 88,
+          "late": 306,
+          "at_least_7_days_before": 354,
+          "at_least_10_days_before": 222,
+          "over_30_days_before": 0,
+          "clipped_to_feature_availability": 0
+        },
+        {
+          "lead_days": 7,
+          "n": 1196,
+          "before_repurchase": 1157,
+          "same_day": 25,
+          "late": 14,
+          "at_least_7_days_before": 768,
+          "at_least_10_days_before": 571,
+          "over_30_days_before": 0,
+          "clipped_to_feature_availability": 547
+        },
+        {
+          "lead_days": 10,
+          "n": 1196,
+          "before_repurchase": 1169,
+          "same_day": 24,
+          "late": 3,
+          "at_least_7_days_before": 804,
+          "at_least_10_days_before": 607,
+          "over_30_days_before": 0,
+          "clipped_to_feature_availability": 1073
+        }
+      ]
+    },
+    {
+      "source": "artifacts/final-test-v1/predictions.csv",
+      "source_sha256": "583e46781983082e8f81ed3db44d43656c0503e6870230e9917dbf6780c10439",
+      "policies": [
+        {
+          "lead_days": 0,
+          "n": 786,
+          "before_repurchase": 529,
+          "same_day": 68,
+          "late": 189,
+          "at_least_7_days_before": 213,
+          "at_least_10_days_before": 126,
+          "over_30_days_before": 0,
+          "clipped_to_feature_availability": 0
+        },
+        {
+          "lead_days": 7,
+          "n": 786,
+          "before_repurchase": 766,
+          "same_day": 12,
+          "late": 8,
+          "at_least_7_days_before": 511,
+          "at_least_10_days_before": 360,
+          "over_30_days_before": 0,
+          "clipped_to_feature_availability": 379
+        },
+        {
+          "lead_days": 10,
+          "n": 786,
+          "before_repurchase": 773,
+          "same_day": 10,
+          "late": 3,
+          "at_least_7_days_before": 536,
+          "at_least_10_days_before": 387,
+          "over_30_days_before": 0,
+          "clipped_to_feature_availability": 711
+        }
+      ]
+    }
+  ]
+}

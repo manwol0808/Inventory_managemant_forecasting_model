@@ -1,0 +1,27 @@
+{
+  "verification": [
+    {
+      "root": "artifacts/purchase-segments-v1",
+      "report_sha256": "ec9b0908a39c512eb54ecbbd349151df1b5995bb80ca8816e0d1d14e91f0f88c",
+      "replayed_predictions": 100122,
+      "checked_policy_summaries": 52,
+      "raw_observed_label_matches": 53678,
+      "file_hashes_verified": 251,
+      "status": "passed"
+    },
+    {
+      "root": "artifacts/purchase-segments-controls-v1",
+      "report_sha256": "b0ba7abe06808512a3fec9a33851f309241c881645f34a585dccc8a18cafcbae",
+      "replayed_predictions": 33374,
+      "checked_policy_summaries": 20,
+      "raw_observed_label_matches": 18690,
+      "file_hashes_verified": 43,
+      "status": "passed"
+    }
+  ],
+  "preprocessing_checks": {
+    "all_origin_ids_and_pair_last_gaps": 90773,
+    "independent_item_support_samples": 200,
+    "relevant_unit_tests_passed": 18
+  }
+}

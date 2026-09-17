@@ -1,0 +1,148 @@
+{
+  "version": "router-champion-v1",
+  "understood_as": "Structure the user promoted: stable pairs to XGBoost and speeding-up pairs to TabPFN at the 25th percentile, champion elsewhere; first purchases get no cart; 2026-01/02 excluded from training.",
+  "enriched_source": "artifacts/purchase-segments-v1/enriched-origins.csv",
+  "event_source": "data/purchase-events-full-v1",
+  "train_end": "2026-07-13",
+  "mature": {
+    "horizon_days": 90,
+    "training_window_days": 10000,
+    "note": "Monthly walk-forward from when specialists reach minimum rows; last origin 2026-06-16 so every 90-day horizon ends by mature_end",
+    "folds": [
+      {
+        "id": "2025-07",
+        "train_end": "2025-06-30",
+        "origin_start": "2025-07-01",
+        "origin_end": "2025-07-31"
+      },
+      {
+        "id": "2025-08",
+        "train_end": "2025-07-31",
+        "origin_start": "2025-08-01",
+        "origin_end": "2025-08-31"
+      },
+      {
+        "id": "2025-09",
+        "train_end": "2025-08-31",
+        "origin_start": "2025-09-01",
+        "origin_end": "2025-09-30"
+      },
+      {
+        "id": "2025-10",
+        "train_end": "2025-09-30",
+        "origin_start": "2025-10-01",
+        "origin_end": "2025-10-31"
+      },
+      {
+        "id": "2025-11",
+        "train_end": "2025-10-31",
+        "origin_start": "2025-11-01",
+        "origin_end": "2025-11-30"
+      },
+      {
+        "id": "2025-12",
+        "train_end": "2025-11-30",
+        "origin_start": "2025-12-01",
+        "origin_end": "2025-12-31"
+      },
+      {
+        "id": "2026-01",
+        "train_end": "2025-12-31",
+        "origin_start": "2026-01-01",
+        "origin_end": "2026-01-31"
+      },
+      {
+        "id": "2026-02",
+        "train_end": "2026-01-31",
+        "origin_start": "2026-02-01",
+        "origin_end": "2026-02-28"
+      },
+      {
+        "id": "2026-03",
+        "train_end": "2026-02-28",
+        "origin_start": "2026-03-01",
+        "origin_end": "2026-03-31"
+      },
+      {
+        "id": "2026-04",
+        "train_end": "2026-03-31",
+        "origin_start": "2026-04-01",
+        "origin_end": "2026-04-30"
+      },
+      {
+        "id": "2026-05",
+        "train_end": "2026-04-30",
+        "origin_start": "2026-05-01",
+        "origin_end": "2026-05-31"
+      },
+      {
+        "id": "2026-06",
+        "train_end": "2026-05-31",
+        "origin_start": "2026-06-01",
+        "origin_end": "2026-06-16"
+      }
+    ],
+    "confirm_from": "2026-04"
+  },
+  "mature_end": "2026-09-14",
+  "route_unit": "pair",
+  "routes": {
+    "stable": "stable_xgboost",
+    "speeding_up": "speeding_up_tabpfn",
+    "slowing_down": "champion",
+    "rebound": "champion",
+    "irregular": "champion",
+    "insufficient": "champion"
+  },
+  "minimum_group_rows": 100,
+  "minimum_group_customers": 20,
+  "switch_window": 3,
+  "switch_min_votes": 2,
+  "quantiles": [
+    0.25,
+    0.5,
+    0.75
+  ],
+  "max_relative_iqr": 1.0,
+  "point_quantile": 0.25,
+  "late_guard": false,
+  "xgb_rounds": 150,
+  "xgb_params": {
+    "tree_method": "hist",
+    "device": "cpu",
+    "eta": 0.05,
+    "max_depth": 4,
+    "min_child_weight": 10,
+    "lambda": 1,
+    "seed": 42,
+    "nthread": 4
+  },
+  "tabpfn": {
+    "weights": "artifacts/tabpfn-weights/tabpfn-v2-regressor.ckpt",
+    "context_rows": 1000,
+    "n_estimators": 2,
+    "auto_scale_n_estimators": false,
+    "batch_size": 256,
+    "device": "cpu",
+    "torch_threads": 4,
+    "seed": 42
+  },
+  "weekly_release_hour": 22,
+  "weekly_buyer_max_gap_days": 7,
+  "cart_policies": [
+    "none",
+    "lead7",
+    "lead10"
+  ],
+  "evaluation": "Consumed champion validation 1,196 plus monthly mature 90-day folds 2025-07..2026-06; exploratory, no auto-promotion",
+  "operational_approval": false,
+  "independent_final_test": false,
+  "monitoring_days": 45,
+  "skip_first_purchase": true,
+  "second_purchase_last_gap": false,
+  "training_exclude": {
+    "start": "2026-01-01",
+    "end": "2026-02-28",
+    "reason": "User-declared exceptional period (2026-01 origins spiked to 10,800); excluded from training only, still evaluated"
+  }
+}

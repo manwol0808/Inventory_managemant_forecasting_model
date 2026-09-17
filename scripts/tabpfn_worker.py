@@ -14,8 +14,9 @@ def run(input_path, weights, config_path, output):
     if output.exists():
         raise FileExistsError(output)
     data = np.load(input_path,allow_pickle=False)
-    if set(data.files) != {"x_train","y_train","x_valid"} or data["x_train"].shape[1] != 21:
+    if set(data.files) != {"x_train","y_train","x_valid"} or data["x_train"].shape[1] != cfg.get("feature_count",21):
         raise ValueError("Unexpected local feature arrays")
+    extra = {"quantiles":cfg["quantiles"]} if cfg["output_type"] == "quantiles" else {}
     torch.set_num_threads(cfg["torch_threads"])
     model = TabPFNRegressor.create_default_for_version(ModelVersion.V2,model_path=weights,
         n_estimators=cfg["n_estimators"],auto_scale_n_estimators=cfg["auto_scale_n_estimators"],
@@ -24,7 +25,9 @@ def run(input_path, weights, config_path, output):
     model.fit(data["x_train"],data["y_train"])
     raw = []
     for start in range(0,len(data["x_valid"]),cfg["batch_size"]):
-        raw.extend(model.predict(data["x_valid"][start:start+cfg["batch_size"]],output_type=cfg["output_type"]).tolist())
+        predicted = model.predict(data["x_valid"][start:start+cfg["batch_size"]],output_type=cfg["output_type"],**extra)
+        # Quantile output is one array per requested quantile; store rows as (n, quantiles).
+        raw.extend((np.column_stack(predicted) if isinstance(predicted,list) else predicted).tolist())
         if start % (cfg["batch_size"]*4) == 0:
             print(json.dumps({"fold":input_path.parent.name,"predicted":min(start+cfg["batch_size"],len(data["x_valid"])),"total":len(data["x_valid"])}),flush=True)
     if not np.isfinite(raw).all():

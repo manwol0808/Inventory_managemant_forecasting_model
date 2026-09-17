@@ -1,0 +1,21 @@
+{
+  "policy": "weekly-order-v1",
+  "default_release": "Sunday 22:00 Asia/Seoul",
+  "cohort": "Consumed champion validation only; hypothetical execution from feature availability, not operational stockout performance",
+  "source_sha256": "d2090683fd8eb66c962a657e9ead4fd86d52ca69505a8773d882187d1b631178",
+  "counts": {
+    "n": 1196,
+    "prior_week_window": 86,
+    "adjusted_for_availability": 1110,
+    "sunday_or_monday": 1116,
+    "immediate_other_weekday": 80,
+    "before_actual_repurchase_day": 1111,
+    "same_actual_day": 32,
+    "after_actual_day": 53
+  },
+  "limitations": [
+    "Previous early-cart and relative25 metrics do not describe this new weekly policy",
+    "A late model forecast can still produce late suggestions; weekday scheduling is not a zero-lateness guarantee",
+    "Same-day orders have unknown intra-day ordering relative to scheduled release"
+  ]
+}

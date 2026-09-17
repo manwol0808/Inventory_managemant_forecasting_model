@@ -1,0 +1,1063 @@
+{
+  "version": "segment-history-comparison-v1",
+  "validation_n": 1196,
+  "customers": 444,
+  "cart_policy": "relative25_cap7; at earliest next day; window includes actual repurchase day",
+  "results": [
+    {
+      "history": "full",
+      "candidate": "base_q25",
+      "n": 1196,
+      "metrics": {
+        "window": {
+          "n": 788,
+          "rate": 0.6588628762541806
+        },
+        "late": {
+          "n": 234,
+          "rate": 0.1956521739130435
+        },
+        "same_day": {
+          "n": 72,
+          "rate": 0.06020066889632107
+        },
+        "too_early_over10": {
+          "n": 174,
+          "rate": 0.1454849498327759
+        },
+        "too_early_over30": {
+          "n": 0,
+          "rate": 0.0
+        },
+        "date7": {
+          "n": 913,
+          "rate": 0.7633779264214047
+        },
+        "quantity2": {
+          "n": 1161,
+          "rate": 0.9707357859531772
+        }
+      },
+      "vs_frozen_champion_paired_customer_bootstrap": {
+        "window": {
+          "delta_pp": 0.2508361204013378,
+          "ci95_pp": [
+            -2.5512961389519777,
+            3.0568149354624476
+          ]
+        },
+        "late": {
+          "delta_pp": 7.859531772575251,
+          "ci95_pp": [
+            5.87275498870793,
+            10.000665483584735
+          ]
+        },
+        "too_early_over10": {
+          "delta_pp": -8.110367892976589,
+          "ci95_pp": [
+            -10.299324109895425,
+            -6.0300783684137675
+          ]
+        }
+      }
+    },
+    {
+      "history": "full",
+      "candidate": "base_q50",
+      "n": 1196,
+      "metrics": {
+        "window": {
+          "n": 573,
+          "rate": 0.4790969899665552
+        },
+        "late": {
+          "n": 557,
+          "rate": 0.4657190635451505
+        },
+        "same_day": {
+          "n": 77,
+          "rate": 0.06438127090301003
+        },
+        "too_early_over10": {
+          "n": 66,
+          "rate": 0.05518394648829431
+        },
+        "too_early_over30": {
+          "n": 0,
+          "rate": 0.0
+        },
+        "date7": {
+          "n": 765,
+          "rate": 0.6396321070234113
+        },
+        "quantity2": {
+          "n": 1161,
+          "rate": 0.9707357859531772
+        }
+      },
+      "vs_frozen_champion_paired_customer_bootstrap": {
+        "window": {
+          "delta_pp": -17.725752508361204,
+          "ci95_pp": [
+            -21.814455270632713,
+            -13.34460118128206
+          ]
+        },
+        "late": {
+          "delta_pp": 34.86622073578595,
+          "ci95_pp": [
+            31.53219128232166,
+            38.28195736607074
+          ]
+        },
+        "too_early_over10": {
+          "delta_pp": -17.140468227424748,
+          "ci95_pp": [
+            -20.018328800534256,
+            -14.467902586566543
+          ]
+        }
+      }
+    },
+    {
+      "history": "full",
+      "candidate": "frozen_champion",
+      "n": 1196,
+      "metrics": {
+        "window": {
+          "n": 785,
+          "rate": 0.6563545150501672
+        },
+        "late": {
+          "n": 140,
+          "rate": 0.11705685618729098
+        },
+        "same_day": {
+          "n": 59,
+          "rate": 0.04933110367892977
+        },
+        "too_early_over10": {
+          "n": 271,
+          "rate": 0.2265886287625418
+        },
+        "too_early_over30": {
+          "n": 0,
+          "rate": 0.0
+        },
+        "date7": {
+          "n": 873,
+          "rate": 0.729933110367893
+        },
+        "quantity2": {
+          "n": 1164,
+          "rate": 0.9732441471571907
+        }
+      },
+      "vs_frozen_champion_paired_customer_bootstrap": {
+        "window": {
+          "delta_pp": 0.0,
+          "ci95_pp": [
+            0.0,
+            0.0
+          ]
+        },
+        "late": {
+          "delta_pp": 0.0,
+          "ci95_pp": [
+            0.0,
+            0.0
+          ]
+        },
+        "too_early_over10": {
+          "delta_pp": 0.0,
+          "ci95_pp": [
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "history": "full",
+      "candidate": "patterns_items_q25",
+      "n": 1196,
+      "metrics": {
+        "window": {
+          "n": 777,
+          "rate": 0.6496655518394648
+        },
+        "late": {
+          "n": 246,
+          "rate": 0.205685618729097
+        },
+        "same_day": {
+          "n": 68,
+          "rate": 0.056856187290969896
+        },
+        "too_early_over10": {
+          "n": 173,
+          "rate": 0.14464882943143811
+        },
+        "too_early_over30": {
+          "n": 0,
+          "rate": 0.0
+        },
+        "date7": {
+          "n": 920,
+          "rate": 0.7692307692307693
+        },
+        "quantity2": {
+          "n": 1161,
+          "rate": 0.9707357859531772
+        }
+      },
+      "vs_frozen_champion_paired_customer_bootstrap": {
+        "window": {
+          "delta_pp": -0.6688963210702341,
+          "ci95_pp": [
+            -3.547041746453007,
+            2.2101148518085068
+          ]
+        },
+        "late": {
+          "delta_pp": 8.862876254180602,
+          "ci95_pp": [
+            6.839618396566011,
+            11.101245295420222
+          ]
+        },
+        "too_early_over10": {
+          "delta_pp": -8.193979933110368,
+          "ci95_pp": [
+            -10.469729565032731,
+            -6.120643118252148
+          ]
+        }
+      }
+    },
+    {
+      "history": "full",
+      "candidate": "patterns_items_q50",
+      "n": 1196,
+      "metrics": {
+        "window": {
+          "n": 594,
+          "rate": 0.49665551839464883
+        },
+        "late": {
+          "n": 543,
+          "rate": 0.4540133779264214
+        },
+        "same_day": {
+          "n": 77,
+          "rate": 0.06438127090301003
+        },
+        "too_early_over10": {
+          "n": 59,
+          "rate": 0.04933110367892977
+        },
+        "too_early_over30": {
+          "n": 0,
+          "rate": 0.0
+        },
+        "date7": {
+          "n": 756,
+          "rate": 0.6321070234113713
+        },
+        "quantity2": {
+          "n": 1161,
+          "rate": 0.9707357859531772
+        }
+      },
+      "vs_frozen_champion_paired_customer_bootstrap": {
+        "window": {
+          "delta_pp": -15.96989966555184,
+          "ci95_pp": [
+            -20.15632781374502,
+            -11.26478552859619
+          ]
+        },
+        "late": {
+          "delta_pp": 33.69565217391305,
+          "ci95_pp": [
+            30.08978863481669,
+            37.375609339584564
+          ]
+        },
+        "too_early_over10": {
+          "delta_pp": -17.725752508361204,
+          "ci95_pp": [
+            -20.899772330737477,
+            -14.831444495676301
+          ]
+        }
+      }
+    },
+    {
+      "history": "full",
+      "candidate": "patterns_q25",
+      "n": 1196,
+      "metrics": {
+        "window": {
+          "n": 785,
+          "rate": 0.6563545150501672
+        },
+        "late": {
+          "n": 242,
+          "rate": 0.20234113712374582
+        },
+        "same_day": {
+          "n": 73,
+          "rate": 0.061036789297658864
+        },
+        "too_early_over10": {
+          "n": 169,
+          "rate": 0.14130434782608695
+        },
+        "too_early_over30": {
+          "n": 0,
+          "rate": 0.0
+        },
+        "date7": {
+          "n": 917,
+          "rate": 0.7667224080267558
+        },
+        "quantity2": {
+          "n": 1161,
+          "rate": 0.9707357859531772
+        }
+      },
+      "vs_frozen_champion_paired_customer_bootstrap": {
+        "window": {
+          "delta_pp": 0.0,
+          "ci95_pp": [
+            -2.936887724678422,
+            2.9670632659169263
+          ]
+        },
+        "late": {
+          "delta_pp": 8.528428093645484,
+          "ci95_pp": [
+            6.393017741881927,
+            10.811046648742982
+          ]
+        },
+        "too_early_over10": {
+          "delta_pp": -8.528428093645484,
+          "ci95_pp": [
+            -10.864173813616233,
+            -6.451429479811197
+          ]
+        }
+      }
+    },
+    {
+      "history": "full",
+      "candidate": "patterns_q50",
+      "n": 1196,
+      "metrics": {
+        "window": {
+          "n": 596,
+          "rate": 0.4983277591973244
+        },
+        "late": {
+          "n": 540,
+          "rate": 0.451505016722408
+        },
+        "same_day": {
+          "n": 87,
+          "rate": 0.07274247491638795
+        },
+        "too_early_over10": {
+          "n": 60,
+          "rate": 0.05016722408026756
+        },
+        "too_early_over30": {
+          "n": 0,
+          "rate": 0.0
+        },
+        "date7": {
+          "n": 758,
+          "rate": 0.6337792642140468
+        },
+        "quantity2": {
+          "n": 1161,
+          "rate": 0.9707357859531772
+        }
+      },
+      "vs_frozen_champion_paired_customer_bootstrap": {
+        "window": {
+          "delta_pp": -15.802675585284282,
+          "ci95_pp": [
+            -19.87026563430015,
+            -11.296725797268527
+          ]
+        },
+        "late": {
+          "delta_pp": 33.44481605351171,
+          "ci95_pp": [
+            30.11002029908289,
+            36.89437030356673
+          ]
+        },
+        "too_early_over10": {
+          "delta_pp": -17.642140468227424,
+          "ci95_pp": [
+            -20.830054721533532,
+            -14.743294635708567
+          ]
+        }
+      }
+    },
+    {
+      "history": "full",
+      "candidate": "specialists_q25",
+      "n": 1196,
+      "metrics": {
+        "window": {
+          "n": 780,
+          "rate": 0.6521739130434783
+        },
+        "late": {
+          "n": 258,
+          "rate": 0.2157190635451505
+        },
+        "same_day": {
+          "n": 67,
+          "rate": 0.056020066889632104
+        },
+        "too_early_over10": {
+          "n": 158,
+          "rate": 0.13210702341137123
+        },
+        "too_early_over30": {
+          "n": 0,
+          "rate": 0.0
+        },
+        "date7": {
+          "n": 922,
+          "rate": 0.7709030100334449
+        },
+        "quantity2": {
+          "n": 1157,
+          "rate": 0.967391304347826
+        }
+      },
+      "vs_frozen_champion_paired_customer_bootstrap": {
+        "window": {
+          "delta_pp": -0.4180602006688963,
+          "ci95_pp": [
+            -3.4404779874213838,
+            2.539732970233367
+          ]
+        },
+        "late": {
+          "delta_pp": 9.866220735785953,
+          "ci95_pp": [
+            7.692165558019217,
+            12.357656412395048
+          ]
+        },
+        "too_early_over10": {
+          "delta_pp": -9.448160535117058,
+          "ci95_pp": [
+            -11.832448686489709,
+            -7.18849840255591
+          ]
+        }
+      }
+    },
+    {
+      "history": "full",
+      "candidate": "specialists_q50",
+      "n": 1196,
+      "metrics": {
+        "window": {
+          "n": 569,
+          "rate": 0.47575250836120403
+        },
+        "late": {
+          "n": 571,
+          "rate": 0.4774247491638796
+        },
+        "same_day": {
+          "n": 84,
+          "rate": 0.07023411371237458
+        },
+        "too_early_over10": {
+          "n": 56,
+          "rate": 0.046822742474916385
+        },
+        "too_early_over30": {
+          "n": 0,
+          "rate": 0.0
+        },
+        "date7": {
+          "n": 723,
+          "rate": 0.6045150501672241
+        },
+        "quantity2": {
+          "n": 1157,
+          "rate": 0.967391304347826
+        }
+      },
+      "vs_frozen_champion_paired_customer_bootstrap": {
+        "window": {
+          "delta_pp": -18.06020066889632,
+          "ci95_pp": [
+            -22.260958768336195,
+            -13.436607620724784
+          ]
+        },
+        "late": {
+          "delta_pp": 36.03678929765886,
+          "ci95_pp": [
+            32.2572913693025,
+            40.0
+          ]
+        },
+        "too_early_over10": {
+          "delta_pp": -17.976588628762542,
+          "ci95_pp": [
+            -21.118704144053126,
+            -15.090919066520641
+          ]
+        }
+      }
+    },
+    {
+      "history": "short",
+      "candidate": "base_q25",
+      "n": 1196,
+      "metrics": {
+        "window": {
+          "n": 766,
+          "rate": 0.6404682274247492
+        },
+        "late": {
+          "n": 55,
+          "rate": 0.04598662207357859
+        },
+        "same_day": {
+          "n": 40,
+          "rate": 0.033444816053511704
+        },
+        "too_early_over10": {
+          "n": 375,
+          "rate": 0.31354515050167225
+        },
+        "too_early_over30": {
+          "n": 0,
+          "rate": 0.0
+        },
+        "date7": {
+          "n": 743,
+          "rate": 0.6212374581939799
+        },
+        "quantity2": {
+          "n": 1154,
+          "rate": 0.9648829431438127
+        }
+      },
+      "vs_frozen_champion_paired_customer_bootstrap": {
+        "window": {
+          "delta_pp": -1.588628762541806,
+          "ci95_pp": [
+            -4.699237727583345,
+            1.2240969047440589
+          ]
+        },
+        "late": {
+          "delta_pp": -7.1070234113712365,
+          "ci95_pp": [
+            -9.03145145498735,
+            -5.191361771095556
+          ]
+        },
+        "too_early_over10": {
+          "delta_pp": 8.695652173913043,
+          "ci95_pp": [
+            6.858215949859082,
+            10.594327252816921
+          ]
+        }
+      }
+    },
+    {
+      "history": "short",
+      "candidate": "base_q50",
+      "n": 1196,
+      "metrics": {
+        "window": {
+          "n": 774,
+          "rate": 0.6471571906354515
+        },
+        "late": {
+          "n": 106,
+          "rate": 0.08862876254180602
+        },
+        "same_day": {
+          "n": 65,
+          "rate": 0.05434782608695652
+        },
+        "too_early_over10": {
+          "n": 316,
+          "rate": 0.26421404682274247
+        },
+        "too_early_over30": {
+          "n": 0,
+          "rate": 0.0
+        },
+        "date7": {
+          "n": 827,
+          "rate": 0.6914715719063546
+        },
+        "quantity2": {
+          "n": 1154,
+          "rate": 0.9648829431438127
+        }
+      },
+      "vs_frozen_champion_paired_customer_bootstrap": {
+        "window": {
+          "delta_pp": -0.919732441471572,
+          "ci95_pp": [
+            -2.931226294912997,
+            0.9664517208536036
+          ]
+        },
+        "late": {
+          "delta_pp": -2.842809364548495,
+          "ci95_pp": [
+            -4.098641365371659,
+            -1.4285414417656233
+          ]
+        },
+        "too_early_over10": {
+          "delta_pp": 3.7625418060200673,
+          "ci95_pp": [
+            2.4325308142691617,
+            5.086397568641951
+          ]
+        }
+      }
+    },
+    {
+      "history": "short",
+      "candidate": "frozen_champion",
+      "n": 1196,
+      "metrics": {
+        "window": {
+          "n": 785,
+          "rate": 0.6563545150501672
+        },
+        "late": {
+          "n": 140,
+          "rate": 0.11705685618729098
+        },
+        "same_day": {
+          "n": 59,
+          "rate": 0.04933110367892977
+        },
+        "too_early_over10": {
+          "n": 271,
+          "rate": 0.2265886287625418
+        },
+        "too_early_over30": {
+          "n": 0,
+          "rate": 0.0
+        },
+        "date7": {
+          "n": 873,
+          "rate": 0.729933110367893
+        },
+        "quantity2": {
+          "n": 1164,
+          "rate": 0.9732441471571907
+        }
+      },
+      "vs_frozen_champion_paired_customer_bootstrap": {
+        "window": {
+          "delta_pp": 0.0,
+          "ci95_pp": [
+            0.0,
+            0.0
+          ]
+        },
+        "late": {
+          "delta_pp": 0.0,
+          "ci95_pp": [
+            0.0,
+            0.0
+          ]
+        },
+        "too_early_over10": {
+          "delta_pp": 0.0,
+          "ci95_pp": [
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "history": "short",
+      "candidate": "patterns_items_q25",
+      "n": 1196,
+      "metrics": {
+        "window": {
+          "n": 759,
+          "rate": 0.6346153846153846
+        },
+        "late": {
+          "n": 67,
+          "rate": 0.056020066889632104
+        },
+        "same_day": {
+          "n": 33,
+          "rate": 0.027591973244147156
+        },
+        "too_early_over10": {
+          "n": 370,
+          "rate": 0.3093645484949833
+        },
+        "too_early_over30": {
+          "n": 0,
+          "rate": 0.0
+        },
+        "date7": {
+          "n": 754,
+          "rate": 0.6304347826086957
+        },
+        "quantity2": {
+          "n": 1159,
+          "rate": 0.9690635451505016
+        }
+      },
+      "vs_frozen_champion_paired_customer_bootstrap": {
+        "window": {
+          "delta_pp": -2.1739130434782608,
+          "ci95_pp": [
+            -5.073086844368014,
+            0.524040390147738
+          ]
+        },
+        "late": {
+          "delta_pp": -6.103678929765886,
+          "ci95_pp": [
+            -8.085230599968058,
+            -4.3065395580105585
+          ]
+        },
+        "too_early_over10": {
+          "delta_pp": 8.277591973244148,
+          "ci95_pp": [
+            6.4976000135540914,
+            10.120722667622159
+          ]
+        }
+      }
+    },
+    {
+      "history": "short",
+      "candidate": "patterns_items_q50",
+      "n": 1196,
+      "metrics": {
+        "window": {
+          "n": 775,
+          "rate": 0.6479933110367893
+        },
+        "late": {
+          "n": 119,
+          "rate": 0.09949832775919733
+        },
+        "same_day": {
+          "n": 51,
+          "rate": 0.042642140468227424
+        },
+        "too_early_over10": {
+          "n": 302,
+          "rate": 0.2525083612040134
+        },
+        "too_early_over30": {
+          "n": 0,
+          "rate": 0.0
+        },
+        "date7": {
+          "n": 835,
+          "rate": 0.6981605351170569
+        },
+        "quantity2": {
+          "n": 1159,
+          "rate": 0.9690635451505016
+        }
+      },
+      "vs_frozen_champion_paired_customer_bootstrap": {
+        "window": {
+          "delta_pp": -0.8361204013377926,
+          "ci95_pp": [
+            -2.662081333319079,
+            1.1466971798830201
+          ]
+        },
+        "late": {
+          "delta_pp": -1.7558528428093645,
+          "ci95_pp": [
+            -3.162447257383966,
+            -0.4336045339408949
+          ]
+        },
+        "too_early_over10": {
+          "delta_pp": 2.591973244147157,
+          "ci95_pp": [
+            1.2509385418854864,
+            3.978886616014026
+          ]
+        }
+      }
+    },
+    {
+      "history": "short",
+      "candidate": "patterns_q25",
+      "n": 1196,
+      "metrics": {
+        "window": {
+          "n": 775,
+          "rate": 0.6479933110367893
+        },
+        "late": {
+          "n": 72,
+          "rate": 0.06020066889632107
+        },
+        "same_day": {
+          "n": 48,
+          "rate": 0.04013377926421405
+        },
+        "too_early_over10": {
+          "n": 349,
+          "rate": 0.29180602006688966
+        },
+        "too_early_over30": {
+          "n": 0,
+          "rate": 0.0
+        },
+        "date7": {
+          "n": 781,
+          "rate": 0.653010033444816
+        },
+        "quantity2": {
+          "n": 1159,
+          "rate": 0.9690635451505016
+        }
+      },
+      "vs_frozen_champion_paired_customer_bootstrap": {
+        "window": {
+          "delta_pp": -0.8361204013377926,
+          "ci95_pp": [
+            -3.4060208533535956,
+            1.7988552739165986
+          ]
+        },
+        "late": {
+          "delta_pp": -5.68561872909699,
+          "ci95_pp": [
+            -7.716819368582915,
+            -3.8246656534439984
+          ]
+        },
+        "too_early_over10": {
+          "delta_pp": 6.521739130434782,
+          "ci95_pp": [
+            4.8879456299713135,
+            8.122289683578307
+          ]
+        }
+      }
+    },
+    {
+      "history": "short",
+      "candidate": "patterns_q50",
+      "n": 1196,
+      "metrics": {
+        "window": {
+          "n": 784,
+          "rate": 0.6555183946488294
+        },
+        "late": {
+          "n": 123,
+          "rate": 0.1028428093645485
+        },
+        "same_day": {
+          "n": 55,
+          "rate": 0.04598662207357859
+        },
+        "too_early_over10": {
+          "n": 289,
+          "rate": 0.24163879598662208
+        },
+        "too_early_over30": {
+          "n": 0,
+          "rate": 0.0
+        },
+        "date7": {
+          "n": 847,
+          "rate": 0.7081939799331104
+        },
+        "quantity2": {
+          "n": 1159,
+          "rate": 0.9690635451505016
+        }
+      },
+      "vs_frozen_champion_paired_customer_bootstrap": {
+        "window": {
+          "delta_pp": -0.08361204013377926,
+          "ci95_pp": [
+            -1.9344968377528222,
+            1.8982842833155464
+          ]
+        },
+        "late": {
+          "delta_pp": -1.4214046822742474,
+          "ci95_pp": [
+            -2.842859820089955,
+            0.08211708573221356
+          ]
+        },
+        "too_early_over10": {
+          "delta_pp": 1.5050167224080269,
+          "ci95_pp": [
+            0.17500838394753512,
+            2.73972602739726
+          ]
+        }
+      }
+    },
+    {
+      "history": "short",
+      "candidate": "specialists_q25",
+      "n": 1196,
+      "metrics": {
+        "window": {
+          "n": 778,
+          "rate": 0.6505016722408027
+        },
+        "late": {
+          "n": 66,
+          "rate": 0.05518394648829431
+        },
+        "same_day": {
+          "n": 36,
+          "rate": 0.030100334448160536
+        },
+        "too_early_over10": {
+          "n": 352,
+          "rate": 0.29431438127090304
+        },
+        "too_early_over30": {
+          "n": 0,
+          "rate": 0.0
+        },
+        "date7": {
+          "n": 777,
+          "rate": 0.6496655518394648
+        },
+        "quantity2": {
+          "n": 1159,
+          "rate": 0.9690635451505016
+        }
+      },
+      "vs_frozen_champion_paired_customer_bootstrap": {
+        "window": {
+          "delta_pp": -0.5852842809364548,
+          "ci95_pp": [
+            -3.3913431677018635,
+            2.1240476507793713
+          ]
+        },
+        "late": {
+          "delta_pp": -6.187290969899665,
+          "ci95_pp": [
+            -8.215665794319781,
+            -4.276615104640582
+          ]
+        },
+        "too_early_over10": {
+          "delta_pp": 6.77257525083612,
+          "ci95_pp": [
+            5.189379577538122,
+            8.418477940309073
+          ]
+        }
+      }
+    },
+    {
+      "history": "short",
+      "candidate": "specialists_q50",
+      "n": 1196,
+      "metrics": {
+        "window": {
+          "n": 788,
+          "rate": 0.6588628762541806
+        },
+        "late": {
+          "n": 117,
+          "rate": 0.09782608695652174
+        },
+        "same_day": {
+          "n": 55,
+          "rate": 0.04598662207357859
+        },
+        "too_early_over10": {
+          "n": 291,
+          "rate": 0.24331103678929766
+        },
+        "too_early_over30": {
+          "n": 0,
+          "rate": 0.0
+        },
+        "date7": {
+          "n": 838,
+          "rate": 0.7006688963210702
+        },
+        "quantity2": {
+          "n": 1159,
+          "rate": 0.9690635451505016
+        }
+      },
+      "vs_frozen_champion_paired_customer_bootstrap": {
+        "window": {
+          "delta_pp": 0.2508361204013378,
+          "ci95_pp": [
+            -1.6395129191121907,
+            2.1281870933708427
+          ]
+        },
+        "late": {
+          "delta_pp": -1.9230769230769231,
+          "ci95_pp": [
+            -3.172019503405146,
+            -0.7188498402555911
+          ]
+        },
+        "too_early_over10": {
+          "delta_pp": 1.6722408026755853,
+          "ci95_pp": [
+            0.2666430469441984,
+            3.025271873455264
+          ]
+        }
+      }
+    }
+  ],
+  "provenance": {
+    "artifacts/purchase-segments-v1/report.json": "ec9b0908a39c512eb54ecbbd349151df1b5995bb80ca8816e0d1d14e91f0f88c",
+    "artifacts/purchase-segments-controls-v1/report.json": "b0ba7abe06808512a3fec9a33851f309241c881645f34a585dccc8a18cafcbae",
+    "artifacts/purchase-segments-short-v1/report.json": "39dcafe40b1571257f2e1e8869e86e4c68508bf369d3752c46e937cb9550704c"
+  },
+  "limits": [
+    "Same reused, boundary-limited validation; not fresh prospective accuracy",
+    "Bootstrap 2000 paired customer clusters, seed20260917; exploratory intervals not multiple-comparison adjusted",
+    "Customer grouping changes with history length; only overall same-cohort metrics are compared",
+    "No stockout ground truth or operational auto-promotion"
+  ]
+}

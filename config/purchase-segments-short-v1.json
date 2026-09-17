@@ -1,0 +1,91 @@
+{
+  "version": "purchase-segments-short-v1",
+  "understood_as": "Repeat identical customer/item preprocessing and eight model candidates on the existing 2026-04-09 short-history dataset; compare exact same validation IDs with full-history runs and frozen champion. No pre-April history in any features.",
+  "reference_protocol": "config/cadence-groups-full-v1.json",
+  "minimum_gaps": 4,
+  "recent_gaps": 6,
+  "stable_cv_max": 0.25,
+  "trend_relative_change_min": 0.3,
+  "trend_direction_fraction_min": 0.75,
+  "product_recent_intervals": 100,
+  "minimum_product_intervals": 20,
+  "minimum_product_customers": 5,
+  "minimum_specialist_rows": 200,
+  "minimum_specialist_customers": 30,
+  "rounds": 150,
+  "params": {
+    "tree_method": "hist",
+    "device": "cpu",
+    "eta": 0.05,
+    "max_depth": 4,
+    "min_child_weight": 10,
+    "lambda": 1,
+    "subsample": 1,
+    "colsample_bytree": 1,
+    "seed": 42,
+    "nthread": 4
+  },
+  "candidates": [
+    {
+      "id": "base_q50",
+      "features": "base",
+      "alpha": 0.5,
+      "specialists": false
+    },
+    {
+      "id": "patterns_q50",
+      "features": "patterns",
+      "alpha": 0.5,
+      "specialists": false
+    },
+    {
+      "id": "patterns_items_q50",
+      "features": "all",
+      "alpha": 0.5,
+      "specialists": false
+    },
+    {
+      "id": "patterns_items_q25",
+      "features": "all",
+      "alpha": 0.25,
+      "specialists": false
+    },
+    {
+      "id": "specialists_q50",
+      "features": "all",
+      "alpha": 0.5,
+      "specialists": true
+    },
+    {
+      "id": "specialists_q25",
+      "features": "all",
+      "alpha": 0.25,
+      "specialists": true
+    },
+    {
+      "id": "base_q25",
+      "features": "base",
+      "alpha": 0.25,
+      "specialists": false
+    },
+    {
+      "id": "patterns_q25",
+      "features": "patterns",
+      "alpha": 0.25,
+      "specialists": false
+    }
+  ],
+  "cart_policies": [
+    "none",
+    "lead7",
+    "lead10",
+    "relative25_cap7"
+  ],
+  "selection": "No automatic promotion. Compare late/same-day, 1-10-day early, >30-day early, next-day suggestions, quantity errors and non-return suggestions together. No post-score threshold tuning.",
+  "operational_approval": false,
+  "independent_final_test": false,
+  "feature_source": "data/features-splits-short-v2",
+  "event_source": "data/purchase-events-short-v2",
+  "expected_history_start": "2026-04-09",
+  "evaluation_mode": "champion_validation_only"
+}

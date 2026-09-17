@@ -2,10 +2,10 @@
 
 고객·상품별 재구매 시점과 수량을 예측해 자동 장바구니에 활용하는 프로젝트입니다. 현재 실험은 시점을 우선하고 수량 ±1·±2개 적중률과 불필요한 추천을 함께 평가합니다.
 
-사용자가 지정한 현재 [챔피언과 등록 방식](docs/champion-benchmarks.md), [전체 벤치마크 Grafana](http://127.0.0.1:3008/d/forecasting-benchmarks)에서 모델 비교를 확인할 수 있습니다. [규칙적인 이력만 학습한 후속 실험](docs/evidence/regular-history-v1.md)도 완료했습니다. 기존 최종 시험은 사용 완료했으며 새 결과는 과거 개발 비교입니다. 실제 앱 연결과 미래 로그 검증은 남아 있습니다. 현재 상태는 [작업 목록](docs/tasks.md)을 따릅니다.
+현재 챔피언은 고객×품목의 구매 주기 유형에 따라 XGBoost·TabPFN·기본 XGBoost를 고르는 [멀티 에이전트 라우터](docs/multi-agent-architecture.md)입니다. 장바구니는 예상 주의 전주 월요일에 담고, 이 품목의 첫 구매에는 담지 않습니다. [등록과 성능](docs/champion-benchmarks.md), 앱 연동은 남아 있습니다.
 
 - [전체 문서와 대화 기록](docs/README.md)
-- [내일 검토할 순서와 미결 질문](docs/handoff.md)
+- [다음 작업 시작점](docs/handoff.md)
 - [데이터·아이템 추적·범주형 피처 설계](docs/data-contract.md)
 - [평가·과적합 방지·XGBoost 학습 설계](docs/evaluation.md)
 - [Grafana 패널과 수집 설계](docs/observability.md)

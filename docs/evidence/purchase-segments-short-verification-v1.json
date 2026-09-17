@@ -1,0 +1,13 @@
+{
+  "verification": [
+    {
+      "root": "artifacts/purchase-segments-short-v1",
+      "report_sha256": "39dcafe40b1571257f2e1e8869e86e4c68508bf369d3752c46e937cb9550704c",
+      "replayed_predictions": 9568,
+      "checked_policy_summaries": 36,
+      "raw_observed_label_matches": 10764,
+      "file_hashes_verified": 43,
+      "status": "passed"
+    }
+  ]
+}
