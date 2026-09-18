@@ -1,0 +1,339 @@
+{
+  "uid": "reorder-champion",
+  "title": "재구매 장바구니 챔피언 · reorder-champion-v3",
+  "tags": [
+    "forecasting",
+    "champion"
+  ],
+  "timezone": "Asia/Seoul",
+  "schemaVersion": 39,
+  "version": 3,
+  "editable": false,
+  "refresh": "",
+  "panels": [
+    {
+      "id": 1,
+      "type": "text",
+      "title": "이 화면 읽는 법",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 6
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "**reorder-champion-v3 · 등록 2026-09-18 · 검증 2026-01~2026-06 · 12,229건**\n\n첫 구매를 제외하고 90일 안에 재구매가 관측된 고객×품목 건만 채점했습니다. 학습에 쓰지 않은 기간입니다.\n\n**앱 연동은 없고 실제로 장바구니에 담은 적도 없습니다.** 과거 주문 이력에 우리 규칙이 정했을 가상의 담는 날을 계산해, 이미 알고 있는 다음 구매일과 비교한 사후 대조입니다. 담는 날이 실제 구매일보다 뒤면 **늦음**입니다. 따라서 모든 수치는 사장님의 구매 행동이 장바구니 제안에 영향받지 않는다는 가정 위에 있습니다. 운영 성능은 연동 후 새 로그로만 확인됩니다.\n\n**담는 날은 기존 규칙(예측 재구매일 7일 전 이전 월요일)을 그대로 씁니다.** 바뀐 것은 네 가지입니다 — ① 수량을 매장 단위 장바구니 모델 값으로 교체, ② 매장 주문 리듬 예측이 더 이르면 최대 7일까지 앞당김, ③ 간격 예측을 분위 0.4로 재학습, ④ 그 고객×품목의 과거 예측 오차만큼 담는 날을 당기는 짝별 보정(앞당김만 허용, 한도 7일, 검증 건의 29%에 적용).\n\n**순진한 규칙**은 예측 없이 구매 다음 월요일에 무조건 담는 방식입니다. 모델이 이것보다 나은지가 판단 기준입니다. **대기**는 담긴 뒤 실제 구매까지의 일수이고, 짧을수록 제때 담았다는 뜻입니다. **늦음**은 담기 전에 이미 산 경우로 그 주기는 0점입니다."
+      }
+    },
+    {
+      "id": 2,
+      "type": "barchart",
+      "title": "적중과 수량 · 순진한 규칙 / 현행 / 챔피언",
+      "description": "같은 검증 건을 같은 분모로 비교합니다.",
+      "gridPos": {
+        "x": 0,
+        "y": 6,
+        "w": 12,
+        "h": 10
+      },
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "forecasting-saved-results"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "forecasting-saved-results"
+          },
+          "scenarioId": "csv_content",
+          "csvContent": "지표,순진한 규칙,현행,챔피언\r\n늦음 (낮을수록 좋음),0.03900564232561943,0.14498323656881185,0.07923787717720174\r\n담긴 뒤 7일 안에 구매,0.21048327745522938,0.24908005560552784,0.2553765639054706\r\n담긴 뒤 14일 안에 구매,0.4005233461444108,0.44541663259465203,0.47657208275410906\r\n담긴 뒤 21일 안에 구매,0.5397824842587292,0.5739635293155614,0.620328726796958\r\n수량 정확,0.47468354430379744,0.5011933174224343,0.5849347975291695\r\n수량 ±1개,0.8487137607186607,0.8630438773636865,0.8719972546328071\r\n"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "decimals": 1,
+          "min": 0,
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisPlacement": "auto",
+            "fillOpacity": 85,
+            "lineWidth": 0,
+            "gradientMode": "none"
+          },
+          "max": 1.0
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "horizontal",
+        "xField": "지표",
+        "showValue": "always",
+        "stacking": "none",
+        "groupWidth": 0.78,
+        "barWidth": 0.9,
+        "barRadius": 0.12,
+        "xTickLabelRotation": 0,
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      }
+    },
+    {
+      "id": 3,
+      "type": "barchart",
+      "title": "담긴 뒤 구매까지 대기 일수 · 짧을수록 좋음",
+      "description": "장바구니에 얼마나 오래 머물렀는지. 순진한 규칙은 상위 10%가 57일까지 갑니다.",
+      "gridPos": {
+        "x": 12,
+        "y": 6,
+        "w": 12,
+        "h": 10
+      },
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "forecasting-saved-results"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "forecasting-saved-results"
+          },
+          "scenarioId": "csv_content",
+          "csvContent": "지표,순진한 규칙,현행,챔피언\r\n대기 중앙값,17,14,14\r\n대기 상위 10% 경계,57,44,44\r\n"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "suffix:일",
+          "decimals": 0,
+          "min": 0,
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisPlacement": "auto",
+            "fillOpacity": 85,
+            "lineWidth": 0,
+            "gradientMode": "none"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "horizontal",
+        "xField": "지표",
+        "showValue": "always",
+        "stacking": "none",
+        "groupWidth": 0.78,
+        "barWidth": 0.9,
+        "barRadius": 0.12,
+        "xTickLabelRotation": 0,
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      }
+    },
+    {
+      "id": 4,
+      "type": "table",
+      "title": "예측 간격 구간별 담기는 시점",
+      "description": "챔피언 기준. 예측 간격이 길수록 늦게 담깁니다.",
+      "gridPos": {
+        "x": 0,
+        "y": 16,
+        "w": 24,
+        "h": 9
+      },
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "forecasting-saved-results"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "forecasting-saved-results"
+          },
+          "scenarioId": "csv_content",
+          "csvContent": "예측 간격,건수,담는 날,대기 중앙,구매 시점에 담겨있음\r\n14일 이하,4415,구매 후 3일,9일,0.956964892412231\r\n15-21일,2935,구매 후 6일,15일,0.9557069846678024\r\n22-30일,2475,구매 후 13일,18일,0.9094949494949495\r\n31-45일,2003,구매 후 25일,23일,0.836744882675986\r\n46일 이상,401,구매 후 39일,21일,0.7556109725685786\r\n"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            }
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
+      }
+    },
+    {
+      "id": 5,
+      "type": "table",
+      "title": "예측 간격별 사례",
+      "description": "라우터가 해당 간격으로 예측한 짝이 실제로 언제 담겼는지입니다.",
+      "gridPos": {
+        "x": 0,
+        "y": 25,
+        "w": 24,
+        "h": 9
+      },
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "forecasting-saved-results"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "forecasting-saved-results"
+          },
+          "scenarioId": "csv_content",
+          "csvContent": "예측 간격,건수,담는 날,대기 중앙,구매 시점에 담겨있음\r\n19일,1149,구매 후 7일 (1~13일),16일,0.9477806788511749\r\n26일,847,구매 후 13일 (1~20일),18일,0.922077922077922\r\n37일,443,구매 후 25일 (14~31일),24일,0.8668171557562077\r\n57일,28,구매 후 46일 (38~51일),25일,0.7142857142857143\r\n"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            }
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
+      }
+    },
+    {
+      "id": 6,
+      "type": "barchart",
+      "title": "짝별 보정의 효과",
+      "description": "같은 구성에서 ④번 보정만 켜고 끈 차이입니다. 늦음만 줄이고 적중은 유지합니다.",
+      "gridPos": {
+        "x": 0,
+        "y": 34,
+        "w": 12,
+        "h": 9
+      },
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "forecasting-saved-results"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "forecasting-saved-results"
+          },
+          "scenarioId": "csv_content",
+          "csvContent": "지표,보정 없음,보정 적용\r\n늦음,0.08463488429143838,0.07923787717720174\r\n담긴 뒤 14일 안에 구매,0.47910704064109905,0.47657208275410906\r\n담긴 뒤 21일 안에 구매,0.6202469539618939,0.620328726796958\r\n"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "decimals": 1,
+          "min": 0,
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisPlacement": "auto",
+            "fillOpacity": 85,
+            "lineWidth": 0,
+            "gradientMode": "none"
+          },
+          "max": 1.0
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "horizontal",
+        "xField": "지표",
+        "showValue": "always",
+        "stacking": "none",
+        "groupWidth": 0.78,
+        "barWidth": 0.9,
+        "barRadius": 0.12,
+        "xTickLabelRotation": 0,
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      }
+    },
+    {
+      "id": 7,
+      "type": "text",
+      "title": "모델이 실제로 버는 것",
+      "gridPos": {
+        "x": 12,
+        "y": 34,
+        "w": 12,
+        "h": 9
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "순진한 규칙(구매 다음 월요일에 무조건 담기) 대비 챔피언의 차이입니다.\n\n- 담긴 뒤 14일 안에 구매: **40.1% → 47.7%**\n- 담긴 뒤 21일 안에 구매: **54.0% → 62.0%**\n- 대기 상위 10% 경계: **57일 → 44일**\n- 대가는 늦음 3.9% → 7.9%입니다.\n\n**약 8%p가 예측 모델의 값입니다.** 특히 꼬리에서 큽니다 — 순진한 규칙은 열 건 중 한 건이 두 달 가까이 장바구니에 박혀 있는데 챔피언은 44일로 줄입니다. 담는 날을 앞당기는 규칙은 모두 순진한 쪽으로 가는 방향이라 채택하지 않았습니다."
+      }
+    },
+    {
+      "id": 8,
+      "type": "text",
+      "title": "확인하지 않은 것",
+      "gridPos": {
+        "x": 0,
+        "y": 43,
+        "w": 24,
+        "h": 9
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "- 수량은 **기존 담는 날 기준**으로 계산한 값을 재사용했습니다. ②번이 날짜를 당긴 건에 대해서는 그 시점 피처로 다시 뽑아야 최종값입니다.\n- 간격 재학습은 단일 XGBoost입니다. 라우터 구조(stable·speeding_up 전용 모델)로도 재학습해 비교했으나 21일 안 적중이 62.0% → 62.1%로 사실상 같았습니다. 학습 표본이 stable 1,076건, speeding_up 250건뿐이라 전용 모델이 붙는 것은 전체의 7%입니다. 기존 라우터의 TabPFN 분기는 재현하지 않았습니다.\n- 분위 0.4는 학습 기간 안쪽(2025-11~12)에서만 독립적으로 다시 골라 같은 값이 나왔습니다. 선택 편향은 해소되었습니다.\n- 매장 주문 리듬 모델의 장바구니 임계값 0.2는 2026-07~08 실험에서 정해져 약한 누수가 남아 있습니다.\n- 예측 간격 22-30일 구간이 가장 약합니다. 실제 간격 표준편차가 20.5일이며 담는 날 규칙 25가지와 재학습으로도 개선되지 않았습니다.\n- 예측을 한 번만 하고 담은 뒤에는 고치지 않습니다. 담기 전 주 단위 재예측은 아직 측정하지 않았습니다.\n- 담기 전 주 단위 재예측을 세 가지로 구현해 모두 실패했습니다. 피처가 전부 구매 시점 고정값이라 구매와 구매 사이에 새로 도착하는 정보가 없고, 챔피언이 담는 날에 다시 물어도 모델 답이 같습니다.\n- 운영 적용과 앱 연동은 하지 않았습니다. 장바구니 삭제 로그가 없어 오래 담겨 있는 비용은 측정하지 못했습니다."
+      }
+    }
+  ],
+  "time": {
+    "from": "now-6M",
+    "to": "now"
+  }
+}

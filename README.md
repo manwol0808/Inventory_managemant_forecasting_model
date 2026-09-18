@@ -4,6 +4,7 @@
 
 현재 챔피언은 고객×품목의 구매 주기 유형에 따라 XGBoost·TabPFN·기본 XGBoost를 고르는 [멀티 에이전트 라우터](docs/multi-agent-architecture.md)입니다. 장바구니는 예상 주의 전주 월요일에 담고, 이 품목의 첫 구매에는 담지 않습니다. [등록과 성능](docs/champion-benchmarks.md), 앱 연동은 남아 있습니다.
 
+- [재구매 장바구니 챔피언 reorder-champion-v3 (2026-09-18)](docs/reorder-champion-v1.md)
 - [전체 문서와 대화 기록](docs/README.md)
 - [다음 작업 시작점](docs/handoff.md)
 - [데이터·아이템 추적·범주형 피처 설계](docs/data-contract.md)
