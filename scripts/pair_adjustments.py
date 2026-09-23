@@ -1,7 +1,8 @@
 """고객×품목별 담는 날 보정 저장소.
 
-짝마다 과거 예측 오차(실제 간격 - 예측 간격)를 쌓고, 그 중앙값만큼 담는 날을 당긴다.
-앞당김만 적용한다. 늦게 담으면 그 주기는 통째로 0점이지만, 조금 일찍 담는 것은
+짝마다 과거 예측 오차(실제 간격 - 예측 간격)를 쌓고, 그 중앙값만큼 담는 날을 당긴다(median).
+ratchet 모드는 알림보다 먼저 산 짝을 그 부족분만큼 점점 더 일찍 알린다. 알림을 받을 때까지
+당기기만 하고 되돌리지 않는다. 앞당김만 적용한다. 늦게 담으면 그 주기는 통째로 0점이지만, 조금 일찍 담는 것은
 장바구니에 남아 있으므로 회복 가능하기 때문이다.
 
 배치는 무상태이므로 이 저장소가 실행 사이의 기억을 맡는다.
@@ -12,10 +13,13 @@
 import argparse
 import sqlite3
 import statistics
+from datetime import date
 from pathlib import Path
 
 DEFAULT_DB = Path("data/pair-adjustments-v1.sqlite")
 DEFAULT_CAP_DAYS = 7
+RATCHET_CAP_DAYS = 21
+MODES = ("median", "ratchet")
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS pair_error (
     origin_event_id TEXT PRIMARY KEY,
@@ -24,7 +28,8 @@ CREATE TABLE IF NOT EXISTS pair_error (
     origin_on       TEXT NOT NULL,
     predicted_gap   INTEGER NOT NULL,
     actual_gap      INTEGER NOT NULL,
-    error_days      INTEGER NOT NULL
+    error_days      INTEGER NOT NULL,
+    alarm_gap       INTEGER
 );
 CREATE INDEX IF NOT EXISTS pair_error_pair ON pair_error (customer_id, product_id);
 """
@@ -33,14 +38,18 @@ CREATE INDEX IF NOT EXISTS pair_error_pair ON pair_error (customer_id, product_i
 class PairAdjustments:
     """오차 이력을 보관하고 짝별 보정값을 낸다. 보정값은 0 이하(앞당김)뿐이다."""
 
-    def __init__(self, path=DEFAULT_DB, cap_days=DEFAULT_CAP_DAYS):
+    def __init__(self, path=DEFAULT_DB, cap_days=DEFAULT_CAP_DAYS, mode="median"):
         if cap_days < 0:
             raise ValueError("Cap must not be negative")
+        if mode not in MODES:
+            raise ValueError(f"Unknown mode {mode!r}")
         path = Path(path)
         path.parent.mkdir(parents=True, exist_ok=True)
-        self.cap_days = cap_days
+        self.cap_days, self.mode = cap_days, mode
         self.db = sqlite3.connect(path)
         self.db.executescript(SCHEMA)
+        if "alarm_gap" not in {c[1] for c in self.db.execute("PRAGMA table_info(pair_error)")}:
+            self.db.execute("ALTER TABLE pair_error ADD COLUMN alarm_gap INTEGER")   # 예전 저장소 호환
         self.db.commit()
 
     def close(self):
@@ -56,7 +65,8 @@ class PairAdjustments:
         """관측된 결과를 쌓는다. origin_event_id 로 멱등하므로 재실행해도 중복되지 않는다.
 
         rows 의 각 항목은 origin_event_id, customer_id, product_id, origin_on,
-        predicted_gap_days, target_gap_days 를 가진다. 재구매가 관측되지 않은 건은 건너뛴다.
+        predicted_gap_days, target_gap_days 를 가진다. cart_on 이 있으면 알림까지의 일수도 남긴다
+        (ratchet 모드가 쓴다). 재구매가 관측되지 않은 건은 건너뛴다.
         """
         payload = []
         for r in rows:
@@ -65,9 +75,12 @@ class PairAdjustments:
             actual, predicted = int(float(r["target_gap_days"])), int(float(r["predicted_gap_days"]))
             if actual <= 0:
                 continue                      # 같은 날 재구매는 주기가 아니다
+            alarm = None
+            if r.get("cart_on"):
+                alarm = (date.fromisoformat(r["cart_on"]) - date.fromisoformat(r["origin_on"])).days
             payload.append((r["origin_event_id"], r["customer_id"], r["product_id"], r["origin_on"],
-                            predicted, actual, actual - predicted))
-        self.db.executemany("INSERT OR REPLACE INTO pair_error VALUES (?,?,?,?,?,?,?)", payload)
+                            predicted, actual, actual - predicted, alarm))
+        self.db.executemany("INSERT OR REPLACE INTO pair_error VALUES (?,?,?,?,?,?,?,?)", payload)
         self.db.commit()
         return len(payload)
 
@@ -76,15 +89,24 @@ class PairAdjustments:
 
         before_on 을 주면 그 날짜보다 앞선 관측만 쓴다. 과거 시점을 재현할 때 필요하다.
         """
-        sql = "SELECT error_days FROM pair_error WHERE customer_id=? AND product_id=?"
+        sql = "SELECT error_days, predicted_gap, actual_gap, alarm_gap FROM pair_error WHERE customer_id=? AND product_id=?"
         args = [customer_id, product_id]
         if before_on:
             sql += " AND origin_on < ?"
             args.append(before_on)
-        errors = [row[0] for row in self.db.execute(sql, args)]
-        if not errors:
+        sql += " ORDER BY origin_on, origin_event_id"
+        history = list(self.db.execute(sql, args))
+        if not history:
             return 0
-        return int(max(-self.cap_days, min(0, statistics.median(errors))))
+        if self.mode == "median":
+            return int(max(-self.cap_days, min(0, statistics.median(h[0] for h in history))))
+        # ratchet: 알림보다 먼저 산 만큼(+1일) 더 일찍. 받았으면 그대로. 되돌리지 않는다.
+        offset = 0
+        for _, predicted, actual, alarm in history:
+            alarm = alarm if alarm is not None else max(1, predicted - DEFAULT_CAP_DAYS)
+            if actual < alarm:
+                offset = min(self.cap_days, offset + (alarm - actual) + 1)
+        return -offset
 
     def all_adjustments(self):
         """짝 전체의 보정값. 배치에서 한 번에 조회할 때 쓴다."""
@@ -100,7 +122,7 @@ class PairAdjustments:
         pairs = self.db.execute("SELECT COUNT(DISTINCT customer_id || '\\x00' || product_id) FROM pair_error")
         return {"errors": self.db.execute("SELECT COUNT(*) FROM pair_error").fetchone()[0],
                 "pairs": pairs.fetchone()[0], "adjusted_pairs": len(self.all_adjustments()),
-                "cap_days": self.cap_days}
+                "cap_days": self.cap_days, "mode": self.mode}
 
 
 def demo():
@@ -150,21 +172,23 @@ if __name__ == "__main__":
                                                   "predicted_gap_days/target_gap_days 를 가진 CSV")
     r.add_argument("--db", type=Path, default=DEFAULT_DB)
     r.add_argument("--cap-days", type=int, default=DEFAULT_CAP_DAYS)
+    r.add_argument("--mode", choices=MODES, default="median")
     s = sub.add_parser("show")
     s.add_argument("customer_id")
     s.add_argument("product_id")
     s.add_argument("--db", type=Path, default=DEFAULT_DB)
     s.add_argument("--cap-days", type=int, default=DEFAULT_CAP_DAYS)
+    s.add_argument("--mode", choices=MODES, default="median")
     sub.add_parser("demo")
     args = parser.parse_args()
     if args.command == "demo":
         demo()
     elif args.command == "record":
         import csv
-        with PairAdjustments(args.db, args.cap_days) as store:
+        with PairAdjustments(args.db, args.cap_days, args.mode) as store:
             with args.predictions.open(newline="", encoding="utf-8") as stream:
                 added = store.record(csv.DictReader(stream))
             print({"recorded": added, **store.stats()})
     else:
-        with PairAdjustments(args.db, args.cap_days) as store:
+        with PairAdjustments(args.db, args.cap_days, args.mode) as store:
             print({"adjustment_days": store.adjustment(args.customer_id, args.product_id)})

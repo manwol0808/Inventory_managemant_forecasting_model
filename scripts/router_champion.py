@@ -19,7 +19,7 @@ import xgboost as xgb
 
 from scripts.build_features_and_splits import next_midnight, read_csv
 from scripts.build_purchase_events import write_csv
-from scripts.pair_adjustments import DEFAULT_CAP_DAYS, DEFAULT_DB, PairAdjustments
+from scripts.pair_adjustments import DEFAULT_CAP_DAYS, DEFAULT_DB, MODES as ADJUSTMENT_MODES, PairAdjustments
 from scripts.predict_replenishment import KOREA, base_champion_path, champion_path
 from scripts.run_baseline import digest, write_json
 from scripts.run_multi_agent_router import (FEATURE_MODE, MODEL_AGENTS, feature_array, guard, purchase_rule,
@@ -30,6 +30,47 @@ from scripts.train_xgboost import matrix, postprocess
 
 REGISTRY = Path("config/champion.json")
 STORE_RHYTHM_MAX_PULL_DAYS = 7
+BASE_LEAD_DAYS = 7          # 전주 월요일 담기가 주는 기본 여유
+PROPORTIONAL_LEAD_SHARE = 0.3
+PROPORTIONAL_LEAD_MAX_DAYS = 14
+LEAD_POLICIES = ("fixed", "proportional")
+FIRST_PURCHASE_RULES = ("skip", "item_median")   # 첫 구매: 담지 않음 / 품목 재구매 주기 중앙값으로 담음
+SECOND_PURCHASE_RULES = ("model", "last_gap")     # 2번째 구매: 모델 예측 / 직전 간격 그대로
+SCHEDULES = ("weekly_monday", "days_before")      # 전주 월요일 담기 / 예측일 7일 전 알림(요일 무관)
+NOTIFY_HOUR = 9
+
+
+def days_before_schedule(origin_on, scheduled_gap, hour=NOTIFY_HOUR):
+    """예측일(출발일 + scheduled_gap)의 BASE_LEAD_DAYS일 전 아침. 이미 지났으면 다음 날 아침."""
+    origin = date.fromisoformat(origin_on)
+    notify = max(origin + timedelta(days=1), origin + timedelta(days=scheduled_gap - BASE_LEAD_DAYS))
+    at = datetime.combine(notify, time(hour), KOREA)
+    return notify.isoformat(), at.isoformat()
+
+
+def short_history_gap(row, stage, model_gap, first_rule, second_rule):
+    """첫·둘째 구매의 간격 규칙. (간격, 담을지, 에이전트 이름). 규칙이 기본값이면 None을 돌려 기존 흐름을 따른다."""
+    if stage == "first" and first_rule == "item_median":
+        item = row.get("item_gap_median") or ""
+        if item != "":
+            return max(1, round(float(item))), True, "first_purchase_item_median"
+        return model_gap, True, "first_purchase_model_fallback"
+    if stage == "second" and second_rule == "last_gap":
+        return max(1, round(float(row["pair_gap_lag1"]))), True, "second_purchase_last_gap"
+    return None
+
+
+def extra_lead_days(gap, policy="fixed"):
+    """담는 날을 기본 여유(전주 월요일)보다 며칠 더 당길지.
+
+    fixed: 0. proportional: 예측 간격의 30%를 여유로 하되 7~14일로 묶는다.
+    한 달 주기는 3일, 47일 이상은 7일 더 당긴다. 24일 이하는 바뀌지 않는다.
+    """
+    if policy not in LEAD_POLICIES:
+        raise ValueError(f"Unknown lead policy {policy!r}")
+    if policy == "fixed":
+        return 0
+    return min(PROPORTIONAL_LEAD_MAX_DAYS, max(BASE_LEAD_DAYS, round(gap*PROPORTIONAL_LEAD_SHARE))) - BASE_LEAD_DAYS
 
 
 def read_store_rhythm(path):
@@ -119,11 +160,20 @@ def promote(source, output, registry_path=REGISTRY, *, selected_on, evaluation):
 
 class RouterChampion:
     def __init__(self, registry_path=REGISTRY, *, store_rhythm=None, adjustments_db=None,
-                 adjustment_cap=DEFAULT_CAP_DAYS):
+                 adjustment_cap=DEFAULT_CAP_DAYS, lead_policy="fixed",
+                 first_purchase="skip", second_purchase="model", schedule="weekly_monday",
+                 adjustment_mode="median"):
+        extra_lead_days(30, lead_policy)
+        if first_purchase not in FIRST_PURCHASE_RULES or second_purchase not in SECOND_PURCHASE_RULES:
+            raise ValueError("Unknown short-history rule")
+        if schedule not in SCHEDULES:
+            raise ValueError("Unknown schedule")
+        self.lead_policy, self.first_purchase, self.second_purchase = lead_policy, first_purchase, second_purchase
+        self.schedule_mode, self.adjustment_mode = schedule, adjustment_mode
         self.store_rhythm = read_store_rhythm(store_rhythm) if store_rhythm else {}
         self.adjustments = {}
         if adjustments_db:
-            with PairAdjustments(adjustments_db, adjustment_cap) as store:
+            with PairAdjustments(adjustments_db, adjustment_cap, adjustment_mode) as store:
                 self.adjustments = store.all_adjustments()
         self.root = champion_path(registry_path)
         self.base_root = base_champion_path(registry_path)
@@ -189,10 +239,17 @@ class RouterChampion:
             stage, suggest, fixed_gap = purchase_rule(r, group, cfg)
             if fixed_gap is not None:
                 agent, gap, reason, agent_qty = "second_purchase_last_gap", fixed_gap, None, champion_qty
+            override = short_history_gap(r, stage, champion_gap, self.first_purchase, self.second_purchase)
+            if override is not None:
+                gap, suggest, agent = override
+                reason, agent_qty = None, champion_qty
             pair = (r["customer_id"], r["product_id"])
             adjustment = self.adjustments.get(pair, 0) if suggest else 0
-            scheduled_gap = max(1, gap + adjustment)
+            extra_lead = extra_lead_days(gap, self.lead_policy) if suggest else 0
+            scheduled_gap = max(1, gap + adjustment - extra_lead)
             predicted_on, cart_on, cart_at = weekly_cart(r["origin_on"], scheduled_gap, cfg["weekly_release_hour"], cfg["weekly_buyer_max_gap_days"])
+            if self.schedule_mode == "days_before":
+                cart_on, cart_at = days_before_schedule(r["origin_on"], scheduled_gap)
             predicted_on = (date.fromisoformat(r["origin_on"])+timedelta(days=gap)).isoformat()
             rhythm_on, rhythm_qty = self.store_rhythm.get(pair, (None, None))
             pulled = False
@@ -206,7 +263,8 @@ class RouterChampion:
                 "origin_event_id": r["origin_event_id"], "origin_on": r["origin_on"], "customer_group": group,
                 "purchase_stage": stage, "selected_agent": agent, "fallback_agent": "champion" if reason else "",
                 "predicted_gap_days": gap, "predicted_repurchase_on": predicted_on,
-                "pair_adjustment_days": adjustment, "scheduled_gap_days": scheduled_gap,
+                "pair_adjustment_days": adjustment, "lead_days": BASE_LEAD_DAYS + extra_lead,
+                "scheduled_gap_days": scheduled_gap,
                 "store_rhythm_on": rhythm_on or "", "store_rhythm_pulled": pulled,
                 "cart_quantity": rhythm_qty if rhythm_qty else (champion_qty if reason else agent_qty),
                 "router_quantity": champion_qty if reason else agent_qty, "cart_on": cart_on, "cart_at": cart_at,
@@ -218,6 +276,9 @@ class RouterChampion:
                    "status": {s: sum(r["status"] == s for r in records) for s in sorted({r["status"] for r in records})},
                    "open_by_final_agent": dict(Counter(r["fallback_agent"] or r["selected_agent"] for r in records
                                                        if r["status"] in {"due", "scheduled"})),
+                   "lead_policy": self.lead_policy,
+                   "first_purchase": self.first_purchase, "second_purchase": self.second_purchase,
+                   "schedule": self.schedule_mode, "adjustment_mode": self.adjustment_mode,
                    "store_rhythm": {"pairs_loaded": len(self.store_rhythm),
                                     "carts_pulled": sum(r["store_rhythm_pulled"] for r in records),
                                     "quantities_used": sum(bool(self.store_rhythm.get((r["customer_id"], r["product_id"]), (None, None))[1])
@@ -246,6 +307,16 @@ if __name__ == "__main__":
     s.add_argument("--adjustments-db", type=Path, nargs="?", const=DEFAULT_DB,
                    help="짝별 보정 저장소. 생략하면 보정하지 않는다")
     s.add_argument("--adjustment-cap-days", type=int, default=DEFAULT_CAP_DAYS)
+    s.add_argument("--adjustment-mode", choices=ADJUSTMENT_MODES, default="median",
+                   help="ratchet: 알림보다 먼저 산 짝을 부족분만큼 점점 더 일찍 알린다 (한도는 --adjustment-cap-days, 권장 21)")
+    s.add_argument("--lead-policy", choices=LEAD_POLICIES, default="fixed",
+                   help="proportional: 예측 간격의 30%%(7~14일)를 여유로 두어 긴 주기를 더 일찍 담는다")
+    s.add_argument("--first-purchase", choices=FIRST_PURCHASE_RULES, default="skip",
+                   help="item_median: 첫 구매도 품목 재구매 주기 중앙값으로 담는다 (없으면 모델)")
+    s.add_argument("--second-purchase", choices=SECOND_PURCHASE_RULES, default="model",
+                   help="last_gap: 2번째 구매는 직전 간격을 그대로 쓴다")
+    s.add_argument("--schedule", choices=SCHEDULES, default="weekly_monday",
+                   help="days_before: 요일과 무관하게 예측일 7일 전 아침에 알림/담기")
     args = parser.parse_args()
     if args.command == "promote":
         print(json.dumps(promote(args.source, args.output, selected_on=args.selected_on,
@@ -255,5 +326,7 @@ if __name__ == "__main__":
         if as_of.tzinfo is None:
             raise ValueError("Timezone required")
         champion = RouterChampion(store_rhythm=args.store_rhythm, adjustments_db=args.adjustments_db,
-                                  adjustment_cap=args.adjustment_cap_days)
+                                  adjustment_cap=args.adjustment_cap_days, lead_policy=args.lead_policy,
+                                  first_purchase=args.first_purchase, second_purchase=args.second_purchase,
+                                  schedule=args.schedule, adjustment_mode=args.adjustment_mode)
         print(json.dumps(champion.schedule(as_of.astimezone(KOREA), args.output), ensure_ascii=False, indent=2))
