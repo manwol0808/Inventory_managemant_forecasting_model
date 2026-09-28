@@ -48,3 +48,34 @@ class ChampionRegistryTests(unittest.TestCase):
 
 if __name__=='__main__':
     unittest.main()
+
+
+class NoRouterTests(unittest.TestCase):
+    def test_no_router_sends_every_group_to_the_base_model(self):
+        from scripts.router_champion import REGISTRY, RouterChampion
+        if not (REGISTRY.exists() and Path(json.loads(REGISTRY.read_text())["model_dir"]).exists()):
+            self.skipTest("champion artifacts are not in this checkout")
+        routes = RouterChampion(router=False).cfg["routes"]
+        self.assertTrue(routes and set(routes.values()) == {"champion"})
+
+    def test_ab_group_is_stable_and_holdout_is_about_five_percent(self):
+        from scripts.router_champion import ab_group
+        ids = [f"store-{i}" for i in range(20000)]
+        groups = [ab_group(i) for i in ids]
+        self.assertEqual(groups, [ab_group(i) for i in ids])
+        share = groups.count("holdout") / len(groups)
+        self.assertTrue(0.04 < share < 0.06, share)
+        self.assertEqual(set(groups), {"holdout", "control", "treatment"})
+
+
+class DailyExtractSqlTests(unittest.TestCase):
+    def test_app_orders_table_is_substituted_and_both_windows_move(self):
+        from delivery.run_daily import DEFAULT_APP_ORDERS_TABLE, extract_sql
+        web = extract_sql("2026-10-07")
+        self.assertNotIn("app_orders", web)
+        self.assertIn("BETWEEN DATE '2024-10-02' AND DATE '2026-10-07'", web)
+        both = extract_sql("2026-10-07", "proj.ds.app_orders")
+        self.assertIn("`proj.ds.app_orders`", both)
+        self.assertNotIn(f"`{DEFAULT_APP_ORDERS_TABLE}`", both)
+        self.assertEqual(both.count("BETWEEN DATE '2024-10-02' AND DATE '2026-10-07'"), 2)
+        self.assertIn("UNION ALL", both)

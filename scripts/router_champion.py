@@ -8,6 +8,7 @@ predict: route every pair's latest purchase and schedule its cart; local CSV onl
 수량도 매장 리듬 모델 값이 있으면 그것을 쓴다. 둘 다 입력이 없으면 기존 동작 그대로다.
 """
 import argparse
+import hashlib
 import json
 import shutil
 from collections import Counter
@@ -38,6 +39,17 @@ FIRST_PURCHASE_RULES = ("skip", "item_median")   # 첫 구매: 담지 않음 / �
 SECOND_PURCHASE_RULES = ("model", "last_gap")     # 2번째 구매: 모델 예측 / 직전 간격 그대로
 SCHEDULES = ("weekly_monday", "days_before")      # 전주 월요일 담기 / 예측일 7일 전 알림(요일 무관)
 NOTIFY_HOUR = 9
+AB_GROUPS = (("holdout", 5), ("control", 50), ("treatment", 100))   # 매장ID 해시 0~99 → 그룹. holdout 5%는 끝까지 제안 안 보냄
+
+
+def ab_group(customer_id):
+    bucket = int(hashlib.sha256(customer_id.encode()).hexdigest(), 16) % 100
+    return next(name for name, upper in AB_GROUPS if bucket < upper)
+
+
+def suggestion_key(customer_id, product_id, origin_event_id):
+    """predict_replenishment와 같은 규칙. 모델 버전이 바뀌어도 같은 구매에는 같은 키."""
+    return hashlib.sha256(json.dumps([customer_id, product_id, origin_event_id], ensure_ascii=False).encode()).hexdigest()
 
 
 def days_before_schedule(origin_on, scheduled_gap, hour=NOTIFY_HOUR):
@@ -162,7 +174,7 @@ class RouterChampion:
     def __init__(self, registry_path=REGISTRY, *, store_rhythm=None, adjustments_db=None,
                  adjustment_cap=DEFAULT_CAP_DAYS, lead_policy="fixed",
                  first_purchase="skip", second_purchase="model", schedule="weekly_monday",
-                 adjustment_mode="median"):
+                 adjustment_mode="median", router=True):
         extra_lead_days(30, lead_policy)
         if first_purchase not in FIRST_PURCHASE_RULES or second_purchase not in SECOND_PURCHASE_RULES:
             raise ValueError("Unknown short-history rule")
@@ -179,6 +191,9 @@ class RouterChampion:
         self.base_root = base_champion_path(registry_path)
         self.report = json.loads((self.root/"report.json").read_text())
         self.cfg = json.loads((self.root/"router-config.json").read_text())
+        self.model_version = "reorder-champion-v8" + ("" if router else "-norouter")
+        if not router:   # 전부 기본 XGBoost. TabPFN·전담 모델 미사용 (two-type-cadence-v1의 base와 같음)
+            self.cfg["routes"] = {group: "champion" for group in self.cfg["routes"]}
         self.base_schema = json.loads((self.base_root/"feature-schema.json").read_text())
         self.base = {}
         for target in ("gap", "quantity"):
@@ -259,8 +274,10 @@ class RouterChampion:
             monitor_until = date.fromisoformat(r["origin_on"])+timedelta(days=max(cfg["monitoring_days"], gap+7))
             status = ("no_suggestion_first_purchase" if not suggest else "closed" if as_of.date() > monitor_until
                       else "due" if datetime.fromisoformat(cart_at) <= as_of else "scheduled")
-            records.append({"customer_id": r["customer_id"], "product_id": r["product_id"],
+            records.append({"suggestion_key": suggestion_key(r["customer_id"], r["product_id"], r["origin_event_id"]),
+                "customer_id": r["customer_id"], "product_id": r["product_id"],
                 "origin_event_id": r["origin_event_id"], "origin_on": r["origin_on"], "customer_group": group,
+                "ab_group": ab_group(r["customer_id"]), "model_version": self.model_version,
                 "purchase_stage": stage, "selected_agent": agent, "fallback_agent": "champion" if reason else "",
                 "predicted_gap_days": gap, "predicted_repurchase_on": predicted_on,
                 "pair_adjustment_days": adjustment, "lead_days": BASE_LEAD_DAYS + extra_lead,
@@ -317,6 +334,8 @@ if __name__ == "__main__":
                    help="last_gap: 2번째 구매는 직전 간격을 그대로 쓴다")
     s.add_argument("--schedule", choices=SCHEDULES, default="weekly_monday",
                    help="days_before: 요일과 무관하게 예측일 7일 전 아침에 알림/담기")
+    s.add_argument("--no-router", action="store_true",
+                   help="유형별 전담 모델(TabPFN 포함) 없이 기본 XGBoost만 사용")
     args = parser.parse_args()
     if args.command == "promote":
         print(json.dumps(promote(args.source, args.output, selected_on=args.selected_on,
@@ -328,5 +347,6 @@ if __name__ == "__main__":
         champion = RouterChampion(store_rhythm=args.store_rhythm, adjustments_db=args.adjustments_db,
                                   adjustment_cap=args.adjustment_cap_days, lead_policy=args.lead_policy,
                                   first_purchase=args.first_purchase, second_purchase=args.second_purchase,
-                                  schedule=args.schedule, adjustment_mode=args.adjustment_mode)
+                                  schedule=args.schedule, adjustment_mode=args.adjustment_mode,
+                                  router=not args.no_router)
         print(json.dumps(champion.schedule(as_of.astimezone(KOREA), args.output), ensure_ascii=False, indent=2))

@@ -1,4 +1,16 @@
-# 다음 작업 시작점 · 2026-09-23
+# 다음 작업 시작점 · 2026-09-28
+
+## 2026-09-28 변경
+
+- 앱 연동용으로 배치에 `--no-router`를 추가했다. 유형별 전담 모델(일정형 XGBoost 25분위, 짧아짐 TabPFN 25분위)을 쓰지 않고 전부 기본 `xgboost-short-v2`로 예측한다. 첫·둘째 구매 규칙, 매장 리듬, 래칫 보정, 알림 일정은 그대로다. 2026-09-16 일정 16,140행 대조: 전담 모델이 맡던 294행만 바뀌고(열린 제안 204건) 나머지 15,846행은 동일. 성능은 [two-type-cadence-v1](evidence/two-type-cadence-v1.md)의 `base`와 같은 구성이라 라우터 대비 같거나 +0.4%p. 실행 시간 20초→3.6초, torch·tabpfn 의존성과 42MB 가중치가 배포 이미지에서 빠진다. 등록 파일 `champion.json`은 그대로 둔다(`router-config.json`의 유형 판정·알림 설정을 계속 쓴다).
+- 연동 전달 형태는 「모델 파일」이 아니라 「Docker 이미지 + 매일 1회 Cloud Run Job + 제안 테이블(Firestore 또는 BigQuery)」로 정했다. 앱은 표만 읽고 이벤트 6종을 써준다. 전달물은 `delivery/`에 있다: 개발자용 설명서 `README.md`, 표·이벤트·규칙 `SCHEMA.md`, 실행 환경 `RUNTIME.md`, 확인 질문 `QUESTIONS.md`, 배치 `run_daily.py` + `Dockerfile` + `requirements.txt`.
+- `delivery/run_daily.py`는 BigQuery 추출(또는 `--export-csv`) → `prepare_full_history` → 2026-04-09 슬라이스 → 정책·이벤트·피처 ×2 → `segment_features`(학습 없이 enriched 생성) → 직전 실행 결과를 래칫에 기록 → `RouterChampion(router=False)` → Firestore/BigQuery 쓰기를 한 프로세스에서 돈다. 날짜 하드코딩은 SQL 창과 time-split 설정을 실행 시 생성해 풀었다. 동결된 2026-09-15 추출본으로 로컬(40초)·Docker(이미지 1.16GB) 둘 다 기존 `--no-router` 배치와 16,140행 전부 동일. 08-15 절단본→전체본 2회 실행에서 래칫 1,638건 기록·78건 당김 확인. 실제 BigQuery·Firestore 쓰기는 권한이 없어 미검증.
+- 배치 출력에 `suggestion_key`(predict_replenishment와 같은 규칙), `ab_group`(매장ID 해시, holdout 5%/control/treatment, 2026-09-16 일정에서 홀드아웃 184/3,449 매장), `model_version` 열이 추가됐다.
+- 앱 쪽 연동을 직접 붙였다(개발자 제안). 저장소 `~/Desktop/manwol/projects/omcheck/coffee_bean_setting_flutter`의 worktree `../omcheck-reorder`, 브랜치 `feat/reorder-suggestions`, 커밋 d7e9b17 (origin/main 7ea5970 위). 앱은 uid만 알고 member_code를 모르므로 CF `fanoutReorderSuggestions`(10:00 KST)가 `cart_suggestions`(due)를 `manwolConnections`+OTP 관문으로 uid에 대응시켜 `shopReorderSuggestions/{ownerUid}/items`로 복사하고 새 키만 푸시·알림벨·`cart_events(cart_suggested)`. holdout 제외. Flutter는 식자재몰 홈 "재주문 시기" 카드(담기=제안 수량, 안 살래요=기기 래치) + 이벤트 6종. jest 876·flutter 관련 테스트 통과, analyze 오류 0. 배치는 Firestore `coffee-bean-setting` 프로젝트 `cart_suggestions`에 09:30 KST 쓰는 것으로 확정(`delivery/RUNTIME.md`).
+- **앱 결제 주문 인입 구축**(09-28). 앱 주문은 아임웹 API 를 안 타고 앱 DB `omcheck_shop.app_orders` 에만 있어 `manwol_core_mirror` 에 없었다(규모 3건). 앱 브랜치 `scripts/bq_daily_sync.sh` [2b] 가 Cloud SQL → `coffee-bean-setting.omcheck_raw.app_orders`(m코드 변환, PII 제외) 적재, 배치는 `--app-orders-table` 로 `sql/extract_order_items_with_app_v1.sql`(웹+앱 UNION, 상태 대응 규칙 머리말) 사용, 표 없으면 웹만. BigQuery 실행·동결 데이터 재생으로 검증. 앱 쪽 export 권한은 앱 개발자 확인(`delivery/QUESTIONS.md` 2번).
+- **배포 완료(09-28 14:00 KST)**: 사용자가 `delivery/deploy.sh` 실행. Cloud Run Job `manwol-reorder`(이미지 `…/omcheck-jobs/reorder:v8`, amd64, `xgboost-cpu`, 418MB), Scheduler 09:30 KST, SA `manwol-reorder-batch@`, 상태 버킷 `gs://omcheck-reorder-state`. 첫 실행이 Firestore `cart_suggestions` 5,399건 씀(due 4,435). 발견: 래칫 sqlite 를 FUSE 볼륨에 직접 쓰면 `OutOfOrderError` — 작업 폴더 사본 + 끝에 통째 복사로 고치고 손상 시 새로 시작하도록 함(`run_daily.ratchet_db`). 고친 이미지(digest 14ee28fc…)를 14:20 push·Job 갱신 완료. 내일 09:30 실행이 첫 정상 래칫 회차. CF 배포는 개발자 확인 후. `/shop/checkout`·재결제 경로의 `cart_checkout` 이벤트는 미기록.
+
+아래는 2026-09-23 기록이다.
 
 ## 2026-09-23 변경
 

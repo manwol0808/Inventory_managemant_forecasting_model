@@ -1,0 +1,11 @@
+*
+!scripts/
+!sql/
+!config/
+!delivery/
+!data/test-account-exclusions-full-v1.json
+!artifacts/router-champion-v1/
+!artifacts/xgboost-short-v2/
+**/__pycache__
+artifacts/router-champion-v1/inputs/
+artifacts/router-champion-v1/store-rhythm-pairs.csv
