@@ -10,7 +10,7 @@
 
 ## 읽는 순서
 
-1. [다음 작업 시작점](handoff.md): 현재 모델, 재개 방법, 남은 검수.
+1. [다음 작업 시작점](handoff.md): 현재 모델, 재개 방법, 남은 검수. [OKR KR 제안](okr-reorder-kr.md)(2026-09-28, 행동 지표 기준), [앱 전달물](../delivery/README.md).
 2. [결정 사항](decisions.md): 사용자 확정 방향과 미결 질문.
 3. [멀티 에이전트 라우터](multi-agent-architecture.md): 트리, 시도한 대안과 수치, 챔피언 등록.
 4. [챔피언 등록](champion-benchmarks.md): 등록 형식, 배치 일정 명령, 되돌리는 방법.
